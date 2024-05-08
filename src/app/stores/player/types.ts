@@ -1,3 +1,10 @@
+export type Team = {
+  id: string;
+  name: string;
+  logo: string;
+  years: number[];
+};
+
 export type Hitter = {
   name: string;
   team: string;
@@ -50,4 +57,25 @@ export type Pitcher = {
   golden_glove: boolean;
   mvp_league: boolean;
   mvp_korea: boolean;
+};
+
+export type PlayerStoreState = {
+  isShow: boolean;
+  allTeams: Team[];
+  allHitters: Hitter[];
+  allPitchers: Pitcher[];
+  selectedTeams: string[];
+  currentHitters: Hitter[];
+  currentPitchers: Pitcher[];
+  setShowTeamList: () => void;
+  setTeams: ({ id, index, action }: SetTeamsPayload) => void;
+  fetchAllTeams: () => Promise<void>;
+  fetchAllHitters: () => Promise<void>;
+  fetchAllPitchers: () => Promise<void>;
+};
+
+export type SetTeamsPayload = {
+  id: string;
+  index: number;
+  action: string;
 };
