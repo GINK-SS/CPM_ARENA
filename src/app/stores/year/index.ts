@@ -2,7 +2,8 @@ import { create } from 'zustand';
 import { YearStoreState } from './types';
 
 const useYearStore = create<YearStoreState>((set) => ({
-  year: 0,
+  isShow: false,
+  selectedYear: null,
   yearList: [
     2020,
     2021,
@@ -55,8 +56,11 @@ const useYearStore = create<YearStoreState>((set) => ({
     1988,
     1989,
   ],
+  setShowYearList: () => {
+    set((state) => ({ isShow: !state.isShow }));
+  },
   setYear: (newYear: number) => {
-    set(() => ({ year: newYear }));
+    set(() => ({ selectedYear: newYear }));
   },
 }));
 
