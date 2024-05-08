@@ -1,28 +1,3 @@
-export type Pitcher = {
-  name: string;
-  team: string;
-  overall: number;
-  year: number;
-  pitch_all: number;
-  pitch_right: number;
-  pitch_left: number;
-  control_all: number;
-  control_right: number;
-  control_left: number;
-  stuff_all: number;
-  stuff_right: number;
-  stuff_left: number;
-  mental: number;
-  stamina: number;
-  position: string;
-  hand_type: string;
-  pitches: string;
-  all_star: boolean;
-  golden_glove: boolean;
-  mvp_league: boolean;
-  mvp_korea: boolean;
-};
-
 export type Hitter = {
   name: string;
   team: string;
@@ -46,6 +21,31 @@ export type Hitter = {
   hand_type: string;
   order_type: string;
   order_numbers: string[];
+  all_star: boolean;
+  golden_glove: boolean;
+  mvp_league: boolean;
+  mvp_korea: boolean;
+};
+
+export type Pitcher = {
+  name: string;
+  team: string;
+  overall: number;
+  year: number;
+  pitch_all: number;
+  pitch_right: number;
+  pitch_left: number;
+  control_all: number;
+  control_right: number;
+  control_left: number;
+  stuff_all: number;
+  stuff_right: number;
+  stuff_left: number;
+  mental: number;
+  stamina: number;
+  position: string;
+  hand_type: string;
+  pitches: string;
   all_star: boolean;
   golden_glove: boolean;
   mvp_league: boolean;
