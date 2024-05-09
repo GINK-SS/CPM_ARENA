@@ -5,12 +5,15 @@ import useYearStore from './stores/year';
 import usePlayerStore from './stores/player';
 import YearSelection from './components/yearSelection';
 import TeamSelection from './components/teamSelection';
+import TablePosition from './components/tablePosition';
 
 export default function Home() {
   const { selectedYear, isShow: isYearShow, setShowYearList } = useYearStore();
   const {
     isShow: isTeamShow,
     selectedTeams,
+    allHitters,
+    allPitchers,
     setShowTeamList,
     fetchAllTeams,
     fetchAllHitters,
@@ -43,6 +46,37 @@ export default function Home() {
 
       {isYearShow && <YearSelection />}
       {isTeamShow && <TeamSelection />}
+
+      <div style={{ display: 'flex' }}>
+        {selectedTeams.map((team, idx) => {
+          return (
+            <>
+              <h1>{team}</h1>
+              <div key={idx}>
+                <TablePosition
+                  key={idx}
+                  players={allHitters.filter((hitter) => hitter.year === selectedYear && hitter.team === team)}
+                  isHitter
+                />
+              </div>
+            </>
+          );
+        })}
+      </div>
+
+      <div style={{ display: 'flex' }}>
+        {selectedTeams.map((team, idx) => {
+          return (
+            <div key={idx}>
+              <TablePosition
+                key={idx}
+                players={allPitchers.filter((pitcher) => pitcher.year === selectedYear && pitcher.team === team)}
+                isHitter={false}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
