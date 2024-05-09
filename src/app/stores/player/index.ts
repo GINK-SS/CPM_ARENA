@@ -15,7 +15,7 @@ const usePlayerStore = create<PlayerStoreState>((set) => ({
   setTeams: ({ id, index, action }) => {
     if (action === 'ADD' && index < 5) {
       set((state) => ({
-        selectedTeams: state.selectedTeams.concat(id),
+        selectedTeams: [...state.selectedTeams, id],
       }));
     } else if (action === 'DELETE') {
       set((state) => ({ selectedTeams: state.selectedTeams.filter((team) => team !== id) }));
