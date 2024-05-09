@@ -79,3 +79,7 @@ export type SetTeamsPayload = {
   index: number;
   action: string;
 };
+
+export type PositionLimit = {
+  [key: string]: number;
+};
