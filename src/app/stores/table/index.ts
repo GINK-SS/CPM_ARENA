@@ -6,6 +6,9 @@ const useTableStore = create<TableStoreState>((set) => ({
   showTable: () => {
     set(() => ({ isShow: true }));
   },
+  closeTable: () => {
+    set(() => ({ isShow: false }));
+  },
 }));
 
 export default useTableStore;

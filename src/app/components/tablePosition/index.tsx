@@ -5,10 +5,12 @@ import usePlayerStore from '@/app/stores/player';
 import TablePlayer from '../tablePlayer';
 
 import * as S from './styles';
+import useTableStore from '@/app/stores/table';
 
 const TablePosition = () => {
   const { selectedYear } = useYearStore();
   const { selectedTeams, allTeams, allHitters, allPitchers } = usePlayerStore();
+  const { closeTable } = useTableStore();
   const positionLimit: PositionLimit = {
     포수: 2,
     '1루수': 2,
@@ -63,9 +65,19 @@ const TablePosition = () => {
     return arranged;
   };
 
+  const onReStart = () => {
+    closeTable();
+  };
+
   return (
     <S.Container>
-      <S.Title>{selectedYear}년 ARENA</S.Title>
+      <S.Header>
+        <S.Title>{selectedYear}년 ARENA</S.Title>
+        <S.Button onClick={onReStart}>
+          <Image src='/assets/redo.svg' alt='re' width={20} height={20} />
+        </S.Button>
+      </S.Header>
+
       <S.TableContainer>
         <S.LineUpWrapper>
           <S.PositionTitleBox $heightNum={2}>포수</S.PositionTitleBox>
