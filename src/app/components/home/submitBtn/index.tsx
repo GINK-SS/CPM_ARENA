@@ -5,11 +5,13 @@ import useTableStore from '@/app/stores/table';
 import * as S from './styles';
 
 const SubmitBtn = () => {
-  const { selectedYear } = useYearStore();
-  const { selectedTeams } = usePlayerStore();
+  const { selectedYear, closeYearList } = useYearStore();
+  const { selectedTeams, closeTeamList } = usePlayerStore();
   const { showTable } = useTableStore();
 
   const onSubmit = () => {
+    closeYearList();
+    closeTeamList();
     showTable();
   };
 

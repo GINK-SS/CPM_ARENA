@@ -9,6 +9,9 @@ const usePlayerStore = create<PlayerStoreState>((set) => ({
   selectedTeams: [],
   currentHitters: [],
   currentPitchers: [],
+  closeTeamList: () => {
+    set(() => ({ isShow: false }));
+  },
   setShowTeamList: () => {
     set((state) => ({ isShow: !state.isShow }));
   },
