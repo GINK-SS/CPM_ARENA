@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid #000;
-  width: 130px;
+  width: 140px;
   height: 30px;
   background-color: #fff;
   color: #000;
@@ -24,7 +24,7 @@ export const Name = styled.div<{ $isAllStar: boolean; $isMVP: boolean }>`
 `;
 
 export const Overall = styled.div<{ $isOver80: boolean; $isGoldenGlove: boolean }>`
-  width: 30px;
+  width: 40px;
   height: 20px;
   padding: 5px;
   text-align: center;
