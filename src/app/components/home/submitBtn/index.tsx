@@ -10,7 +10,7 @@ const SubmitBtn = () => {
   return (
     <S.Button
       $isActive={!!selectedYear && selectedTeams.length === 5}
-      disabled={!!selectedYear && selectedTeams.length === 5}
+      disabled={!selectedYear || selectedTeams.length < 5}
     >
       CHECK
     </S.Button>
