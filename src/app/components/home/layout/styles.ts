@@ -5,24 +5,13 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 1100px;
-  height: 100%;
+  min-height: 100%;
   background: url('/assets/hideout.svg');
   background-size: 100px 100px;
 `;
 
 export const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 50px 0;
-  overflow-y: scroll;
+  max-width: 1100px;
+  padding: 30px 0;
   user-select: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;

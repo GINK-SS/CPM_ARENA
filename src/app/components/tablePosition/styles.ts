@@ -18,6 +18,7 @@ export const Title = styled.h1`
   font-size: 40px;
   margin-bottom: 30px;
   letter-spacing: 20px;
+  text-shadow: 3px 3px 2px #555;
 `;
 
 export const Button = styled.button`
@@ -77,6 +78,7 @@ export const TeamTitle = styled.div`
 `;
 
 export const TeamName = styled.h2`
+  margin-top: 5px;
   font-weight: 600;
 `;
 
@@ -84,20 +86,26 @@ export const PositionGroup = styled.div`
   margin-bottom: 2px;
 `;
 
-export const PositionTitleBox = styled.div<{ $heightNum: number }>`
+export const PositionTitleBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 864px;
+  gap: 2px;
+`;
+
+export const PositionTitle = styled.div<{ $heightNum: number }>`
+  border: 1px solid #000;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80px;
-  height: ${({ $heightNum }) => $heightNum * 30 + ($heightNum - 1) * 2}px;
-  border: 1px solid #000;
-  border-top: 3px solid #000;
+  height: ${({ $heightNum }) => $heightNum * 30 + ($heightNum - 1)}px;
+  padding: 0 10px;
   background-color: #fff;
   color: #000;
   font-weight: 600;
 
   &:last-child {
-    border-bottom: 3px solid #000;
+    margin-bottom: 2px;
   }
 `;
 
@@ -107,12 +115,14 @@ export const DescriptionWrapper = styled.div`
   gap: 3px;
   width: 100%;
   border: 1px solid #000;
+  box-sizing: border-box;
 `;
 
 export const Description = styled.div`
   flex: 1;
-  padding: 15px 0;
+  padding: 13px 0;
   font-weight: 600;
+  font-size: 17px;
   text-align: center;
   letter-spacing: 2px;
 
