@@ -8,6 +8,7 @@ import Selection from './components/home/selection';
 import SubmitBtn from './components/home/submitBtn';
 import HomeLayout from './components/home/layout';
 import TablePosition from './components/tablePosition';
+import Footer from './components/footer';
 
 export default function Home() {
   const { fetchAllTeams, fetchAllHitters, fetchAllPitchers } = usePlayerStore();
@@ -34,6 +35,8 @@ export default function Home() {
           <SubmitBtn />
         </>
       )}
+
+      <Footer />
     </HomeLayout>
   );
 }
