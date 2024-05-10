@@ -67,6 +67,7 @@ export type PlayerStoreState = {
   selectedTeams: string[];
   currentHitters: Hitter[];
   currentPitchers: Pitcher[];
+  setSelectedTeamsReset: () => void;
   setShowTeamList: () => void;
   setTeams: ({ id, index, action }: SetTeamsPayload) => void;
   fetchAllTeams: () => Promise<void>;

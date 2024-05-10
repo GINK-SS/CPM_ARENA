@@ -2,16 +2,20 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
+  align-items: center;
   border: 1px solid #000;
-  width: 150px;
+  width: 140px;
   height: 30px;
-  margin-left: 10px;
+  background-color: #fff;
+  color: #000;
 `;
 
 export const Name = styled.div<{ $isAllStar: boolean; $isMVP: boolean }>`
   width: 100px;
+  height: 20px;
   padding: 5px;
   font-weight: 700;
+  font-size: 17px;
   border-right: 1px solid #000;
   text-align: center;
   font-weight: ${({ $isMVP }) => $isMVP && 700};
@@ -20,10 +24,12 @@ export const Name = styled.div<{ $isAllStar: boolean; $isMVP: boolean }>`
 `;
 
 export const Overall = styled.div<{ $isOver80: boolean; $isGoldenGlove: boolean }>`
-  width: 30px;
+  width: 40px;
+  height: 20px;
   padding: 5px;
   text-align: center;
   font-weight: ${({ $isOver80 }) => $isOver80 && 700};
+  font-size: 18px;
   background-color: ${({ $isGoldenGlove }) => $isGoldenGlove && '#F5DF94'};
-  color: ${({ $isOver80 }) => $isOver80 && 'blue'};
+  color: ${({ $isOver80 }) => $isOver80 && '#1B1588'};
 `;
