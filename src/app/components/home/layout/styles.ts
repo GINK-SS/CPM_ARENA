@@ -19,6 +19,7 @@ export const Content = styled.div`
   width: 100%;
   padding: 50px 0;
   overflow-y: scroll;
+  user-select: none;
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
