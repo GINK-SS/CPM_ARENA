@@ -12,18 +12,21 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  margin-bottom: 50px;
 `;
 
 export const Title = styled.h1`
-  font-size: 150px;
+  font-size: 140px;
   font-weight: 800;
   color: transparent;
   background: linear-gradient(180deg, #eee 20%, #ed5907 100%);
   background-size: 100% 120%;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  &:nth-child(2) {
+    margin-top: -20px;
+    margin-bottom: 20px;
+  }
 `;
 
 export const SubTitle = styled.h2`
