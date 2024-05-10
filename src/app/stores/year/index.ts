@@ -59,6 +59,9 @@ const useYearStore = create<YearStoreState>((set) => ({
   setShowYearList: () => {
     set((state) => ({ isShow: !state.isShow }));
   },
+  closeYearList: () => {
+    set(() => ({ isShow: false }));
+  },
   setYear: (newYear: number) => {
     set(() => ({ selectedYear: newYear }));
   },

@@ -3,5 +3,6 @@ export type YearStoreState = {
   selectedYear: number | null;
   yearList: (number | null)[];
   setShowYearList: () => void;
+  closeYearList: () => void;
   setYear: (newYear: number) => void;
 };
