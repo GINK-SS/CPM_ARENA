@@ -17,9 +17,16 @@ const usePlayerStore = create<PlayerStoreState>((set) => ({
       set((state) => ({
         selectedTeams: [...state.selectedTeams, id],
       }));
+
+      if (index === 4) {
+        set(() => ({ isShow: false }));
+      }
     } else if (action === 'DELETE') {
       set((state) => ({ selectedTeams: state.selectedTeams.filter((team) => team !== id) }));
     }
+  },
+  setSelectedTeamsReset: () => {
+    set(() => ({ selectedTeams: [] }));
   },
   fetchAllTeams: async () => {
     set({ allTeams: await fetch('/storage/teams.json').then((res) => res.json()) });
