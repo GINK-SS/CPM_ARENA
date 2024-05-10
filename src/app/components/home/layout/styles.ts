@@ -16,7 +16,6 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  gap: 180px;
   width: 100%;
   padding: 50px 0;
   overflow-y: scroll;

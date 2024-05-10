@@ -4,6 +4,7 @@ export const Button = styled.button<{ $isActive: boolean }>`
   position: relative;
   width: 900px;
   min-height: 60px;
+  margin-bottom: 50px;
   border: 2px solid;
   background: none;
   color: ${({ $isActive }) => ($isActive ? '#fff' : '#555')};
