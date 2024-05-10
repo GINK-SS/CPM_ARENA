@@ -1,12 +1,11 @@
 import { Hitter, Pitcher, PositionLimit } from '@/app/stores/player/types';
-import TablePlayer from '../\btablePlayer';
+import useYearStore from '@/app/stores/year';
+import usePlayerStore from '@/app/stores/player';
+import TablePlayer from '../tablePlayer';
 
-type TablePositionProps = {
-  players: (Hitter | Pitcher)[];
-  isHitter: boolean;
-};
-
-const TablePosition = ({ players, isHitter }: TablePositionProps) => {
+const TablePosition = () => {
+  const { selectedYear } = useYearStore();
+  const { selectedTeams, allTeams, allHitters, allPitchers } = usePlayerStore();
   const positionLimit: PositionLimit = {
     포수: 2,
     '1루수': 2,
@@ -61,27 +60,33 @@ const TablePosition = ({ players, isHitter }: TablePositionProps) => {
     return arranged;
   };
 
-  const hitArrangedPlayers = hitArrangePlayers(players);
-  const pitchArrangedPlayers = pitchArrangePlayers(players);
-
   return (
-    <>
-      {isHitter
-        ? hitArrangedPlayers.map((group, index) => (
+    <div style={{ display: 'flex' }}>
+      {selectedTeams.map((selectedTeam, idx) => (
+        <div key={idx}>
+          <h1>{allTeams.find((team) => team.id === selectedTeam)?.name}</h1>
+          {hitArrangePlayers(
+            allHitters.filter((hitter) => hitter.year === selectedYear && hitter.team === selectedTeam)
+          ).map((group, index) => (
             <div key={index} style={{ marginBottom: '10px' }}>
-              {group.players.map((player, index) => (
-                <TablePlayer key={index} player={player} />
-              ))}
-            </div>
-          ))
-        : pitchArrangedPlayers.map((group, index) => (
-            <div key={index} style={{ marginBottom: '10px' }}>
-              {group.players.map((player, index) => (
-                <TablePlayer key={index} player={player} />
+              {group.players.map((player, iindex) => (
+                <TablePlayer key={iindex} player={player} />
               ))}
             </div>
           ))}
-    </>
+
+          {pitchArrangePlayers(
+            allPitchers.filter((pitcher) => pitcher.year === selectedYear && pitcher.team === selectedTeam)
+          ).map((group, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              {group.players.map((player, iindex) => (
+                <TablePlayer key={iindex} player={player} />
+              ))}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 };
 

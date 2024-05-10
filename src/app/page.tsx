@@ -1,24 +1,17 @@
 'use client';
 
 import { useEffect } from 'react';
-import useYearStore from './stores/year';
 import usePlayerStore from './stores/player';
-import YearSelection from './components/yearSelection';
-import TeamSelection from './components/teamSelection';
+import useTableStore from './stores/table';
+import MainTitle from './components/home/title';
+import Selection from './components/home/selection';
+import SubmitBtn from './components/home/submitBtn';
+import HomeLayout from './components/home/layout';
 import TablePosition from './components/tablePosition';
 
 export default function Home() {
-  const { selectedYear, isShow: isYearShow, setShowYearList } = useYearStore();
-  const {
-    isShow: isTeamShow,
-    selectedTeams,
-    allHitters,
-    allPitchers,
-    setShowTeamList,
-    fetchAllTeams,
-    fetchAllHitters,
-    fetchAllPitchers,
-  } = usePlayerStore();
+  const { fetchAllTeams, fetchAllHitters, fetchAllPitchers } = usePlayerStore();
+  const { isShow: isShowTable } = useTableStore();
 
   useEffect(() => {
     fetchAllTeams();
@@ -26,57 +19,21 @@ export default function Home() {
     fetchAllPitchers();
   }, []);
 
-  const onYearList = () => {
-    setShowYearList();
-  };
-
-  const onTeamList = () => {
-    setShowTeamList();
-  };
-
   return (
-    <div>
-      <button onClick={onYearList}>연도 선택</button>
-      <span>{selectedYear ?? '연도를 선택해주세요.'}</span>
+    <HomeLayout>
+      {isShowTable ? (
+        <>
+          <TablePosition />
+        </>
+      ) : (
+        <>
+          <MainTitle />
 
-      <button onClick={onTeamList}>팀 선택</button>
-      {selectedTeams.map((team, index) => (
-        <span key={index}>{team}</span>
-      ))}
+          <Selection />
 
-      {isYearShow && <YearSelection />}
-      {isTeamShow && <TeamSelection />}
-
-      <div style={{ display: 'flex' }}>
-        {selectedTeams.map((team, idx) => {
-          return (
-            <>
-              <h1>{team}</h1>
-              <div key={idx}>
-                <TablePosition
-                  key={idx}
-                  players={allHitters.filter((hitter) => hitter.year === selectedYear && hitter.team === team)}
-                  isHitter
-                />
-              </div>
-            </>
-          );
-        })}
-      </div>
-
-      <div style={{ display: 'flex' }}>
-        {selectedTeams.map((team, idx) => {
-          return (
-            <div key={idx}>
-              <TablePosition
-                key={idx}
-                players={allPitchers.filter((pitcher) => pitcher.year === selectedYear && pitcher.team === team)}
-                isHitter={false}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </div>
+          <SubmitBtn />
+        </>
+      )}
+    </HomeLayout>
   );
 }
