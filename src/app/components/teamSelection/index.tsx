@@ -20,25 +20,30 @@ const TeamSelection = () => {
 
   return (
     <S.Container>
-      {allTeams
-        .filter((team) => team.years.includes(selectedYear as number))
-        .map((team, index) => (
-          <S.Wrapper key={index} value={team.id} onClick={onTeamClick} $isChoice={selectedTeams.includes(team.id)}>
-            <Image
-              src={team.logo}
-              alt={team.name}
-              placeholder='blur'
-              blurDataURL={team.logo}
-              width={40}
-              height={40}
-              style={{
-                filter: selectedTeams.includes(team.id) ? '' : 'drop-shadow(3px 3px 0 #333)',
-              }}
-            />
+      {allTeams.map((team, index) => (
+        <S.Wrapper
+          key={index}
+          value={team.id}
+          onClick={onTeamClick}
+          disabled={!selectedYear || !team.years.includes(selectedYear)}
+          $isDisabled={!selectedYear || !team.years.includes(selectedYear)}
+          $isSelected={selectedTeams.includes(team.id)}
+        >
+          <Image
+            src={team.logo}
+            alt={team.name}
+            placeholder='blur'
+            blurDataURL={team.logo}
+            width={40}
+            height={40}
+            style={{
+              filter: selectedTeams.includes(team.id) ? '' : 'drop-shadow(3px 3px 0 #333)',
+            }}
+          />
 
-            <span>{team.name}</span>
-          </S.Wrapper>
-        ))}
+          <span>{team.name}</span>
+        </S.Wrapper>
+      ))}
     </S.Container>
   );
 };
