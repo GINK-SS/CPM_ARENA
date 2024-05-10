@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  min-width: 1100px;
   height: 100%;
   background: url('/assets/hideout.svg');
   background-size: 100px 100px;
