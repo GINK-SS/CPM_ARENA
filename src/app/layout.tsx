@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 import StyledComponentsRegistry from './lib/registry';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -50,6 +52,8 @@ export default function RootLayout({
     <html lang='ko'>
       <body className={notoSansKR.className}>
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
