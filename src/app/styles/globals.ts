@@ -10,29 +10,27 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
   body {
-    max-width: 1500px;
-    margin: 0 auto;
     background: linear-gradient(0deg, #a3440f, #000000, #000000);
     background-size: 500% 500%;
     background-repeat: no-repeat;
     background-color: #000000;
-    -webkit-animation: AnimationName 10s ease infinite;
-    -moz-animation: AnimationName 10s ease infinite;
-    animation: AnimationName 10s ease infinite;
+    -webkit-animation: AnimationGradient 10s ease infinite;
+    -moz-animation: AnimationGradient 10s ease infinite;
+    animation: AnimationGradient 10s ease infinite;
     color: #FFF;
   }
 
-  @-webkit-keyframes AnimationName {
+  @-webkit-keyframes AnimationGradient {
     0%{background-position:0% 44%}
     50%{background-position:100% 57%}
     100%{background-position:0% 44%}
   }
-  @-moz-keyframes AnimationName {
+  @-moz-keyframes AnimationGradient {
       0%{background-position:0% 44%}
       50%{background-position:100% 57%}
       100%{background-position:0% 44%}
   }
-  @keyframes AnimationName {
+  @keyframes AnimationGradient {
       0%{background-position:0% 44%}
       50%{background-position:100% 57%}
       100%{background-position:0% 44%}
