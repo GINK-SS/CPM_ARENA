@@ -1,7 +1,10 @@
+import Image from 'next/image';
 import { Hitter, Pitcher, PositionLimit } from '@/app/stores/player/types';
 import useYearStore from '@/app/stores/year';
 import usePlayerStore from '@/app/stores/player';
 import TablePlayer from '../tablePlayer';
+
+import * as S from './styles';
 
 const TablePosition = () => {
   const { selectedYear } = useYearStore();
@@ -61,32 +64,68 @@ const TablePosition = () => {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
-      {selectedTeams.map((selectedTeam, idx) => (
-        <div key={idx}>
-          <h1>{allTeams.find((team) => team.id === selectedTeam)?.name}</h1>
-          {hitArrangePlayers(
-            allHitters.filter((hitter) => hitter.year === selectedYear && hitter.team === selectedTeam)
-          ).map((group, index) => (
-            <div key={index} style={{ marginBottom: '10px' }}>
-              {group.players.map((player, iindex) => (
-                <TablePlayer key={iindex} player={player} />
-              ))}
-            </div>
-          ))}
+    <S.Container>
+      <S.Title>{selectedYear}년 ARENA</S.Title>
+      <S.TableContainer>
+        <S.LineUpWrapper>
+          <S.PositionTitleBox $heightNum={2}>포수</S.PositionTitleBox>
+          <S.PositionTitleBox $heightNum={2}>1루수</S.PositionTitleBox>
+          <S.PositionTitleBox $heightNum={2}>2루수</S.PositionTitleBox>
+          <S.PositionTitleBox $heightNum={2}>3루수</S.PositionTitleBox>
+          <S.PositionTitleBox $heightNum={2}>유격수</S.PositionTitleBox>
+          <S.PositionTitleBox $heightNum={5}>외야수</S.PositionTitleBox>
+          <S.PositionTitleBox $heightNum={5}>선발</S.PositionTitleBox>
+          <S.PositionTitleBox $heightNum={5}>계투</S.PositionTitleBox>
+          <S.PositionTitleBox $heightNum={2}>마무리</S.PositionTitleBox>
+        </S.LineUpWrapper>
 
-          {pitchArrangePlayers(
-            allPitchers.filter((pitcher) => pitcher.year === selectedYear && pitcher.team === selectedTeam)
-          ).map((group, index) => (
-            <div key={index} style={{ marginBottom: '10px' }}>
-              {group.players.map((player, iindex) => (
-                <TablePlayer key={iindex} player={player} />
-              ))}
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
+        {selectedTeams.map((selectedTeam, idx) => (
+          <S.LineUpWrapper key={idx}>
+            <S.TeamTitle>
+              <Image
+                src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
+                alt={selectedTeam}
+                width='60'
+                height='60'
+                style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
+              />
+              <S.TeamName>{allTeams.find((team) => team.id === selectedTeam)?.name}</S.TeamName>
+            </S.TeamTitle>
+
+            {hitArrangePlayers(
+              allHitters.filter(
+                (hitter) => hitter.year === selectedYear && hitter.team === selectedTeam && hitter.overall >= 69
+              )
+            ).map((group, index) => (
+              <S.PositionGroup key={index}>
+                {group.players.map((player, iindex) => (
+                  <TablePlayer key={iindex} player={player} />
+                ))}
+              </S.PositionGroup>
+            ))}
+
+            {pitchArrangePlayers(
+              allPitchers.filter(
+                (pitcher) => pitcher.year === selectedYear && pitcher.team === selectedTeam && pitcher.overall >= 69
+              )
+            ).map((group, index) => (
+              <S.PositionGroup key={index}>
+                {group.players.map((player, iindex) => (
+                  <TablePlayer key={iindex} player={player} />
+                ))}
+              </S.PositionGroup>
+            ))}
+          </S.LineUpWrapper>
+        ))}
+      </S.TableContainer>
+
+      <S.DescriptionWrapper>
+        <S.Description>올스타</S.Description>
+        <S.Description>골든글러브</S.Description>
+        <S.Description>MVP</S.Description>
+        <S.Description>80 이상</S.Description>
+      </S.DescriptionWrapper>
+    </S.Container>
   );
 };
 
