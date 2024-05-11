@@ -2,8 +2,8 @@ import { styled } from 'styled-components';
 
 export const Button = styled.button<{ $isActive: boolean }>`
   position: relative;
-  width: 900px;
-  min-height: 60px;
+  width: 100%;
+  height: 60px;
   margin-bottom: 10px;
   border: 2px solid;
   background: none;
@@ -13,8 +13,8 @@ export const Button = styled.button<{ $isActive: boolean }>`
   letter-spacing: 10px;
   opacity: ${({ $isActive }) => ($isActive ? '1' : '0.8')};
   overflow: hidden;
-  -webkit-transition: border-color 0.2s, color 0.2s;
-  transition: border-color 0.2s, color 0.2s;
+  -webkit-transition: border-color 0.1s, color 0.1s;
+  transition: border-color 0.1s, color 0.1s;
   -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.2, 1);
   transition-timing-function: cubic-bezier(0.2, 1, 0.2, 1);
   -moz-osx-font-smoothing: grayscale;
@@ -30,8 +30,8 @@ export const Button = styled.button<{ $isActive: boolean }>`
     bottom: 100%;
     left: 0;
     z-index: -1;
-    -webkit-transition: -webkit-transform 0.2s;
-    transition: transform 0.2s;
+    -webkit-transition: -webkit-transform 0.1s;
+    transition: transform 0.1s;
     -webkit-transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
     transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
   }
@@ -57,5 +57,20 @@ export const Button = styled.button<{ $isActive: boolean }>`
       -webkit-transition-delay: 0.175s;
       transition-delay: 0.175s;
     }
+  }
+
+  @media (max-width: 470px) {
+    height: 50px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 416px) {
+    height: 45px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 353px) {
+    height: 35px;
+    font-size: 15px;
   }
 `;
