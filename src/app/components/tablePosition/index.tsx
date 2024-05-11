@@ -74,7 +74,9 @@ const TablePosition = () => {
       <S.Header>
         <S.Title>{selectedYear}년 ARENA</S.Title>
         <S.Button onClick={onReStart}>
-          <Image src='/assets/redo.svg' alt='reSelect' width={20} height={20} />
+          <S.ButtonImage>
+            <Image src='/assets/redo.svg' alt='reSelect' layout='fill' />
+          </S.ButtonImage>
         </S.Button>
       </S.Header>
 
@@ -90,13 +92,15 @@ const TablePosition = () => {
         {selectedTeams.map((selectedTeam, idx) => (
           <S.LineUpWrapper key={idx}>
             <S.TeamTitle>
-              <Image
-                src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
-                alt={selectedTeam}
-                width='60'
-                height='60'
-                style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
-              />
+              <S.TeamLogo>
+                <Image
+                  src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
+                  alt={selectedTeam}
+                  layout='fill'
+                  style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
+                />
+              </S.TeamLogo>
+
               <S.TeamName>{allTeams.find((team) => team.id === selectedTeam)?.name}</S.TeamName>
             </S.TeamTitle>
 

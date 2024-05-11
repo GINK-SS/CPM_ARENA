@@ -29,17 +29,18 @@ const TeamSelection = () => {
           $isDisabled={!selectedYear || !team.years.includes(selectedYear)}
           $isSelected={selectedTeams.includes(team.id)}
         >
-          <Image
-            src={team.logo}
-            alt={team.name}
-            placeholder='blur'
-            blurDataURL={team.logo}
-            width={40}
-            height={40}
-            style={{
-              filter: selectedTeams.includes(team.id) ? '' : 'drop-shadow(3px 3px 0 #333)',
-            }}
-          />
+          <S.TeamLogo>
+            <Image
+              src={team.logo}
+              alt={team.name}
+              placeholder='blur'
+              blurDataURL={team.logo}
+              layout='fill'
+              style={{
+                filter: selectedTeams.includes(team.id) ? '' : 'drop-shadow(3px 3px 0 #333)',
+              }}
+            />
+          </S.TeamLogo>
 
           <span>{team.name}</span>
         </S.Wrapper>

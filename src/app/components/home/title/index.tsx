@@ -5,7 +5,15 @@ import * as S from './styles';
 const MainTitle = () => {
   return (
     <S.Container>
-      <Image src='/assets/logo/mainLogo.webp' alt='mainLogo' width={100} height={100} style={{ borderRadius: '50%' }} />
+      <S.Logo>
+        <Image
+          src='/assets/logo/mainLogo.webp'
+          alt='mainLogo'
+          layout='fill'
+          objectFit='cover'
+          style={{ borderRadius: '50%' }}
+        />
+      </S.Logo>
       <S.Wrapper>
         <S.Title>ARENA</S.Title>
         <S.Title>HELPER</S.Title>

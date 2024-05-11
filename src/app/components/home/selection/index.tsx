@@ -25,14 +25,14 @@ const Selection = () => {
           {selectedTeams.length ? (
             <S.LogoWrapper>
               {selectedTeams.map((selectedTeam, idx) => (
-                <Image
-                  key={idx}
-                  src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
-                  alt={allTeams.find((team) => team.id === selectedTeam)?.id || ''}
-                  width={45}
-                  height={45}
-                  style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
-                />
+                <S.Logo key={idx}>
+                  <Image
+                    src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
+                    alt={allTeams.find((team) => team.id === selectedTeam)?.id || ''}
+                    layout='fill'
+                    style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
+                  />
+                </S.Logo>
               ))}
             </S.LogoWrapper>
           ) : (

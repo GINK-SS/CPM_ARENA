@@ -14,4 +14,12 @@ export const Content = styled.div`
   max-width: 1100px;
   padding: 30px 0;
   user-select: none;
+
+  @media (max-width: 416px) {
+    padding: 20px 0;
+  }
+
+  @media (max-width: 353px) {
+    padding: 15px 0;
+  }
 `;

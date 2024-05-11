@@ -58,4 +58,19 @@ export const Button = styled.button<{ $isActive: boolean }>`
       transition-delay: 0.175s;
     }
   }
+
+  @media (max-width: 470px) {
+    height: 50px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 416px) {
+    height: 45px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 353px) {
+    height: 35px;
+    font-size: 15px;
+  }
 `;

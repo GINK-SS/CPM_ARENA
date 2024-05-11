@@ -6,6 +6,18 @@ export const Container = styled.div`
   align-items: center;
   width: 900px;
   margin-bottom: 180px;
+
+  @media (max-width: 1100px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 110px;
+  }
+
+  @media (max-width: 470px) {
+    margin-bottom: 60px;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -17,7 +29,7 @@ export const Button = styled.button<{ $hasData: boolean }>`
   width: 370px;
   height: 60px;
   border: ${({ $hasData }) => ($hasData ? '1px solid' : '2px solid')};
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 600;
   letter-spacing: 8px;
   background: ${({ $hasData }) => !$hasData && 'none'};
@@ -63,10 +75,57 @@ export const Button = styled.button<{ $hasData: boolean }>`
       transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
     }
   }
+
+  @media (max-width: 1100px) {
+    width: 100%;
+  }
+
+  @media (max-width: 470px) {
+    height: 50px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 416px) {
+    height: 40px;
+  }
+
+  @media (max-width: 353px) {
+    height: 30px;
+    font-size: 14px;
+  }
 `;
 
 export const LogoWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 18px;
+
+  @media (max-width: 470px) {
+    gap: 13px;
+  }
+
+  @media (max-width: 353px) {
+    gap: 15px;
+  }
+`;
+
+export const Logo = styled.div`
+  position: relative;
+  width: 45px;
+  height: 45px;
+
+  @media (max-width: 470px) {
+    width: 35px;
+    height: 35px;
+  }
+
+  @media (max-width: 416px) {
+    width: 30px;
+    height: 30px;
+  }
+
+  @media (max-width: 353px) {
+    width: 20px;
+    height: 20px;
+  }
 `;

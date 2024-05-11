@@ -12,6 +12,20 @@ export const Container = styled.div`
   border: 2px solid #888;
   border-radius: 5px;
   background-color: #eee;
+  z-index: 1;
+
+  @media (max-width: 560px) {
+    grid-template-columns: repeat(10, 40px);
+    padding: 3px;
+  }
+
+  @media (max-width: 470px) {
+    grid-template-columns: repeat(10, 30px);
+  }
+
+  @media (max-width: 353px) {
+    grid-template-columns: repeat(10, 20px);
+  }
 `;
 
 export const Item = styled.button<{ $isSelected: boolean; $isDisabled: boolean }>`
@@ -30,5 +44,21 @@ export const Item = styled.button<{ $isSelected: boolean; $isDisabled: boolean }
 
   &:disabled {
     cursor: default;
+  }
+
+  @media (max-width: 560px) {
+    font-size: 13px;
+    height: 40px;
+  }
+
+  @media (max-width: 470px) {
+    font-size: 10px;
+    height: 30px;
+  }
+
+  @media (max-width: 353px) {
+    height: 20px;
+    font-size: 6.5px;
+    border: 1px solid;
   }
 `;
