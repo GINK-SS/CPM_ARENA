@@ -74,33 +74,33 @@ const TablePosition = () => {
       <S.Header>
         <S.Title>{selectedYear}년 ARENA</S.Title>
         <S.Button onClick={onReStart}>
-          <Image src='/assets/redo.svg' alt='re' width={20} height={20} />
+          <S.ButtonImage>
+            <Image src='/assets/redo.svg' alt='reSelect' layout='fill' />
+          </S.ButtonImage>
         </S.Button>
       </S.Header>
 
       <S.TableContainer>
-        <S.LineUpWrapper>
-          <S.PositionTitleBox $heightNum={2}>포수</S.PositionTitleBox>
-          <S.PositionTitleBox $heightNum={2}>1루수</S.PositionTitleBox>
-          <S.PositionTitleBox $heightNum={2}>2루수</S.PositionTitleBox>
-          <S.PositionTitleBox $heightNum={2}>3루수</S.PositionTitleBox>
-          <S.PositionTitleBox $heightNum={2}>유격수</S.PositionTitleBox>
-          <S.PositionTitleBox $heightNum={5}>외야수</S.PositionTitleBox>
-          <S.PositionTitleBox $heightNum={5}>선발</S.PositionTitleBox>
-          <S.PositionTitleBox $heightNum={5}>계투</S.PositionTitleBox>
-          <S.PositionTitleBox $heightNum={2}>마무리</S.PositionTitleBox>
-        </S.LineUpWrapper>
+        <S.PositionTitleBox>
+          {Object.entries(positionLimit).map((limit) => (
+            <S.PositionTitle key={limit[0]} $heightNum={limit[1]}>
+              {limit[0]}
+            </S.PositionTitle>
+          ))}
+        </S.PositionTitleBox>
 
         {selectedTeams.map((selectedTeam, idx) => (
           <S.LineUpWrapper key={idx}>
             <S.TeamTitle>
-              <Image
-                src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
-                alt={selectedTeam}
-                width='60'
-                height='60'
-                style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
-              />
+              <S.TeamLogo>
+                <Image
+                  src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
+                  alt={selectedTeam}
+                  layout='fill'
+                  style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
+                />
+              </S.TeamLogo>
+
               <S.TeamName>{allTeams.find((team) => team.id === selectedTeam)?.name}</S.TeamName>
             </S.TeamTitle>
 
@@ -133,9 +133,9 @@ const TablePosition = () => {
 
       <S.DescriptionWrapper>
         <S.Description>올스타</S.Description>
-        <S.Description>골든글러브</S.Description>
+        <S.Description>골든 글러브</S.Description>
         <S.Description>MVP</S.Description>
-        <S.Description>80 이상</S.Description>
+        <S.Description>오버롤 80 이상</S.Description>
       </S.DescriptionWrapper>
     </S.Container>
   );

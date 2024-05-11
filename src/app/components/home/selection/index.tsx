@@ -10,10 +10,16 @@ const Selection = () => {
   const { isShow: isShowOfYear, selectedYear, setShowYearList } = useYearStore();
   const { isShow: isShowOfTeam, allTeams, selectedTeams, setShowTeamList } = usePlayerStore();
 
+  const onTeamList = () => {
+    if (!selectedYear) return;
+
+    setShowTeamList();
+  };
+
   return (
     <S.Container>
       <S.Wrapper>
-        <S.Button $hasData={!!selectedYear} onClick={setShowYearList}>
+        <S.Button $hasData={!!selectedYear} onClick={setShowYearList} $isActive>
           {selectedYear ? `IN ${selectedYear}` : 'YEAR'}
         </S.Button>
 
@@ -21,18 +27,23 @@ const Selection = () => {
       </S.Wrapper>
 
       <S.Wrapper>
-        <S.Button $hasData={selectedTeams.length === 5} onClick={setShowTeamList}>
+        <S.Button
+          $hasData={selectedTeams.length === 5}
+          onClick={onTeamList}
+          $isActive={!!selectedYear}
+          disabled={!selectedYear}
+        >
           {selectedTeams.length ? (
             <S.LogoWrapper>
               {selectedTeams.map((selectedTeam, idx) => (
-                <Image
-                  key={idx}
-                  src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
-                  alt={allTeams.find((team) => team.id === selectedTeam)?.id || ''}
-                  width={45}
-                  height={45}
-                  style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
-                />
+                <S.Logo key={idx}>
+                  <Image
+                    src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
+                    alt={allTeams.find((team) => team.id === selectedTeam)?.id || ''}
+                    layout='fill'
+                    style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
+                  />
+                </S.Logo>
               ))}
             </S.LogoWrapper>
           ) : (
