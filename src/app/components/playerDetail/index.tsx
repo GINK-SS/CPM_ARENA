@@ -1,11 +1,12 @@
 import Image from 'next/image';
+import { AnimatePresence } from 'framer-motion';
 import usePlayerStore from '@/app/stores/player';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 
 import * as S from './styles';
 
 const PlayerDetail = () => {
-  const { selectedPlayer, allTeams } = usePlayerStore();
+  const { selectedPlayer, selectedPlayerComponentId, allTeams } = usePlayerStore();
   const hitterStat = {
     타격: 'batting_all',
     장타: 'long_all',
@@ -38,133 +39,135 @@ const PlayerDetail = () => {
   };
 
   return (
-    selectedPlayer && (
-      <S.Container>
-        <S.Header>
-          <S.Overall>{selectedPlayer.overall}</S.Overall>
+    <AnimatePresence>
+      {selectedPlayer && (
+        <S.Container layoutId={selectedPlayerComponentId}>
+          <S.Header>
+            <S.Overall>{selectedPlayer.overall}</S.Overall>
 
-          <S.NameWrapper>
-            <S.TeamWrapper>
-              <S.Team>{allTeams.find((team) => team.id === selectedPlayer.team)?.name || ''}</S.Team>
-              <S.TeamLogo>
-                <Image
-                  src={allTeams.find((team) => team.id === selectedPlayer.team)?.logo || ''}
-                  alt={selectedPlayer.team}
-                  layout='fill'
-                />
-              </S.TeamLogo>
-            </S.TeamWrapper>
+            <S.NameWrapper>
+              <S.TeamWrapper>
+                <S.Team>{allTeams.find((team) => team.id === selectedPlayer.team)?.name || ''}</S.Team>
+                <S.TeamLogo>
+                  <Image
+                    src={allTeams.find((team) => team.id === selectedPlayer.team)?.logo || ''}
+                    alt={selectedPlayer.team}
+                    layout='fill'
+                  />
+                </S.TeamLogo>
+              </S.TeamWrapper>
 
-            <S.Name>{`'${selectedPlayer.year.toString().slice(2)} ${selectedPlayer.name}`}</S.Name>
-          </S.NameWrapper>
-        </S.Header>
+              <S.Name>{`'${selectedPlayer.year.toString().slice(2)} ${selectedPlayer.name}`}</S.Name>
+            </S.NameWrapper>
+          </S.Header>
 
-        <S.MiddleContainer>
-          {isHitter(selectedPlayer) ? (
-            <>
-              <S.MainStatContainer>
-                {Object.entries(hitterStat).map((value, index) => (
-                  <S.MainStatWrapper key={index}>
-                    <span>{value[0]}</span>
-                    <S.MainStatValue $stat={selectedPlayer[value[1]]}>{selectedPlayer[value[1]]}</S.MainStatValue>
-                  </S.MainStatWrapper>
+          <S.MiddleContainer>
+            {isHitter(selectedPlayer) ? (
+              <>
+                <S.MainStatContainer>
+                  {Object.entries(hitterStat).map((value, index) => (
+                    <S.MainStatWrapper key={index}>
+                      <span>{value[0]}</span>
+                      <S.MainStatValue $stat={selectedPlayer[value[1]]}>{selectedPlayer[value[1]]}</S.MainStatValue>
+                    </S.MainStatWrapper>
+                  ))}
+                </S.MainStatContainer>
+
+                <S.MiddleRightContainer>
+                  <S.PositionHandTypeWrapper>
+                    <S.Position>{selectedPlayer.position}</S.Position>
+                    <span>{`(${selectedPlayer.hand_type})`}</span>
+                  </S.PositionHandTypeWrapper>
+
+                  <S.RealLogo>
+                    <Image src='/assets/logo/cpmRealLogo.webp' alt='logo' layout='fill' />
+                  </S.RealLogo>
+
+                  <S.OrderWrapper>
+                    <S.OrderNumberWrapper>
+                      {selectedPlayer.order_numbers.map((orderNumber) => (
+                        <S.OrderNumber key={orderNumber} $orderNumber={Number(orderNumber)}>
+                          {orderNumber}
+                        </S.OrderNumber>
+                      ))}
+                    </S.OrderNumberWrapper>
+
+                    <S.OrderType $orderType={selectedPlayer.order_type}>
+                      {selectedPlayer.order_type !== '클린업' && selectedPlayer.order_type !== '밸런스'
+                        ? `${selectedPlayer.order_type}타선`
+                        : selectedPlayer.order_type}
+                    </S.OrderType>
+                  </S.OrderWrapper>
+                </S.MiddleRightContainer>
+              </>
+            ) : (
+              <>
+                <S.MainStatContainer>
+                  {Object.entries(pitcherStat).map((value, index) => (
+                    <S.MainStatWrapper key={index}>
+                      <span>{value[0]}</span>
+                      <S.MainStatValue $stat={selectedPlayer[value[1]]}>{selectedPlayer[value[1]]}</S.MainStatValue>
+                    </S.MainStatWrapper>
+                  ))}
+                </S.MainStatContainer>
+
+                <S.MiddleRightContainer>
+                  <S.PositionHandTypeWrapper>
+                    <S.Position>{selectedPlayer.position}</S.Position>
+                    <span>{`(${selectedPlayer.hand_type})`}</span>
+                  </S.PositionHandTypeWrapper>
+
+                  <S.PitchesContainer>
+                    {setPitchesFourAmount(selectedPlayer.pitches.split(' / ')).map((pitch) => {
+                      const [arsenal, grade] = pitch.split(' ');
+
+                      return (
+                        <S.PitchesWrapper key={pitch}>
+                          <span>{arsenal}</span>
+                          <S.ArsenalGrade $grade={grade}>{grade}</S.ArsenalGrade>
+                        </S.PitchesWrapper>
+                      );
+                    })}
+                  </S.PitchesContainer>
+                </S.MiddleRightContainer>
+              </>
+            )}
+          </S.MiddleContainer>
+
+          <S.BottomContainer>
+            {isHitter(selectedPlayer) ? (
+              <S.DetailStatContainer>
+                {Object.entries(hitterStatDetail).map((value, index) => (
+                  <S.DetailStatWrapper key={index}>
+                    <S.DetailStatName>{value[0]}</S.DetailStatName>
+                    <S.DetailStatValue>{selectedPlayer[value[1]]}</S.DetailStatValue>
+                  </S.DetailStatWrapper>
                 ))}
-              </S.MainStatContainer>
-
-              <S.MiddleRightContainer>
-                <S.PositionHandTypeWrapper>
-                  <S.Position>{selectedPlayer.position}</S.Position>
-                  <span>{`(${selectedPlayer.hand_type})`}</span>
-                </S.PositionHandTypeWrapper>
-
-                <S.RealLogo>
-                  <Image src='/assets/logo/cpmRealLogo.webp' alt='logo' layout='fill' />
-                </S.RealLogo>
-
-                <S.OrderWrapper>
-                  <S.OrderNumberWrapper>
-                    {selectedPlayer.order_numbers.map((orderNumber) => (
-                      <S.OrderNumber key={orderNumber} $orderNumber={Number(orderNumber)}>
-                        {orderNumber}
-                      </S.OrderNumber>
-                    ))}
-                  </S.OrderNumberWrapper>
-
-                  <S.OrderType $orderType={selectedPlayer.order_type}>
-                    {selectedPlayer.order_type !== '클린업' && selectedPlayer.order_type !== '밸런스'
-                      ? `${selectedPlayer.order_type}타선`
-                      : selectedPlayer.order_type}
-                  </S.OrderType>
-                </S.OrderWrapper>
-              </S.MiddleRightContainer>
-            </>
-          ) : (
-            <>
-              <S.MainStatContainer>
-                {Object.entries(pitcherStat).map((value, index) => (
-                  <S.MainStatWrapper key={index}>
-                    <span>{value[0]}</span>
-                    <S.MainStatValue $stat={selectedPlayer[value[1]]}>{selectedPlayer[value[1]]}</S.MainStatValue>
-                  </S.MainStatWrapper>
+              </S.DetailStatContainer>
+            ) : (
+              <S.DetailStatContainer>
+                {Object.entries(pitcherStatDetail).map((value, index) => (
+                  <S.DetailStatWrapper key={index}>
+                    <S.DetailStatName>{value[0]}</S.DetailStatName>
+                    <S.DetailStatValue>{selectedPlayer[value[1]]}</S.DetailStatValue>
+                  </S.DetailStatWrapper>
                 ))}
-              </S.MainStatContainer>
+              </S.DetailStatContainer>
+            )}
 
-              <S.MiddleRightContainer>
-                <S.PositionHandTypeWrapper>
-                  <S.Position>{selectedPlayer.position}</S.Position>
-                  <span>{`(${selectedPlayer.hand_type})`}</span>
-                </S.PositionHandTypeWrapper>
+            <S.RecordContainer>
+              <S.RecordTitle>레코드</S.RecordTitle>
 
-                <S.PitchesContainer>
-                  {setPitchesFourAmount(selectedPlayer.pitches.split(' / ')).map((pitch) => {
-                    const [arsenal, grade] = pitch.split(' ');
-
-                    return (
-                      <S.PitchesWrapper key={pitch}>
-                        <span>{arsenal}</span>
-                        <S.ArsenalGrade $grade={grade}>{grade}</S.ArsenalGrade>
-                      </S.PitchesWrapper>
-                    );
-                  })}
-                </S.PitchesContainer>
-              </S.MiddleRightContainer>
-            </>
-          )}
-        </S.MiddleContainer>
-
-        <S.BottomContainer>
-          {isHitter(selectedPlayer) ? (
-            <S.DetailStatContainer>
-              {Object.entries(hitterStatDetail).map((value, index) => (
-                <S.DetailStatWrapper key={index}>
-                  <S.DetailStatName>{value[0]}</S.DetailStatName>
-                  <S.DetailStatValue>{selectedPlayer[value[1]]}</S.DetailStatValue>
-                </S.DetailStatWrapper>
-              ))}
-            </S.DetailStatContainer>
-          ) : (
-            <S.DetailStatContainer>
-              {Object.entries(pitcherStatDetail).map((value, index) => (
-                <S.DetailStatWrapper key={index}>
-                  <S.DetailStatName>{value[0]}</S.DetailStatName>
-                  <S.DetailStatValue>{selectedPlayer[value[1]]}</S.DetailStatValue>
-                </S.DetailStatWrapper>
-              ))}
-            </S.DetailStatContainer>
-          )}
-
-          <S.RecordContainer>
-            <S.RecordTitle>레코드</S.RecordTitle>
-
-            <S.RecordWrapper>
-              {selectedPlayer.all_star && <S.Record $recordName='all_star'>올스타</S.Record>}
-              {selectedPlayer.golden_glove && <S.Record $recordName='golden_glove'>골든글러브</S.Record>}
-              {(selectedPlayer.mvp_korea || selectedPlayer.mvp_league) && <S.Record $recordName='mvp'>MVP</S.Record>}
-            </S.RecordWrapper>
-          </S.RecordContainer>
-        </S.BottomContainer>
-      </S.Container>
-    )
+              <S.RecordWrapper>
+                {selectedPlayer.all_star && <S.Record $recordName='all_star'>올스타</S.Record>}
+                {selectedPlayer.golden_glove && <S.Record $recordName='golden_glove'>골든글러브</S.Record>}
+                {(selectedPlayer.mvp_korea || selectedPlayer.mvp_league) && <S.Record $recordName='mvp'>MVP</S.Record>}
+              </S.RecordWrapper>
+            </S.RecordContainer>
+          </S.BottomContainer>
+        </S.Container>
+      )}
+    </AnimatePresence>
   );
 };
 

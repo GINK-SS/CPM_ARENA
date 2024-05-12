@@ -1,15 +1,25 @@
 import Image from 'next/image';
+import { AnimatePresence } from 'framer-motion';
 import { Hitter, Pitcher, PositionLimit } from '@/app/stores/player/types';
 import useYearStore from '@/app/stores/year';
 import usePlayerStore from '@/app/stores/player';
+import useTableStore from '@/app/stores/table';
 import TablePlayer from '../tablePlayer';
+import PlayerDetail from '../playerDetail';
 
 import * as S from './styles';
-import useTableStore from '@/app/stores/table';
 
 const TablePosition = () => {
   const { selectedYear } = useYearStore();
-  const { selectedTeams, allTeams, allHitters, allPitchers } = usePlayerStore();
+  const {
+    selectedTeams,
+    selectedPlayer,
+    setSelectedPlayer,
+    setSelectedPlayerComponentId,
+    allTeams,
+    allHitters,
+    allPitchers,
+  } = usePlayerStore();
   const { closeTable } = useTableStore();
   const positionLimit: PositionLimit = {
     포수: 2,
@@ -69,75 +79,98 @@ const TablePosition = () => {
     closeTable();
   };
 
+  const onOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.currentTarget === e.target) {
+      setSelectedPlayer(null);
+      setSelectedPlayerComponentId(undefined);
+    }
+  };
+
   return (
-    <S.Container>
-      <S.Header>
-        <S.Title>{selectedYear}년 ARENA</S.Title>
-        <S.Button onClick={onReStart}>
-          <S.ButtonImage>
-            <Image src='/assets/redo.svg' alt='reSelect' layout='fill' />
-          </S.ButtonImage>
-        </S.Button>
-      </S.Header>
+    <>
+      <AnimatePresence>
+        {selectedPlayer && (
+          <S.Outer
+            onClick={onOuterClick}
+            $isActive={!!selectedPlayer}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+        )}
+      </AnimatePresence>
 
-      <S.TableContainer>
-        <S.PositionTitleBox>
-          {Object.entries(positionLimit).map((limit) => (
-            <S.PositionTitle key={limit[0]} $heightNum={limit[1]}>
-              {limit[0]}
-            </S.PositionTitle>
+      <S.Container>
+        <PlayerDetail />
+
+        <S.Header>
+          <S.Title>{selectedYear}년 ARENA</S.Title>
+          <S.Button onClick={onReStart}>
+            <S.ButtonImage>
+              <Image src='/assets/redo.svg' alt='reSelect' layout='fill' />
+            </S.ButtonImage>
+          </S.Button>
+        </S.Header>
+
+        <S.TableContainer>
+          <S.PositionTitleBox>
+            {Object.entries(positionLimit).map((limit) => (
+              <S.PositionTitle key={limit[0]} $heightNum={limit[1]}>
+                {limit[0]}
+              </S.PositionTitle>
+            ))}
+          </S.PositionTitleBox>
+
+          {selectedTeams.map((selectedTeam, idx) => (
+            <S.LineUpWrapper key={idx}>
+              <S.TeamTitle>
+                <S.TeamLogo>
+                  <Image
+                    src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
+                    alt={selectedTeam}
+                    layout='fill'
+                    style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
+                  />
+                </S.TeamLogo>
+
+                <S.TeamName>{allTeams.find((team) => team.id === selectedTeam)?.name}</S.TeamName>
+              </S.TeamTitle>
+
+              {hitArrangePlayers(
+                allHitters.filter(
+                  (hitter) => hitter.year === selectedYear && hitter.team === selectedTeam && hitter.overall >= 69
+                )
+              ).map((group, index) => (
+                <S.PositionGroup key={index}>
+                  {group.players.map((player, iindex) => (
+                    <TablePlayer key={iindex} player={player} componentId={`hit-${idx}-${index}-${iindex}`} />
+                  ))}
+                </S.PositionGroup>
+              ))}
+
+              {pitchArrangePlayers(
+                allPitchers.filter(
+                  (pitcher) => pitcher.year === selectedYear && pitcher.team === selectedTeam && pitcher.overall >= 69
+                )
+              ).map((group, index) => (
+                <S.PositionGroup key={index}>
+                  {group.players.map((player, iindex) => (
+                    <TablePlayer key={iindex} player={player} componentId={`pitch-${idx}-${index}-${iindex}`} />
+                  ))}
+                </S.PositionGroup>
+              ))}
+            </S.LineUpWrapper>
           ))}
-        </S.PositionTitleBox>
+        </S.TableContainer>
 
-        {selectedTeams.map((selectedTeam, idx) => (
-          <S.LineUpWrapper key={idx}>
-            <S.TeamTitle>
-              <S.TeamLogo>
-                <Image
-                  src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
-                  alt={selectedTeam}
-                  layout='fill'
-                  style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
-                />
-              </S.TeamLogo>
-
-              <S.TeamName>{allTeams.find((team) => team.id === selectedTeam)?.name}</S.TeamName>
-            </S.TeamTitle>
-
-            {hitArrangePlayers(
-              allHitters.filter(
-                (hitter) => hitter.year === selectedYear && hitter.team === selectedTeam && hitter.overall >= 69
-              )
-            ).map((group, index) => (
-              <S.PositionGroup key={index}>
-                {group.players.map((player, iindex) => (
-                  <TablePlayer key={iindex} player={player} />
-                ))}
-              </S.PositionGroup>
-            ))}
-
-            {pitchArrangePlayers(
-              allPitchers.filter(
-                (pitcher) => pitcher.year === selectedYear && pitcher.team === selectedTeam && pitcher.overall >= 69
-              )
-            ).map((group, index) => (
-              <S.PositionGroup key={index}>
-                {group.players.map((player, iindex) => (
-                  <TablePlayer key={iindex} player={player} />
-                ))}
-              </S.PositionGroup>
-            ))}
-          </S.LineUpWrapper>
-        ))}
-      </S.TableContainer>
-
-      <S.DescriptionWrapper>
-        <S.Description>올스타</S.Description>
-        <S.Description>골든 글러브</S.Description>
-        <S.Description>MVP</S.Description>
-        <S.Description>오버롤 80 이상</S.Description>
-      </S.DescriptionWrapper>
-    </S.Container>
+        <S.DescriptionWrapper>
+          <S.Description>올스타</S.Description>
+          <S.Description>골든 글러브</S.Description>
+          <S.Description>MVP</S.Description>
+          <S.Description>오버롤 80 이상</S.Description>
+        </S.DescriptionWrapper>
+      </S.Container>
+    </>
   );
 };
 

@@ -9,6 +9,8 @@ import SubmitBtn from './components/home/submitBtn';
 import HomeLayout from './components/home/layout';
 import TablePosition from './components/tablePosition';
 import Footer from './components/footer';
+import PlayerDetail from './components/playerDetail';
+import { AnimatePresence } from 'framer-motion';
 
 export default function Home() {
   const { fetchAllTeams, fetchAllHitters, fetchAllPitchers } = usePlayerStore();
@@ -23,9 +25,7 @@ export default function Home() {
   return (
     <HomeLayout>
       {isShowTable ? (
-        <>
-          <TablePosition />
-        </>
+        <TablePosition />
       ) : (
         <>
           <MainTitle />

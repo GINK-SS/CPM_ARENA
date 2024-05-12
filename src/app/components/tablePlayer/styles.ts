@@ -1,6 +1,7 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(motion.div)<{ $hasData: boolean }>`
   display: flex;
   align-items: center;
   border: 1px solid #000;
@@ -8,6 +9,7 @@ export const Wrapper = styled.div`
   width: 140px;
   background-color: #fff;
   color: #000;
+  cursor: ${({ $hasData }) => $hasData && 'pointer'};
 
   &:first-child {
     border-top: 1px solid #000;

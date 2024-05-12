@@ -1,14 +1,15 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled(motion.div)`
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 370px;
+  top: 30%;
   border: 2px solid #aaa;
   background: linear-gradient(220deg, #9e270e, #82220e);
-  box-shadow: 5px 5px 3px #555;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px, rgba(0, 0, 0, 0.5) 3px 3px 3px,
+    rgba(0, 0, 0, 0.5) -3px 3px 3px;
+  z-index: 5;
 `;
 
 export const Header = styled.div`
