@@ -27,16 +27,14 @@ export default function Home() {
       {isShowTable ? (
         <TablePosition />
       ) : (
-        <>
           <MainTitle />
 
           <Selection />
 
           <SubmitBtn />
-        </>
-      )}
 
-      <Footer />
+          <Footer />
+      )}
     </HomeLayout>
   );
 }
