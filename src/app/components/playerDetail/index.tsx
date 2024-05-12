@@ -4,6 +4,7 @@ import usePlayerStore from '@/app/stores/player';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 
 import * as S from './styles';
+import { useEffect, useState } from 'react';
 
 const PlayerDetail = () => {
   const { selectedPlayer, selectedPlayerComponentId, allTeams } = usePlayerStore();
@@ -38,10 +39,40 @@ const PlayerDetail = () => {
     '구위(좌타)': 'stuff_left',
   };
 
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    function handleResize() {
+      setScale(
+        window.innerWidth <= 416
+          ? 0.5
+          : window.innerWidth <= 470
+          ? 0.6
+          : window.innerWidth <= 560
+          ? 0.7
+          : window.innerWidth <= 660
+          ? 0.8
+          : window.innerWidth <= 726
+          ? 0.9
+          : 1
+      );
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <AnimatePresence>
       {selectedPlayer && (
-        <S.Container layoutId={selectedPlayerComponentId}>
+        <S.Container
+          layoutId={selectedPlayerComponentId}
+          // initial={{ scale }}
+          // animate={{ scale }}
+          style={{ scale, translate: '-50% -50%' }}
+        >
           <S.Header>
             <S.Overall>{selectedPlayer.overall}</S.Overall>
 

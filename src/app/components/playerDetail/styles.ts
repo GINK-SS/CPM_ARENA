@@ -4,7 +4,8 @@ import styled from 'styled-components';
 export const Container = styled(motion.div)`
   position: absolute;
   width: 370px;
-  top: 30%;
+  top: 50%;
+  left: 50%;
   border: 2px solid #aaa;
   background: linear-gradient(220deg, #9e270e, #82220e);
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px, rgba(0, 0, 0, 0.5) 3px 3px 3px,
