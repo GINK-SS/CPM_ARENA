@@ -19,7 +19,16 @@ const TeamSelection = () => {
   };
 
   return (
-    <S.Container>
+    <S.Container
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0, opacity: 0 }}
+      transition={{
+        type: 'spring',
+        stiffness: 260,
+        damping: 20,
+      }}
+    >
       {allTeams.map((team, index) => (
         <S.Wrapper
           key={index}

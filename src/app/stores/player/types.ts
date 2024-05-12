@@ -32,6 +32,7 @@ export type Hitter = {
   golden_glove: boolean;
   mvp_league: boolean;
   mvp_korea: boolean;
+  [key: string]: any;
 };
 
 export type Pitcher = {
@@ -57,6 +58,7 @@ export type Pitcher = {
   golden_glove: boolean;
   mvp_league: boolean;
   mvp_korea: boolean;
+  [key: string]: any;
 };
 
 export type PlayerStoreState = {
@@ -65,8 +67,10 @@ export type PlayerStoreState = {
   allHitters: Hitter[];
   allPitchers: Pitcher[];
   selectedTeams: string[];
-  currentHitters: Hitter[];
-  currentPitchers: Pitcher[];
+  selectedPlayer: Hitter | Pitcher | null;
+  selectedPlayerComponentId: string | undefined;
+  setSelectedPlayer: (player: Hitter | Pitcher | null) => void;
+  setSelectedPlayerComponentId: (id: string | undefined) => void;
   setSelectedTeamsReset: () => void;
   setShowTeamList: () => void;
   closeTeamList: () => void;

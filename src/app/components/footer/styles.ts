@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div<{ $isTable: boolean }>`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -9,17 +9,17 @@ export const Container = styled.div<{ $isTable: boolean }>`
 
   @media (max-width: 560px) {
     flex-direction: row;
-    justify-content: ${({ $isTable }) => ($isTable ? 'flex-end' : 'space-between')};
+    justify-content: space-between;
   }
 `;
 
-export const Badge = styled.div<{ $isTable: boolean }>`
+export const Badge = styled.div`
   position: relative;
   height: 20px;
 
   @media (max-width: 414px) {
     > img {
-      height: ${({ $isTable }) => ($isTable ? '10px' : '20px')};
+      height: 20px;
     }
   }
 

@@ -11,6 +11,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
+  position: relative;
   max-width: 1100px;
   padding: 30px 0;
   user-select: none;
