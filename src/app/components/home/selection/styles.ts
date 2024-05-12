@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -20,8 +21,11 @@ export const Container = styled.div`
   }
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(motion.div)`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Button = styled.button<{ $hasData: boolean; $isActive: boolean }>`

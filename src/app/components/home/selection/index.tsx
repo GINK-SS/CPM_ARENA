@@ -5,6 +5,7 @@ import YearSelection from '../../yearSelection';
 import TeamSelection from '../../teamSelection';
 
 import * as S from './styles';
+import { AnimatePresence } from 'framer-motion';
 
 const Selection = () => {
   const { isShow: isShowOfYear, selectedYear, setShowYearList } = useYearStore();
@@ -23,7 +24,7 @@ const Selection = () => {
           {selectedYear ? `IN ${selectedYear}` : 'YEAR'}
         </S.Button>
 
-        {isShowOfYear && <YearSelection />}
+        <AnimatePresence>{isShowOfYear && <YearSelection />}</AnimatePresence>
       </S.Wrapper>
 
       <S.Wrapper>
@@ -51,7 +52,7 @@ const Selection = () => {
           )}
         </S.Button>
 
-        {isShowOfTeam && <TeamSelection />}
+        <AnimatePresence>{isShowOfTeam && <TeamSelection />}</AnimatePresence>
       </S.Wrapper>
     </S.Container>
   );
