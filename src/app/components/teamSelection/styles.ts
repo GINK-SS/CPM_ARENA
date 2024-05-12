@@ -1,13 +1,11 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(5, 100px);
   gap: 2px;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   padding: 5px;
   border: 2px solid #888;
   border-radius: 5px;

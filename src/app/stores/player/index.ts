@@ -7,8 +7,14 @@ const usePlayerStore = create<PlayerStoreState>((set) => ({
   allHitters: [],
   allPitchers: [],
   selectedTeams: [],
-  currentHitters: [],
-  currentPitchers: [],
+  selectedPlayer: null,
+  selectedPlayerComponentId: undefined,
+  setSelectedPlayerComponentId: (id) => {
+    set(() => ({ selectedPlayerComponentId: id }));
+  },
+  setSelectedPlayer: (player) => {
+    set(() => ({ selectedPlayer: player }));
+  },
   closeTeamList: () => {
     set(() => ({ isShow: false }));
   },
