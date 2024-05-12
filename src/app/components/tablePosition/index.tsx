@@ -100,7 +100,7 @@ const TablePosition = () => {
         )}
       </AnimatePresence>
 
-      <S.Container>
+      <S.Container initial={{ y: 25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.3 }}>
         <PlayerDetail />
 
         <S.Header>

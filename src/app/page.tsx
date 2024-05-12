@@ -9,8 +9,7 @@ import SubmitBtn from './components/home/submitBtn';
 import HomeLayout from './components/home/layout';
 import TablePosition from './components/tablePosition';
 import Footer from './components/footer';
-import PlayerDetail from './components/playerDetail';
-import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const { fetchAllTeams, fetchAllHitters, fetchAllPitchers } = usePlayerStore();
@@ -27,6 +26,7 @@ export default function Home() {
       {isShowTable ? (
         <TablePosition />
       ) : (
+        <motion.div initial={{ y: 25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.3 }}>
           <MainTitle />
 
           <Selection />
@@ -34,6 +34,7 @@ export default function Home() {
           <SubmitBtn />
 
           <Footer />
+        </motion.div>
       )}
     </HomeLayout>
   );

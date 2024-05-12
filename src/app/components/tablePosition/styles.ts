@@ -12,7 +12,7 @@ export const Outer = styled(motion.div)<{ $isActive: boolean }>`
   z-index: 5;
 `;
 
-export const Container = styled.div`
+export const Container = styled(motion.div)`
   position: relative;
   display: flex;
   flex-direction: column;
