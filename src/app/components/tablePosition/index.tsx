@@ -6,16 +6,18 @@ import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
 import TablePlayer from '../tablePlayer';
 import PlayerDetail from '../playerDetail';
+import PlayerSimpleInfo from '../playerSimpleInfo';
 
 import * as S from './styles';
 
 const TablePosition = () => {
   const { selectedYear } = useYearStore();
   const {
+    isShowDetail,
     selectedTeams,
     selectedPlayer,
     setSelectedPlayer,
-    setSelectedPlayerComponentId,
+    clearDetail,
     allTeams,
     allHitters,
     allPitchers,
@@ -77,19 +79,19 @@ const TablePosition = () => {
 
   const onReStart = () => {
     closeTable();
+    setSelectedPlayer(null);
   };
 
   const onOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.currentTarget === e.target) {
-      setSelectedPlayer(null);
-      setSelectedPlayerComponentId(undefined);
+      clearDetail();
     }
   };
 
   return (
     <>
       <AnimatePresence>
-        {selectedPlayer && (
+        {isShowDetail && (
           <S.Outer
             onClick={onOuterClick}
             $isActive={!!selectedPlayer}
@@ -100,7 +102,7 @@ const TablePosition = () => {
         )}
       </AnimatePresence>
 
-      <S.Container initial={{ y: 25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.3 }}>
+      <S.Container initial={{ y: 25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.2 }}>
         <PlayerDetail />
 
         <S.Header>
@@ -143,7 +145,7 @@ const TablePosition = () => {
               ).map((group, index) => (
                 <S.PositionGroup key={index}>
                   {group.players.map((player, iindex) => (
-                    <TablePlayer key={iindex} player={player} componentId={`hit-${idx}-${index}-${iindex}`} />
+                    <TablePlayer key={iindex} player={player} />
                   ))}
                 </S.PositionGroup>
               ))}
@@ -155,7 +157,7 @@ const TablePosition = () => {
               ).map((group, index) => (
                 <S.PositionGroup key={index}>
                   {group.players.map((player, iindex) => (
-                    <TablePlayer key={iindex} player={player} componentId={`pitch-${idx}-${index}-${iindex}`} />
+                    <TablePlayer key={iindex} player={player} />
                   ))}
                 </S.PositionGroup>
               ))}
@@ -169,6 +171,8 @@ const TablePosition = () => {
           <S.Description>MVP</S.Description>
           <S.Description>오버롤 80 이상</S.Description>
         </S.DescriptionWrapper>
+
+        <PlayerSimpleInfo />
       </S.Container>
     </>
   );

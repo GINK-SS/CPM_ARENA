@@ -3,17 +3,20 @@ import { PlayerStoreState } from './types';
 
 const usePlayerStore = create<PlayerStoreState>((set) => ({
   isShow: false,
+  isShowDetail: false,
   allTeams: [],
   allHitters: [],
   allPitchers: [],
   selectedTeams: [],
   selectedPlayer: null,
-  selectedPlayerComponentId: undefined,
-  setSelectedPlayerComponentId: (id) => {
-    set(() => ({ selectedPlayerComponentId: id }));
-  },
   setSelectedPlayer: (player) => {
     set(() => ({ selectedPlayer: player }));
+  },
+  showDetail: () => {
+    set(() => ({ isShowDetail: true }));
+  },
+  clearDetail: () => {
+    set(() => ({ isShowDetail: false }));
   },
   closeTeamList: () => {
     set(() => ({ isShow: false }));

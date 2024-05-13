@@ -63,14 +63,15 @@ export type Pitcher = {
 
 export type PlayerStoreState = {
   isShow: boolean;
+  isShowDetail: boolean;
   allTeams: Team[];
   allHitters: Hitter[];
   allPitchers: Pitcher[];
   selectedTeams: string[];
   selectedPlayer: Hitter | Pitcher | null;
-  selectedPlayerComponentId: string | undefined;
+  showDetail: () => void;
+  clearDetail: () => void;
   setSelectedPlayer: (player: Hitter | Pitcher | null) => void;
-  setSelectedPlayerComponentId: (id: string | undefined) => void;
   setSelectedTeamsReset: () => void;
   setShowTeamList: () => void;
   closeTeamList: () => void;

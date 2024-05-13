@@ -4,7 +4,11 @@ import usePlayerStore from '@/app/stores/player';
 import * as S from './styles';
 
 const PlayerSimpleInfo = () => {
-  const { selectedPlayer, allTeams } = usePlayerStore();
+  const { selectedPlayer, allTeams, showDetail } = usePlayerStore();
+
+  const onDetailClick = () => {
+    showDetail();
+  };
 
   return (
     <S.Container>
@@ -70,7 +74,7 @@ const PlayerSimpleInfo = () => {
               </S.StatWrapper>
             </S.StatContainer>
 
-            <S.DetailBtn>
+            <S.DetailBtn onClick={onDetailClick}>
               <IoSearchOutline />
             </S.DetailBtn>
           </>
