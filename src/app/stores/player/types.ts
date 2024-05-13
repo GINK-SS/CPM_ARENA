@@ -1,5 +1,5 @@
 export type Team = {
-  id: string;
+  id: TeamId;
   name: string;
   logo: string;
   years: number[];
@@ -7,7 +7,7 @@ export type Team = {
 
 export type Hitter = {
   name: string;
-  team: string;
+  team: TeamId;
   overall: number;
   year: number;
   batting_all: number;
@@ -37,7 +37,7 @@ export type Hitter = {
 
 export type Pitcher = {
   name: string;
-  team: string;
+  team: TeamId;
   overall: number;
   year: number;
   pitch_all: number;
@@ -61,16 +61,54 @@ export type Pitcher = {
   [key: string]: any;
 };
 
+export type TeamId =
+  | 'KIA'
+  | 'kt'
+  | 'LG'
+  | 'MBC'
+  | 'NC'
+  | 'OB'
+  | 'SK'
+  | 'SSG'
+  | '넥센'
+  | '두산'
+  | '롯데'
+  | '빙그레'
+  | '삼미'
+  | '삼성'
+  | '쌍방울'
+  | '키움'
+  | '태평양'
+  | '한화'
+  | '해태'
+  | '현대';
+
+export type PointTitle = TeamId | 'all_star' | 'golden_glove' | 'mvp' | 'any_team';
+
 export type PlayerStoreState = {
   isShow: boolean;
+  isShowDetail: boolean;
   allTeams: Team[];
   allHitters: Hitter[];
   allPitchers: Pitcher[];
-  selectedTeams: string[];
+  selectedTeams: TeamId[];
   selectedPlayer: Hitter | Pitcher | null;
-  selectedPlayerComponentId: string | undefined;
+  selectedLineUp: {
+    players: (Hitter | Pitcher)[];
+    count: {
+      hitters: number;
+      pitchers: number;
+      teams: number[];
+      all_star: number;
+      golden_glove: number;
+      mvp: number;
+      [key: string]: number | number[];
+    };
+  };
+  setSelectedLineUp: (player: Hitter | Pitcher | null, action?: string) => void;
+  showDetail: () => void;
+  clearDetail: () => void;
   setSelectedPlayer: (player: Hitter | Pitcher | null) => void;
-  setSelectedPlayerComponentId: (id: string | undefined) => void;
   setSelectedTeamsReset: () => void;
   setShowTeamList: () => void;
   closeTeamList: () => void;
@@ -81,7 +119,7 @@ export type PlayerStoreState = {
 };
 
 export type SetTeamsPayload = {
-  id: string;
+  id: TeamId;
   index: number;
   action: string;
 };

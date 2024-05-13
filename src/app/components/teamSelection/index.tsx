@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import useYearStore from '@/app/stores/year';
 import usePlayerStore from '@/app/stores/player';
+import { TeamId } from '@/app/stores/player/types';
 
 import * as S from './styles';
 
@@ -10,11 +11,11 @@ const TeamSelection = () => {
 
   const onTeamClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setTeams({
-      id: e.currentTarget.value,
-      index: selectedTeams.includes(e.currentTarget.value)
-        ? selectedTeams.indexOf(e.currentTarget.value)
+      id: e.currentTarget.value as TeamId,
+      index: selectedTeams.includes(e.currentTarget.value as TeamId)
+        ? selectedTeams.indexOf(e.currentTarget.value as TeamId)
         : selectedTeams.length,
-      action: selectedTeams.includes(e.currentTarget.value) ? 'DELETE' : 'ADD',
+      action: selectedTeams.includes(e.currentTarget.value as TeamId) ? 'DELETE' : 'ADD',
     });
   };
 
