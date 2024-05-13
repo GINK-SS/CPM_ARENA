@@ -1,13 +1,13 @@
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
 import usePlayerStore from '@/app/stores/player';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 
 import * as S from './styles';
-import { useEffect, useState } from 'react';
 
 const PlayerDetail = () => {
-  const { selectedPlayer, selectedPlayerComponentId, allTeams } = usePlayerStore();
+  const { selectedPlayer, isShowDetail, allTeams } = usePlayerStore();
   const hitterStat = {
     타격: 'batting_all',
     장타: 'long_all',
@@ -66,12 +66,12 @@ const PlayerDetail = () => {
 
   return (
     <AnimatePresence>
-      {selectedPlayer && (
+      {isShowDetail && selectedPlayer && (
         <S.Container
-          layoutId={selectedPlayerComponentId}
-          // initial={{ scale }}
-          // animate={{ scale }}
           style={{ scale, translate: '-50% -50%' }}
+          initial={{ y: 25, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.2 }}
         >
           <S.Header>
             <S.Overall>{selectedPlayer.overall}</S.Overall>

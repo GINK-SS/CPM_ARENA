@@ -1,24 +1,29 @@
 import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
 import { Hitter, Pitcher, PositionLimit } from '@/app/stores/player/types';
+import { IoReloadOutline } from 'react-icons/io5';
 import useYearStore from '@/app/stores/year';
 import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
 import TablePlayer from '../tablePlayer';
 import PlayerDetail from '../playerDetail';
+import PlayerSimpleInfo from '../playerSimpleInfo';
+import LineUpInfo from '../lineUpInfo';
 
 import * as S from './styles';
 
 const TablePosition = () => {
   const { selectedYear } = useYearStore();
   const {
+    isShowDetail,
     selectedTeams,
     selectedPlayer,
     setSelectedPlayer,
-    setSelectedPlayerComponentId,
+    clearDetail,
     allTeams,
     allHitters,
     allPitchers,
+    setSelectedLineUp,
   } = usePlayerStore();
   const { closeTable } = useTableStore();
   const positionLimit: PositionLimit = {
@@ -77,19 +82,20 @@ const TablePosition = () => {
 
   const onReStart = () => {
     closeTable();
+    setSelectedPlayer(null);
+    setSelectedLineUp(null);
   };
 
   const onOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.currentTarget === e.target) {
-      setSelectedPlayer(null);
-      setSelectedPlayerComponentId(undefined);
+      clearDetail();
     }
   };
 
   return (
     <>
       <AnimatePresence>
-        {selectedPlayer && (
+        {isShowDetail && (
           <S.Outer
             onClick={onOuterClick}
             $isActive={!!selectedPlayer}
@@ -100,14 +106,14 @@ const TablePosition = () => {
         )}
       </AnimatePresence>
 
-      <S.Container initial={{ y: 25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.3 }}>
+      <S.Container initial={{ y: 25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.2 }}>
         <PlayerDetail />
 
         <S.Header>
           <S.Title>{selectedYear}년 ARENA</S.Title>
           <S.Button onClick={onReStart}>
             <S.ButtonImage>
-              <Image src='/assets/redo.svg' alt='reSelect' layout='fill' />
+              <IoReloadOutline />
             </S.ButtonImage>
           </S.Button>
         </S.Header>
@@ -141,9 +147,9 @@ const TablePosition = () => {
                   (hitter) => hitter.year === selectedYear && hitter.team === selectedTeam && hitter.overall >= 69
                 )
               ).map((group, index) => (
-                <S.PositionGroup key={index}>
+                <S.PositionGroup key={`h-${index}`}>
                   {group.players.map((player, iindex) => (
-                    <TablePlayer key={iindex} player={player} componentId={`hit-${idx}-${index}-${iindex}`} />
+                    <TablePlayer key={`h-${index}-${iindex}`} player={player} />
                   ))}
                 </S.PositionGroup>
               ))}
@@ -153,9 +159,9 @@ const TablePosition = () => {
                   (pitcher) => pitcher.year === selectedYear && pitcher.team === selectedTeam && pitcher.overall >= 69
                 )
               ).map((group, index) => (
-                <S.PositionGroup key={index}>
+                <S.PositionGroup key={`p-${index}`}>
                   {group.players.map((player, iindex) => (
-                    <TablePlayer key={iindex} player={player} componentId={`pitch-${idx}-${index}-${iindex}`} />
+                    <TablePlayer key={`p-${index}-${iindex}`} player={player} />
                   ))}
                 </S.PositionGroup>
               ))}
@@ -169,6 +175,11 @@ const TablePosition = () => {
           <S.Description>MVP</S.Description>
           <S.Description>오버롤 80 이상</S.Description>
         </S.DescriptionWrapper>
+
+        <S.InfoWrapper>
+          <PlayerSimpleInfo />
+          <LineUpInfo />
+        </S.InfoWrapper>
       </S.Container>
     </>
   );

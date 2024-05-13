@@ -122,10 +122,30 @@ export const ButtonImage = styled.div`
   position: relative;
   width: 20px;
   height: 20px;
+  font-size: 20px;
 
   @media (max-width: 660px) {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 560px) {
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
+  }
+
+  @media (max-width: 470px) {
+    width: 13px;
+    height: 13px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 353px) {
+    width: 11px;
+    height: 11px;
+    font-size: 11px;
   }
 `;
 
@@ -346,5 +366,24 @@ export const Description = styled.div`
   @media (max-width: 353px) {
     padding: 2px 0;
     font-size: 7px;
+  }
+`;
+
+export const InfoWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3px;
+  margin-top: 5px;
+
+  @media (max-width: 660px) {
+    flex-direction: column;
+    margin-top: 3px;
+  }
+
+  @media (max-width: 353px) {
+    gap: 2px;
+    margin-top: 2px;
   }
 `;
