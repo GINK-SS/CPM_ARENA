@@ -356,4 +356,14 @@ export const InfoWrapper = styled.div`
   align-items: flex-start;
   gap: 3px;
   margin-top: 5px;
+
+  @media (max-width: 660px) {
+    flex-direction: column;
+    margin-top: 3px;
+  }
+
+  @media (max-width: 353px) {
+    gap: 2px;
+    margin-top: 2px;
+  }
 `;

@@ -61,12 +61,9 @@ const LineUpInfo = () => {
                 {buffList[buff]?.name ? (
                   <S.BuffName>{buffList[buff]?.name}</S.BuffName>
                 ) : (
-                  <Image
-                    src={allTeams.find((team) => team.id === buff)?.logo || ''}
-                    alt={buff}
-                    width={20}
-                    height={20}
-                  />
+                  <S.BuffLogo>
+                    <Image src={allTeams.find((team) => team.id === buff)?.logo || ''} alt={buff} layout='fill' />
+                  </S.BuffLogo>
                 )}
 
                 <S.BuffCurrentNumberWrapper

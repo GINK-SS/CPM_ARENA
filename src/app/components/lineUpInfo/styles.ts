@@ -9,6 +9,9 @@ export const Container = styled.div`
   background-color: #222;
   background: linear-gradient(45deg, #000, #111);
   box-sizing: border-box;
+  @media (max-width: 660px) {
+    width: 100%;
+  }
 `;
 
 export const Header = styled.div`
@@ -26,7 +29,7 @@ export const Header = styled.div`
 export const HeaderLeft = styled.span`
   display: flex;
   align-items: center;
-  padding: 5px 50px;
+  padding: 5px 0 5px 50px;
   color: #ff1e1e;
   font-weight: 600;
   font-size: 12px;
@@ -36,12 +39,29 @@ export const HeaderLeft = styled.span`
     font-size: 11px;
     color: #fff;
   }
+
+  @media (max-width: 726px) {
+    padding-left: 20px;
+  }
+
+  @media (max-width: 660px) {
+    padding-left: 50px;
+  }
+
+  @media (max-width: 353px) {
+    padding-left: 20px;
+  }
 `;
 
 export const HeaderRight = styled.div`
   display: flex;
   gap: 10px;
   padding-right: 10px;
+
+  @media (max-width: 353px) {
+    gap: 5px;
+    padding-right: 5px;
+  }
 `;
 
 export const PlayerNumberWrapper = styled.div`
@@ -52,6 +72,19 @@ export const PlayerNumberWrapper = styled.div`
   &:first-child::after {
     content: '|';
   }
+
+  @media (max-width: 726px) {
+    gap: 5px;
+  }
+
+  @media (max-width: 660px) {
+    gap: 10px;
+  }
+
+  @media (max-width: 353px) {
+    gap: 5px;
+    font-size: 10px;
+  }
 `;
 
 export const Content = styled.div`
@@ -59,10 +92,14 @@ export const Content = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  padding: 10px 10px;
+  padding: 10px;
   border: 1px solid #333;
   border-top: 0;
   box-sizing: border-box;
+
+  @media (max-width: 353px) {
+    padding: 5px;
+  }
 `;
 
 export const BuffContainer = styled.div`
@@ -89,6 +126,34 @@ export const BuffTitleWrapper = styled.div`
 
 export const BuffName = styled.div`
   height: 20px;
+
+  @media (max-width: 726px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 660px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 470px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 353px) {
+    height: 16px;
+    font-size: 12px;
+  }
+`;
+
+export const BuffLogo = styled.div`
+  position: relative;
+  width: 20px;
+  height: 20px;
+
+  @media (max-width: 353px) {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 export const BuffCurrentNumberWrapper = styled.div<{ $isActive: boolean }>`
@@ -101,10 +166,18 @@ export const BuffCurrentNumberWrapper = styled.div<{ $isActive: boolean }>`
 
 export const BuffCurrentIcon = styled.div`
   font-size: 12px;
+
+  @media (max-width: 353px) {
+    font-size: 8px;
+  }
 `;
 
 export const BuffCurrentNumber = styled.span`
   font-size: 12px;
+
+  @media (max-width: 353px) {
+    font-size: 8px;
+  }
 `;
 
 export const BuffGradeWrapper = styled.div`
@@ -123,12 +196,20 @@ export const BuffGrade = styled.span<{ $isActive: boolean }>`
   &:first-child::before {
     content: '';
   }
+
+  @media (max-width: 353px) {
+    font-size: 6px;
+  }
 `;
 
 export const BuffValue = styled.span<{ $value: number }>`
   font-weight: 600;
   font-size: 18px;
   opacity: ${({ $value }) => ($value ? 1 : 0.2)};
+
+  @media (max-width: 353px) {
+    font-size: 16px;
+  }
 `;
 
 export const Footer = styled.div`
@@ -142,15 +223,28 @@ export const PowerWrapper = styled.div`
   align-items: center;
   font-weight: 600;
   font-size: 24px;
+
+  @media (max-width: 353px) {
+    font-size: 17px;
+  }
 `;
 
 export const PowerValue = styled.span`
   width: 56px;
   text-align: center;
+
+  @media (max-width: 353px) {
+    width: 40px;
+  }
 `;
 
 export const ResetBtn = styled.button`
   padding: 4px 10px;
   font-size: 14px;
   cursor: pointer;
+
+  @media (max-width: 353px) {
+    padding: 2px 5px;
+    font-size: 12px;
+  }
 `;

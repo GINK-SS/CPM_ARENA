@@ -10,6 +10,14 @@ export const Container = styled.div`
   background-color: #222;
   background: linear-gradient(45deg, #000, #111);
   box-sizing: border-box;
+
+  @media (max-width: 660px) {
+    width: 100%;
+  }
+
+  @media (max-width: 353px) {
+    height: 60px;
+  }
 `;
 
 export const Header = styled.div`
@@ -27,7 +35,7 @@ export const Header = styled.div`
 export const HeaderLeft = styled.span`
   display: flex;
   align-items: center;
-  padding: 5px 50px;
+  padding: 5px 0 5px 50px;
   color: #ff1e1e;
   font-weight: 600;
   font-size: 12px;
@@ -36,6 +44,18 @@ export const HeaderLeft = styled.span`
     margin-left: 5px;
     font-size: 11px;
     color: #fff;
+  }
+
+  @media (max-width: 726px) {
+    padding-left: 20px;
+  }
+
+  @media (max-width: 660px) {
+    padding-left: 50px;
+  }
+
+  @media (max-width: 353px) {
+    padding-left: 20px;
   }
 `;
 
@@ -69,34 +89,143 @@ export const Content = styled.div`
   border: 1px solid #333;
   border-top: 0;
   box-sizing: border-box;
+
+  @media (max-width: 353px) {
+    padding: 2px 3px;
+  }
 `;
 
 export const NameWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+
+  @media (max-width: 820px) {
+    gap: 3px;
+  }
+
+  @media (max-width: 726px) {
+    gap: 2px;
+  }
+
+  @media (max-width: 660px) {
+    gap: 10px;
+  }
+
+  @media (max-width: 470px) {
+    gap: 3px;
+  }
+
+  @media (max-width: 353px) {
+    gap: 2px;
+  }
 `;
 
 export const Logo = styled.div`
   position: relative;
   width: 25px;
   height: 25px;
+
+  @media (max-width: 820px) {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 726px) {
+    width: 17px;
+    height: 17px;
+  }
+
+  @media (max-width: 660px) {
+    width: 30px;
+    height: 30px;
+  }
+
+  @media (max-width: 470px) {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 353px) {
+    width: 17px;
+    height: 17px;
+  }
 `;
 
 export const Name = styled.span`
   font-weight: 600;
   font-size: 18px;
+
+  @media (max-width: 820px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 726px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 660px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 470px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 353px) {
+    font-size: 13px;
+  }
 `;
 
 export const Overall = styled.span`
   font-weight: 600;
-  font-size: 20px;
+  font-size: 18px;
   transform: scaleY(1.5);
+
+  @media (max-width: 820px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 726px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 660px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 470px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 353px) {
+    font-size: 13px;
+  }
 `;
 
 export const StatContainer = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 7px;
+
+  @media (max-width: 820px) {
+    gap: 5px;
+  }
+
+  @media (max-width: 726px) {
+    gap: 4px;
+  }
+
+  @media (max-width: 660px) {
+    gap: 10px;
+  }
+
+  @media (max-width: 470px) {
+    gap: 5px;
+  }
+
+  @media (max-width: 353px) {
+    gap: 3px;
+  }
 `;
 
 export const StatWrapper = styled.div`
@@ -105,14 +234,22 @@ export const StatWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 3px;
+
+  @media (max-width: 353px) {
+    gap: 2px;
+  }
 `;
 
 export const StatName = styled.span`
   font-size: 10px;
+
+  @media (max-width: 353px) {
+    font-size: 8px;
+  }
 `;
 
 export const StatValue = styled.span<{ $stat: number }>`
-  font-size: 17px;
+  font-size: 16px;
   color: ${({ $stat }) =>
     $stat >= 110
       ? '#e643d8'
@@ -125,6 +262,26 @@ export const StatValue = styled.span<{ $stat: number }>`
       : $stat >= 70
       ? '#fceb6a'
       : '#fff'};
+
+  @media (max-width: 820px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 726px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 660px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 470px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 353px) {
+    font-size: 12px;
+  }
 `;
 
 export const DetailBtn = styled.button`
@@ -138,4 +295,10 @@ export const DetailBtn = styled.button`
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
+
+  @media (max-width: 353px) {
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+  }
 `;
