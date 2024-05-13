@@ -38,6 +38,22 @@ export const HeaderLeft = styled.span`
   }
 `;
 
+export const HeaderRight = styled.div`
+  display: flex;
+  gap: 10px;
+  padding-right: 10px;
+`;
+
+export const PlayerNumberWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+
+  &:first-child::after {
+    content: '|';
+  }
+`;
+
 export const Content = styled.div`
   display: flex;
   flex-direction: column;

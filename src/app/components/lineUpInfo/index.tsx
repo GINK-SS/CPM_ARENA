@@ -40,6 +40,17 @@ const LineUpInfo = () => {
         <S.HeaderLeft>
           ARENA <span>시너지 및 전력</span>
         </S.HeaderLeft>
+
+        <S.HeaderRight>
+          <S.PlayerNumberWrapper>
+            <span>타자</span>
+            <span>{`${selectedLineUp.count.hitters} / 9`}</span>
+          </S.PlayerNumberWrapper>
+          <S.PlayerNumberWrapper>
+            <span>투수</span>
+            <span>{`${selectedLineUp.count.pitchers} / 10`}</span>
+          </S.PlayerNumberWrapper>
+        </S.HeaderRight>
       </S.Header>
 
       <S.Content>
