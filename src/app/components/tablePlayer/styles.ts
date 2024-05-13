@@ -1,7 +1,6 @@
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Wrapper = styled(motion.div)<{ $hasData: boolean }>`
+export const Wrapper = styled.div<{ $hasData: boolean }>`
   position: relative;
   display: flex;
   align-items: center;

@@ -146,9 +146,9 @@ const TablePosition = () => {
                   (hitter) => hitter.year === selectedYear && hitter.team === selectedTeam && hitter.overall >= 69
                 )
               ).map((group, index) => (
-                <S.PositionGroup key={index}>
+                <S.PositionGroup key={`h-${index}`}>
                   {group.players.map((player, iindex) => (
-                    <TablePlayer key={iindex} player={player} />
+                    <TablePlayer key={`h-${index}-${iindex}`} player={player} />
                   ))}
                 </S.PositionGroup>
               ))}
@@ -158,9 +158,9 @@ const TablePosition = () => {
                   (pitcher) => pitcher.year === selectedYear && pitcher.team === selectedTeam && pitcher.overall >= 69
                 )
               ).map((group, index) => (
-                <S.PositionGroup key={index}>
+                <S.PositionGroup key={`p-${index}`}>
                   {group.players.map((player, iindex) => (
-                    <TablePlayer key={iindex} player={player} />
+                    <TablePlayer key={`p-${index}-${iindex}`} player={player} />
                   ))}
                 </S.PositionGroup>
               ))}
