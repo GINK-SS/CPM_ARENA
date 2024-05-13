@@ -1,15 +1,16 @@
 import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
 import { Hitter, Pitcher, PositionLimit } from '@/app/stores/player/types';
+import { IoReloadOutline } from 'react-icons/io5';
 import useYearStore from '@/app/stores/year';
 import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
 import TablePlayer from '../tablePlayer';
 import PlayerDetail from '../playerDetail';
 import PlayerSimpleInfo from '../playerSimpleInfo';
+import LineUpInfo from '../lineUpInfo';
 
 import * as S from './styles';
-import LineUpInfo from '../lineUpInfo';
 
 const TablePosition = () => {
   const { selectedYear } = useYearStore();
@@ -112,7 +113,7 @@ const TablePosition = () => {
           <S.Title>{selectedYear}년 ARENA</S.Title>
           <S.Button onClick={onReStart}>
             <S.ButtonImage>
-              <Image src='/assets/redo.svg' alt='reSelect' layout='fill' />
+              <IoReloadOutline />
             </S.ButtonImage>
           </S.Button>
         </S.Header>
