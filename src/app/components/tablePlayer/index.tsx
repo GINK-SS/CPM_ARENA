@@ -29,6 +29,8 @@ const TablePlayer = ({ player }: TableItemProps) => {
 
   return (
     <S.Wrapper $hasData={!!player.name} onClick={onClick}>
+      <S.LineUpCheck $isLineUp={selectedLineUp.players.includes(player)} />
+
       <S.Name $isAllStar={player.all_star} $isMVP={player.mvp_korea || player.mvp_league}>
         {player.name}
       </S.Name>

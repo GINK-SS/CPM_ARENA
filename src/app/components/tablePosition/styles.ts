@@ -348,3 +348,12 @@ export const Description = styled.div`
     font-size: 7px;
   }
 `;
+
+export const InfoWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3px;
+  margin-top: 5px;
+`;

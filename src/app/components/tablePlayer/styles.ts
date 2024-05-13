@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Wrapper = styled(motion.div)<{ $hasData: boolean }>`
+  position: relative;
   display: flex;
   align-items: center;
   border: 1px solid #000;
@@ -131,4 +132,13 @@ export const Overall = styled.div<{ $isOver80: boolean; $isGoldenGlove: boolean 
     height: 14px;
     font-size: 6px;
   }
+`;
+
+export const LineUpCheck = styled.div<{ $isLineUp: boolean }>`
+  display: ${({ $isLineUp }) => ($isLineUp ? 'block' : 'none')};
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: rotate(-3deg);
 `;

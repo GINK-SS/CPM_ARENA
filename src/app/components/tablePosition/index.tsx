@@ -9,6 +9,7 @@ import PlayerDetail from '../playerDetail';
 import PlayerSimpleInfo from '../playerSimpleInfo';
 
 import * as S from './styles';
+import LineUpInfo from '../lineUpInfo';
 
 const TablePosition = () => {
   const { selectedYear } = useYearStore();
@@ -21,6 +22,7 @@ const TablePosition = () => {
     allTeams,
     allHitters,
     allPitchers,
+    setSelectedLineUp,
   } = usePlayerStore();
   const { closeTable } = useTableStore();
   const positionLimit: PositionLimit = {
@@ -80,6 +82,7 @@ const TablePosition = () => {
   const onReStart = () => {
     closeTable();
     setSelectedPlayer(null);
+    setSelectedLineUp(null);
   };
 
   const onOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -172,7 +175,10 @@ const TablePosition = () => {
           <S.Description>오버롤 80 이상</S.Description>
         </S.DescriptionWrapper>
 
-        <PlayerSimpleInfo />
+        <S.InfoWrapper>
+          <PlayerSimpleInfo />
+          <LineUpInfo />
+        </S.InfoWrapper>
       </S.Container>
     </>
   );
