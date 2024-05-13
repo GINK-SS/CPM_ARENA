@@ -117,7 +117,7 @@ export const BuffValue = styled.span<{ $value: number }>`
 
 export const Footer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 `;
 
 export const PowerWrapper = styled.div`
@@ -131,4 +131,10 @@ export const PowerWrapper = styled.div`
 export const PowerValue = styled.span`
   width: 56px;
   text-align: center;
+`;
+
+export const ResetBtn = styled.button`
+  padding: 4px 10px;
+  font-size: 14px;
+  cursor: pointer;
 `;

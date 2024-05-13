@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { PointTitle, TeamId } from '@/app/stores/player/types';
 
 const LineUpInfo = () => {
-  const { selectedTeams, allTeams, selectedLineUp } = usePlayerStore();
+  const { selectedTeams, allTeams, selectedLineUp, setSelectedLineUp } = usePlayerStore();
   const buffList: { [key in PointTitle]?: { name?: string; grades: number[]; gradeValues: number[] } } = {
     any_team: {
       grades: [2, 4, 6, 9],
@@ -29,6 +29,10 @@ const LineUpInfo = () => {
     },
   };
   const buffOrder: PointTitle[] = [...selectedTeams, 'all_star', 'golden_glove', 'mvp'];
+
+  const onReset = () => {
+    setSelectedLineUp(null);
+  };
 
   return (
     <S.Container>
@@ -133,6 +137,8 @@ const LineUpInfo = () => {
         </S.BuffContainer>
 
         <S.Footer>
+          <S.ResetBtn onClick={onReset}>선택 초기화</S.ResetBtn>
+
           <S.PowerWrapper>
             <span>총 전력</span>
             <S.PowerValue>
