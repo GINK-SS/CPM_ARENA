@@ -8,12 +8,23 @@ type TableItemProps = {
 };
 
 const TablePlayer = ({ player }: TableItemProps) => {
-  const { setSelectedPlayer } = usePlayerStore();
+  const { selectedLineUp, setSelectedLineUp, setSelectedPlayer } = usePlayerStore();
 
   const onClick = () => {
     if (!player.name) return;
 
     setSelectedPlayer(player);
+
+    if (selectedLineUp.players.includes(player)) {
+      setSelectedLineUp(player, 'DELETE');
+
+      return;
+    }
+
+    if (!!player.batting_all && selectedLineUp.count.hitters >= 9) return;
+    if (!!player.pitch_all && selectedLineUp.count.pitchers >= 10) return;
+
+    setSelectedLineUp(player);
   };
 
   return (
