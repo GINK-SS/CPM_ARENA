@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
 import { Hitter, Pitcher, PositionLimit } from '@/app/stores/player/types';
-import { IoReloadOutline } from 'react-icons/io5';
 import useYearStore from '@/app/stores/year';
 import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
@@ -9,23 +8,15 @@ import TablePlayer from '../tablePlayer';
 import PlayerDetail from '../playerDetail';
 import PlayerSimpleInfo from '../playerSimpleInfo';
 import LineUpInfo from '../lineUpInfo';
+import Menu from '../menu';
 
 import * as S from './styles';
 
 const TablePosition = () => {
   const { selectedYear } = useYearStore();
-  const {
-    isShowDetail,
-    selectedTeams,
-    selectedPlayer,
-    setSelectedPlayer,
-    clearDetail,
-    allTeams,
-    allHitters,
-    allPitchers,
-    setSelectedLineUp,
-  } = usePlayerStore();
-  const { closeTable } = useTableStore();
+  const { isShowDetail, selectedTeams, selectedPlayer, clearDetail, allTeams, allHitters, allPitchers } =
+    usePlayerStore();
+  const { isMenu, overallLimit, closeMenu } = useTableStore();
   const positionLimit: PositionLimit = {
     포수: 2,
     '1루수': 2,
@@ -80,22 +71,17 @@ const TablePosition = () => {
     return arranged;
   };
 
-  const onReStart = () => {
-    closeTable();
-    setSelectedPlayer(null);
-    setSelectedLineUp(null);
-  };
-
   const onOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.currentTarget === e.target) {
       clearDetail();
+      closeMenu();
     }
   };
 
   return (
     <>
       <AnimatePresence>
-        {isShowDetail && (
+        {(isShowDetail || isMenu) && (
           <S.Outer
             onClick={onOuterClick}
             $isActive={!!selectedPlayer}
@@ -111,11 +97,8 @@ const TablePosition = () => {
 
         <S.Header>
           <S.Title>{selectedYear}년 ARENA</S.Title>
-          <S.Button onClick={onReStart}>
-            <S.ButtonImage>
-              <IoReloadOutline />
-            </S.ButtonImage>
-          </S.Button>
+
+          <Menu />
         </S.Header>
 
         <S.TableContainer>
@@ -144,7 +127,8 @@ const TablePosition = () => {
 
               {hitArrangePlayers(
                 allHitters.filter(
-                  (hitter) => hitter.year === selectedYear && hitter.team === selectedTeam && hitter.overall >= 69
+                  (hitter) =>
+                    hitter.year === selectedYear && hitter.team === selectedTeam && hitter.overall >= overallLimit
                 )
               ).map((group, index) => (
                 <S.PositionGroup key={`h-${index}`}>
@@ -156,7 +140,8 @@ const TablePosition = () => {
 
               {pitchArrangePlayers(
                 allPitchers.filter(
-                  (pitcher) => pitcher.year === selectedYear && pitcher.team === selectedTeam && pitcher.overall >= 69
+                  (pitcher) =>
+                    pitcher.year === selectedYear && pitcher.team === selectedTeam && pitcher.overall >= overallLimit
                 )
               ).map((group, index) => (
                 <S.PositionGroup key={`p-${index}`}>

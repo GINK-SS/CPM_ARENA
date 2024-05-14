@@ -7,11 +7,12 @@ import * as S from './styles';
 const SubmitBtn = () => {
   const { selectedYear, closeYearList } = useYearStore();
   const { selectedTeams, closeTeamList } = usePlayerStore();
-  const { showTable } = useTableStore();
+  const { showTable, closeMenu } = useTableStore();
 
   const onSubmit = () => {
     closeYearList();
     closeTeamList();
+    closeMenu();
     showTable();
   };
 
