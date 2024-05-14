@@ -3,6 +3,7 @@ import { Noto_Sans_KR } from 'next/font/google';
 import StyledComponentsRegistry from './lib/registry';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -56,6 +57,7 @@ export default function RootLayout({
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
         <Analytics />
         <SpeedInsights />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />
       </body>
     </html>
   );
