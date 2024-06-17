@@ -61,7 +61,14 @@ const TablePosition = () => {
 
           {hitArrangePlayers(
             allHitters.filter(
-              (hitter) => hitter.year === selectedYear && hitter.team === selectedTeam && hitter.overall >= overallLimit
+              (hitter) =>
+                hitter.year === selectedYear &&
+                hitter.team === selectedTeam &&
+                (hitter.overall >= overallLimit ||
+                  hitter.all_star ||
+                  hitter.mvp_korea ||
+                  hitter.mvp_league ||
+                  hitter.golden_glove)
             )
           ).map((group, index) => (
             <S.PositionGroup key={`h-${index}`}>
@@ -74,7 +81,13 @@ const TablePosition = () => {
           {pitchArrangePlayers(
             allPitchers.filter(
               (pitcher) =>
-                pitcher.year === selectedYear && pitcher.team === selectedTeam && pitcher.overall >= overallLimit
+                pitcher.year === selectedYear &&
+                pitcher.team === selectedTeam &&
+                (pitcher.overall >= overallLimit ||
+                  pitcher.all_star ||
+                  pitcher.mvp_korea ||
+                  pitcher.mvp_league ||
+                  pitcher.golden_glove)
             )
           ).map((group, index) => (
             <S.PositionGroup key={`p-${index}`}>
