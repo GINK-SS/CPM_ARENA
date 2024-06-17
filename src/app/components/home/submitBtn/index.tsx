@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import useYearStore from '@/app/stores/year';
 import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
@@ -6,14 +7,20 @@ import * as S from './styles';
 
 const SubmitBtn = () => {
   const { selectedYear, closeYearList } = useYearStore();
-  const { selectedTeams, closeTeamList } = usePlayerStore();
-  const { showTable, closeMenu } = useTableStore();
+  const { selectedTeams, closeTeamList, allTeams } = usePlayerStore();
+  const { closeMenu } = useTableStore();
+  const router = useRouter();
 
   const onSubmit = () => {
     closeYearList();
     closeTeamList();
     closeMenu();
-    showTable();
+
+    router.push(
+      `/lineup/${selectedYear}${selectedTeams
+        .map((selectedTeam) => allTeams.find((team) => team.id === selectedTeam)?.shorten)
+        .join('')}`
+    );
   };
 
   return (

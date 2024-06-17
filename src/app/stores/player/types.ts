@@ -1,5 +1,6 @@
 export type Team = {
   id: TeamId;
+  shorten: string;
   name: string;
   logo: string;
   years: number[];
