@@ -7,14 +7,17 @@ import * as S from './styles';
 
 const SubmitBtn = () => {
   const { selectedYear, closeYearList } = useYearStore();
-  const { selectedTeams, closeTeamList, allTeams } = usePlayerStore();
-  const { closeMenu } = useTableStore();
+  const { allTeams, selectedTeams, closeTeamList, setSelectedPlayer, setSelectedLineUp } = usePlayerStore();
+  const { closeMenu, setOverallLimit } = useTableStore();
   const router = useRouter();
 
   const onSubmit = () => {
     closeYearList();
     closeTeamList();
     closeMenu();
+    setOverallLimit(69);
+    setSelectedPlayer(null);
+    setSelectedLineUp(null);
 
     router.push(
       `/lineup/${selectedYear}${selectedTeams
