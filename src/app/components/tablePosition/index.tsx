@@ -1,3 +1,4 @@
+import { ReactNode, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
 import { Hitter, Pitcher, PositionLimit } from '@/app/stores/player/types';
@@ -9,6 +10,7 @@ import PlayerDetail from '../playerDetail';
 import PlayerSimpleInfo from '../playerSimpleInfo';
 import LineUpInfo from '../lineUpInfo';
 import Menu from '../menu';
+import Loading from '../loading';
 
 import * as S from './styles';
 
@@ -17,6 +19,8 @@ const TablePosition = () => {
   const { isShowDetail, selectedTeams, selectedPlayer, clearDetail, allTeams, allHitters, allPitchers } =
     usePlayerStore();
   const { isMenu, overallLimit, closeMenu } = useTableStore();
+  const [isLoading, setIsLoading] = useState(true);
+  const [tableComponent, setTableComponent] = useState<ReactNode>();
   const positionLimit: PositionLimit = {
     포수: 2,
     '1루수': 2,
@@ -30,6 +34,61 @@ const TablePosition = () => {
   };
   const hitterPositionOrder = ['포수', '1루수', '2루수', '3루수', '유격수', '외야수'];
   const pitcherPositionOrder = ['선발', '계투', '마무리'];
+
+  useEffect(() => {
+    if (!selectedTeams.length) return;
+
+    const makeTimeout = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      setIsLoading(false);
+    };
+
+    setTableComponent(
+      selectedTeams.map((selectedTeam, idx) => (
+        <S.LineUpWrapper key={idx}>
+          <S.TeamTitle>
+            <S.TeamLogo>
+              <Image
+                src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
+                alt={selectedTeam}
+                layout='fill'
+                style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
+              />
+            </S.TeamLogo>
+
+            <S.TeamName>{allTeams.find((team) => team.id === selectedTeam)?.name}</S.TeamName>
+          </S.TeamTitle>
+
+          {hitArrangePlayers(
+            allHitters.filter(
+              (hitter) => hitter.year === selectedYear && hitter.team === selectedTeam && hitter.overall >= overallLimit
+            )
+          ).map((group, index) => (
+            <S.PositionGroup key={`h-${index}`}>
+              {group.players.map((player, iindex) => (
+                <TablePlayer key={`h-${index}-${iindex}`} player={player} />
+              ))}
+            </S.PositionGroup>
+          ))}
+
+          {pitchArrangePlayers(
+            allPitchers.filter(
+              (pitcher) =>
+                pitcher.year === selectedYear && pitcher.team === selectedTeam && pitcher.overall >= overallLimit
+            )
+          ).map((group, index) => (
+            <S.PositionGroup key={`p-${index}`}>
+              {group.players.map((player, iindex) => (
+                <TablePlayer key={`p-${index}-${iindex}`} player={player} />
+              ))}
+            </S.PositionGroup>
+          ))}
+        </S.LineUpWrapper>
+      ))
+    );
+
+    makeTimeout();
+  }, [selectedTeams]);
 
   const hitArrangePlayers = (players: (Hitter | Pitcher)[]) => {
     const arranged = hitterPositionOrder.map((position) => ({
@@ -78,6 +137,8 @@ const TablePosition = () => {
     }
   };
 
+  if (isLoading) return <Loading text='표를 생성 중입니다.' />;
+
   return (
     <>
       <AnimatePresence>
@@ -110,48 +171,7 @@ const TablePosition = () => {
             ))}
           </S.PositionTitleBox>
 
-          {selectedTeams.map((selectedTeam, idx) => (
-            <S.LineUpWrapper key={idx}>
-              <S.TeamTitle>
-                <S.TeamLogo>
-                  <Image
-                    src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
-                    alt={selectedTeam}
-                    layout='fill'
-                    style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
-                  />
-                </S.TeamLogo>
-
-                <S.TeamName>{allTeams.find((team) => team.id === selectedTeam)?.name}</S.TeamName>
-              </S.TeamTitle>
-
-              {hitArrangePlayers(
-                allHitters.filter(
-                  (hitter) =>
-                    hitter.year === selectedYear && hitter.team === selectedTeam && hitter.overall >= overallLimit
-                )
-              ).map((group, index) => (
-                <S.PositionGroup key={`h-${index}`}>
-                  {group.players.map((player, iindex) => (
-                    <TablePlayer key={`h-${index}-${iindex}`} player={player} />
-                  ))}
-                </S.PositionGroup>
-              ))}
-
-              {pitchArrangePlayers(
-                allPitchers.filter(
-                  (pitcher) =>
-                    pitcher.year === selectedYear && pitcher.team === selectedTeam && pitcher.overall >= overallLimit
-                )
-              ).map((group, index) => (
-                <S.PositionGroup key={`p-${index}`}>
-                  {group.players.map((player, iindex) => (
-                    <TablePlayer key={`p-${index}-${iindex}`} player={player} />
-                  ))}
-                </S.PositionGroup>
-              ))}
-            </S.LineUpWrapper>
-          ))}
+          {tableComponent}
         </S.TableContainer>
 
         <S.DescriptionWrapper>
