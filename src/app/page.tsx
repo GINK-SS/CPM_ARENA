@@ -12,14 +12,7 @@ import Footer from './components/footer';
 import { motion } from 'framer-motion';
 
 export default function Home() {
-  const { fetchAllTeams, fetchAllHitters, fetchAllPitchers } = usePlayerStore();
   const { isShow: isShowTable } = useTableStore();
-
-  useEffect(() => {
-    fetchAllTeams();
-    fetchAllHitters();
-    fetchAllPitchers();
-  }, []);
 
   return (
     <HomeLayout>
