@@ -88,7 +88,7 @@ const TablePosition = () => {
     );
 
     makeTimeout();
-  }, [selectedTeams]);
+  }, [selectedTeams, overallLimit]);
 
   const hitArrangePlayers = (players: (Hitter | Pitcher)[]) => {
     const arranged = hitterPositionOrder.map((position) => ({
