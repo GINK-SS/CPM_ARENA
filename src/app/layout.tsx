@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     url: '/',
     title: '컴프매 아레나 도우미 | com2usManager Arena Helper',
     description: '연도와 팀을 선택 후 나만의 라인업을 구성해 보세요! 선수 정보부터 전력까지 한눈에 확인할 수 있습니다.',
-    siteName: '컴프매 아레나 도우미 - 컴투스프로야구for매니저',
+    siteName: '컴프매 아레나 도우미 | com2usManager Arena Helper',
     images: [
       {
         url: '/assets/metaImg.png',
