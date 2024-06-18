@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: MetaProps, parent: ResolvingM
   } as { [key: string]: { name: string; start: number; end: number } };
   const selectedTeams = [];
 
-  if (isNaN(paramYear) || paramYear < 1982 || paramYear > 2023 || !paramTeams || paramTeams.length !== 5) {
+  if (isNaN(paramYear) || paramYear < 1982 || paramYear > 2023 || !paramTeams || new Set(paramTeams).size !== 5) {
     return {
       title: (await parent).title,
     };

@@ -17,7 +17,7 @@ export default function LineupPage() {
     const paramYear = +lineupId.slice(0, 4);
     const paramTeams = lineupId.slice(4).match(/.{1,2}/g);
 
-    if (isNaN(paramYear) || paramYear < 1982 || paramYear > 2023 || !paramTeams || paramTeams.length !== 5) {
+    if (isNaN(paramYear) || paramYear < 1982 || paramYear > 2023 || !paramTeams || new Set(paramTeams).size !== 5) {
       setStatus('invalid');
       return;
     }
