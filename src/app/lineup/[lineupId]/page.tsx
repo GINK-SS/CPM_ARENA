@@ -1,5 +1,5 @@
 import { Metadata, ResolvingMetadata } from 'next';
-import LineupPage from './LineupPage';
+import LineupPage from './lineupPage';
 
 type MetaProps = {
   params: { lineupId: string };
