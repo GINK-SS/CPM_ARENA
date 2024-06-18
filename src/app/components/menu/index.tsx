@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import { IoMenuOutline } from 'react-icons/io5';
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
@@ -5,8 +6,9 @@ import usePlayerStore from '@/app/stores/player';
 import * as S from './styles';
 
 const Menu = () => {
-  const { isMenu, openMenu, closeTable, overallLimit, setOverallLimit } = useTableStore();
+  const { isMenu, openMenu, overallLimit, setOverallLimit } = useTableStore();
   const { setSelectedPlayer, setSelectedLineUp } = usePlayerStore();
+  const router = useRouter();
 
   const onBtnClick = () => {
     openMenu();
@@ -19,7 +21,7 @@ const Menu = () => {
   };
 
   const onReStart = () => {
-    closeTable();
+    router.replace('/');
     setOverallLimit(69);
     setSelectedPlayer(null);
     setSelectedLineUp(null);

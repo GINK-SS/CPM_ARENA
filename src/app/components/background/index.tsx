@@ -2,11 +2,11 @@ import { ReactNode } from 'react';
 
 import * as S from './styles';
 
-type HomeLayoutProps = {
+type BackgroundProps = {
   children: ReactNode;
 };
 
-const HomeLayout = ({ children }: HomeLayoutProps) => {
+const Background = ({ children }: BackgroundProps) => {
   return (
     <S.Container>
       <S.Content>{children}</S.Content>
@@ -14,4 +14,4 @@ const HomeLayout = ({ children }: HomeLayoutProps) => {
   );
 };
 
-export default HomeLayout;
+export default Background;

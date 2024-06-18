@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { TableStoreState } from './types';
 
 const useTableStore = create<TableStoreState>((set) => ({
-  isShow: false,
   overallLimit: 69,
   isMenu: false,
   setOverallLimit: (selectedOverall) => {
@@ -13,12 +12,6 @@ const useTableStore = create<TableStoreState>((set) => ({
   },
   closeMenu: () => {
     set(() => ({ isMenu: false }));
-  },
-  showTable: () => {
-    set(() => ({ isShow: true }));
-  },
-  closeTable: () => {
-    set(() => ({ isShow: false }));
   },
 }));
 
