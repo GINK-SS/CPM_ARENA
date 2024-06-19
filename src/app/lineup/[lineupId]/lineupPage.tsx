@@ -1,16 +1,17 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+
 import TablePosition from '@/app/components/tablePosition';
 import NotFound from '@/app/not-found';
-import usePlayerStore from '@/app/stores/player';
+import useTeamStore from '@/app/stores/team';
 import useYearStore from '@/app/stores/year';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 export default function LineupPage() {
   const { lineupId } = useParams<{ lineupId: string }>();
   const { selectedYear, setYear } = useYearStore();
-  const { allTeams, selectedTeams, setTeams, setSelectedTeamsReset } = usePlayerStore();
+  const { allTeams, selectedTeams, setTeams, resetTeams } = useTeamStore();
   const [status, setStatus] = useState('pending');
 
   const init = () => {
@@ -22,7 +23,7 @@ export default function LineupPage() {
       return;
     }
 
-    if (selectedTeams.length && selectedYear) {
+    if (selectedTeams.length === 5 && selectedYear) {
       setStatus('valid');
       return;
     }
@@ -31,13 +32,13 @@ export default function LineupPage() {
       const selectedTeam = allTeams.find((team) => team.shorten === paramTeams[idx]);
 
       if (!selectedTeam || !selectedTeam.years.includes(paramYear)) {
-        setSelectedTeamsReset();
+        resetTeams();
         setStatus('invalid');
         return;
       }
 
       setTeams({
-        id: selectedTeam.id,
+        team: selectedTeam,
         index: idx,
         action: 'ADD',
       });

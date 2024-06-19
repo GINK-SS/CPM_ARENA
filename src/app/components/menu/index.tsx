@@ -1,13 +1,16 @@
 import { useRouter } from 'next/navigation';
 import { IoMenuOutline } from 'react-icons/io5';
+
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
+import useBuffStore from '@/app/stores/buff';
 
 import * as S from './styles';
 
 const Menu = () => {
   const { isMenu, openMenu, overallLimit, setOverallLimit } = useTableStore();
-  const { setSelectedPlayer, setSelectedLineUp } = usePlayerStore();
+  const { setSelectedPlayer, setSelectedLineup } = usePlayerStore();
+  const { clearBuff } = useBuffStore();
   const router = useRouter();
 
   const onBtnClick = () => {
@@ -17,14 +20,16 @@ const Menu = () => {
   const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setOverallLimit(Number(e.currentTarget.value));
     setSelectedPlayer(null);
-    setSelectedLineUp(null);
+    setSelectedLineup({ action: 'CLEAR' });
+    clearBuff();
   };
 
   const onReStart = () => {
     router.replace('/');
     setOverallLimit(69);
     setSelectedPlayer(null);
-    setSelectedLineUp(null);
+    setSelectedLineup({ action: 'CLEAR' });
+    clearBuff();
   };
 
   return (

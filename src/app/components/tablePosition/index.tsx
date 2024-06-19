@@ -1,8 +1,9 @@
 import { ReactNode, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
-import { Hitter, Pitcher, PositionLimit } from '@/app/stores/player/types';
+
 import useYearStore from '@/app/stores/year';
+import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
 import TablePlayer from '../tablePlayer';
@@ -12,12 +13,14 @@ import LineUpInfo from '../lineUpInfo';
 import Menu from '../menu';
 import Loading from '../loading';
 
+import { Hitter, Pitcher, PositionLimit } from '@/app/stores/player/types';
+
 import * as S from './styles';
 
 const TablePosition = () => {
   const { selectedYear } = useYearStore();
-  const { isShowDetail, selectedTeams, selectedPlayer, clearDetail, allTeams, allHitters, allPitchers } =
-    usePlayerStore();
+  const { isShowDetail, selectedPlayer, clearDetail, allHitters, allPitchers } = usePlayerStore();
+  const { allTeams, selectedTeams } = useTeamStore();
   const { isMenu, overallLimit, closeMenu } = useTableStore();
   const [isLoading, setIsLoading] = useState(true);
   const [tableComponent, setTableComponent] = useState<ReactNode>();
@@ -37,9 +40,10 @@ const TablePosition = () => {
 
   useEffect(() => {
     if (!selectedTeams.length) return;
+    if (!selectedYear) return;
 
     const makeTimeout = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       setIsLoading(false);
     };
 
@@ -49,21 +53,21 @@ const TablePosition = () => {
           <S.TeamTitle>
             <S.TeamLogo>
               <Image
-                src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
-                alt={selectedTeam}
+                src={allTeams.find((team) => team.id === selectedTeam.id)?.logo || ''}
+                alt={selectedTeam.id}
                 layout='fill'
                 style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
               />
             </S.TeamLogo>
 
-            <S.TeamName>{allTeams.find((team) => team.id === selectedTeam)?.name}</S.TeamName>
+            <S.TeamName>{allTeams.find((team) => team.id === selectedTeam.id)?.name}</S.TeamName>
           </S.TeamTitle>
 
           {hitArrangePlayers(
-            allHitters.filter(
+            (allHitters.get(selectedYear) ?? []).filter(
               (hitter) =>
                 hitter.year === selectedYear &&
-                hitter.team === selectedTeam &&
+                hitter.team === selectedTeam.id &&
                 (hitter.overall >= overallLimit ||
                   hitter.all_star ||
                   hitter.mvp_korea ||
@@ -79,10 +83,10 @@ const TablePosition = () => {
           ))}
 
           {pitchArrangePlayers(
-            allPitchers.filter(
+            (allPitchers.get(selectedYear) ?? []).filter(
               (pitcher) =>
                 pitcher.year === selectedYear &&
-                pitcher.team === selectedTeam &&
+                pitcher.team === selectedTeam.id &&
                 (pitcher.overall >= overallLimit ||
                   pitcher.all_star ||
                   pitcher.mvp_korea ||

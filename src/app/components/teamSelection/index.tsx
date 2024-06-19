@@ -1,21 +1,23 @@
 import Image from 'next/image';
+
 import useYearStore from '@/app/stores/year';
-import usePlayerStore from '@/app/stores/player';
-import { TeamId } from '@/app/stores/player/types';
+import useTeamStore from '@/app/stores/team';
+
+import { Team } from '@/app/stores/team/types';
 
 import * as S from './styles';
 
 const TeamSelection = () => {
   const { selectedYear } = useYearStore();
-  const { allTeams, selectedTeams, setTeams } = usePlayerStore();
+  const { allTeams, selectedTeams, setTeams } = useTeamStore();
 
   const onTeamClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const selectedTeam = allTeams.find((team) => team.id === e.currentTarget.value) as Team;
+
     setTeams({
-      id: e.currentTarget.value as TeamId,
-      index: selectedTeams.includes(e.currentTarget.value as TeamId)
-        ? selectedTeams.indexOf(e.currentTarget.value as TeamId)
-        : selectedTeams.length,
-      action: selectedTeams.includes(e.currentTarget.value as TeamId) ? 'DELETE' : 'ADD',
+      team: selectedTeam,
+      index: selectedTeams.includes(selectedTeam) ? selectedTeams.indexOf(selectedTeam) : selectedTeams.length,
+      action: selectedTeams.includes(selectedTeam) ? 'DELETE' : 'ADD',
     });
   };
 
@@ -37,7 +39,7 @@ const TeamSelection = () => {
           onClick={onTeamClick}
           disabled={!selectedYear || !team.years.includes(selectedYear)}
           $isDisabled={!selectedYear || !team.years.includes(selectedYear)}
-          $isSelected={selectedTeams.includes(team.id)}
+          $isSelected={selectedTeams.includes(team)}
         >
           <S.TeamLogo>
             <Image
@@ -47,7 +49,7 @@ const TeamSelection = () => {
               blurDataURL={team.logo}
               layout='fill'
               style={{
-                filter: selectedTeams.includes(team.id) ? '' : 'drop-shadow(3px 3px 0 #333)',
+                filter: selectedTeams.includes(team) ? '' : 'drop-shadow(3px 3px 0 #333)',
               }}
             />
           </S.TeamLogo>

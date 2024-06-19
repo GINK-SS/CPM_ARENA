@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
+
+import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
+
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 
 import * as S from './styles';
 
 const PlayerDetail = () => {
-  const { selectedPlayer, isShowDetail, allTeams } = usePlayerStore();
+  const { selectedPlayer, isShowDetail } = usePlayerStore();
+  const { allTeams } = useTeamStore();
   const hitterStat = {
     타격: 'batting_all',
     장타: 'long_all',

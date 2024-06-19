@@ -1,10 +1,14 @@
 import Image from 'next/image';
 import { IoSearchOutline } from 'react-icons/io5';
+
+import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
+
 import * as S from './styles';
 
 const PlayerSimpleInfo = () => {
-  const { selectedPlayer, allTeams, showDetail } = usePlayerStore();
+  const { selectedPlayer, showDetail } = usePlayerStore();
+  const { allTeams } = useTeamStore();
 
   const onDetailClick = () => {
     showDetail();
