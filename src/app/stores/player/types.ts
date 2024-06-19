@@ -1,10 +1,4 @@
-export type Team = {
-  id: TeamId;
-  shorten: string;
-  name: string;
-  logo: string;
-  years: number[];
-};
+import { TeamId } from '../team/types';
 
 export type Hitter = {
   name: string;
@@ -62,67 +56,18 @@ export type Pitcher = {
   [key: string]: any;
 };
 
-export type TeamId =
-  | 'KIA'
-  | 'kt'
-  | 'LG'
-  | 'MBC'
-  | 'NC'
-  | 'OB'
-  | 'SK'
-  | 'SSG'
-  | '넥센'
-  | '두산'
-  | '롯데'
-  | '빙그레'
-  | '삼미'
-  | '삼성'
-  | '쌍방울'
-  | '키움'
-  | '태평양'
-  | '한화'
-  | '해태'
-  | '현대';
-
-export type PointTitle = TeamId | 'all_star' | 'golden_glove' | 'mvp' | 'any_team';
-
 export type PlayerStoreState = {
-  isShow: boolean;
   isShowDetail: boolean;
-  allTeams: Team[];
-  allHitters: Hitter[];
-  allPitchers: Pitcher[];
-  selectedTeams: TeamId[];
+  allHitters: Map<number, Hitter[]>;
+  allPitchers: Map<number, Pitcher[]>;
   selectedPlayer: Hitter | Pitcher | null;
-  selectedLineUp: {
-    players: (Hitter | Pitcher)[];
-    count: {
-      hitters: number;
-      pitchers: number;
-      teams: number[];
-      all_star: number;
-      golden_glove: number;
-      mvp: number;
-      [key: string]: number | number[];
-    };
-  };
-  setSelectedLineUp: (player: Hitter | Pitcher | null, action?: string) => void;
+  selectedLineup: (Hitter | Pitcher)[];
+  setSelectedLineup: ({ player, action }: { player?: Hitter | Pitcher; action: 'ADD' | 'DELETE' | 'CLEAR' }) => void;
+  setSelectedPlayer: (player: Hitter | Pitcher | null) => void;
   showDetail: () => void;
   clearDetail: () => void;
-  setSelectedPlayer: (player: Hitter | Pitcher | null) => void;
-  setSelectedTeamsReset: () => void;
-  setShowTeamList: () => void;
-  closeTeamList: () => void;
-  setTeams: ({ id, index, action }: SetTeamsPayload) => void;
-  fetchAllTeams: () => Promise<void>;
   fetchAllHitters: () => Promise<void>;
   fetchAllPitchers: () => Promise<void>;
-};
-
-export type SetTeamsPayload = {
-  id: TeamId;
-  index: number;
-  action: string;
 };
 
 export type PositionLimit = {

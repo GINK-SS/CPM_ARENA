@@ -1,17 +1,18 @@
 import React from 'react';
+
 import useYearStore from '@/app/stores/year';
-import usePlayerStore from '@/app/stores/player';
+import useTeamStore from '@/app/stores/team';
 
 import * as S from './styles';
 
 const YearSelection = () => {
   const { selectedYear, yearList, setYear, setShowYearList } = useYearStore();
-  const { setSelectedTeamsReset } = usePlayerStore();
+  const { resetTeams } = useTeamStore();
 
   const onYearClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setYear(Number(e.currentTarget.value));
     setShowYearList();
-    setSelectedTeamsReset();
+    resetTeams();
   };
 
   return (

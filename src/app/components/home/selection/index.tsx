@@ -1,21 +1,33 @@
+import { useEffect } from 'react';
 import Image from 'next/image';
+import { AnimatePresence } from 'framer-motion';
+
 import useYearStore from '@/app/stores/year';
-import usePlayerStore from '@/app/stores/player';
+import useTeamStore from '@/app/stores/team';
 import YearSelection from '../../yearSelection';
 import TeamSelection from '../../teamSelection';
 
 import * as S from './styles';
-import { AnimatePresence } from 'framer-motion';
 
 const Selection = () => {
   const { isShow: isShowOfYear, selectedYear, setShowYearList } = useYearStore();
-  const { isShow: isShowOfTeam, allTeams, selectedTeams, setShowTeamList } = usePlayerStore();
+  const {
+    isPopupActive: isTeamPopupActive,
+    allTeams,
+    selectedTeams,
+    openPopup: openTeamPopup,
+    closePopup: closeTeamPopup,
+  } = useTeamStore();
 
   const onTeamList = () => {
     if (!selectedYear) return;
 
-    setShowTeamList();
+    openTeamPopup();
   };
+
+  useEffect(() => {
+    if (selectedTeams.length === 5) closeTeamPopup();
+  }, [closeTeamPopup, selectedTeams]);
 
   return (
     <S.Container>
@@ -39,8 +51,8 @@ const Selection = () => {
               {selectedTeams.map((selectedTeam, idx) => (
                 <S.Logo key={idx}>
                   <Image
-                    src={allTeams.find((team) => team.id === selectedTeam)?.logo || ''}
-                    alt={allTeams.find((team) => team.id === selectedTeam)?.id || ''}
+                    src={allTeams.find((team) => team.id === selectedTeam.id)?.logo || ''}
+                    alt={allTeams.find((team) => team.id === selectedTeam.id)?.id || ''}
                     layout='fill'
                     style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
                   />
@@ -52,7 +64,7 @@ const Selection = () => {
           )}
         </S.Button>
 
-        <AnimatePresence>{isShowOfTeam && <TeamSelection />}</AnimatePresence>
+        <AnimatePresence>{isTeamPopupActive && <TeamSelection />}</AnimatePresence>
       </S.Wrapper>
     </S.Container>
   );

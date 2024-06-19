@@ -2,12 +2,15 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+
+import useTeamStore from './stores/team';
 import usePlayerStore from './stores/player';
 import Loading from './components/loading';
 import Background from './components/background';
 
 const Init = ({ children }: { children: ReactNode }) => {
-  const { fetchAllTeams, fetchAllHitters, fetchAllPitchers } = usePlayerStore();
+  const { fetchAllHitters, fetchAllPitchers } = usePlayerStore();
+  const { fetchAllTeams } = useTeamStore();
   const [isLoading, setIsLoading] = useState(true);
   const pathname = usePathname();
 
