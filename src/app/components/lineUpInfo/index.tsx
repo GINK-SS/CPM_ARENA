@@ -5,6 +5,7 @@ import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
 
+import { isHitter, isTeamBuff } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
 import { Buff, Record } from '@/app/stores/buff/types';
 
@@ -38,8 +39,6 @@ const LineUpInfo = () => {
   };
   const buffOrder: (Team | Record)[] = [...selectedTeams, 'all_star', 'golden_glove', 'mvp'];
 
-  const isTeamBuff = (buff: Team | Record): buff is Team => !!(buff as Team).id;
-
   const onReset = () => {
     setSelectedLineup({ action: 'CLEAR' });
     clearBuff();
@@ -55,11 +54,11 @@ const LineUpInfo = () => {
         <S.HeaderRight>
           <S.PlayerNumberWrapper>
             <span>타자</span>
-            <span>{`${selectedLineup.filter((player) => !!player.batting_all).length} / 9`}</span>
+            <span>{`${selectedLineup.filter((player) => isHitter(player)).length} / 9`}</span>
           </S.PlayerNumberWrapper>
           <S.PlayerNumberWrapper>
             <span>투수</span>
-            <span>{`${selectedLineup.filter((player) => !player.batting_all).length} / 10`}</span>
+            <span>{`${selectedLineup.filter((player) => !isHitter(player)).length} / 10`}</span>
           </S.PlayerNumberWrapper>
         </S.HeaderRight>
       </S.Header>
