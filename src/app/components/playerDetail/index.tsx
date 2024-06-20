@@ -13,21 +13,21 @@ import * as S from './styles';
 const PlayerDetail = () => {
   const { selectedPlayer, isShowDetail } = usePlayerStore();
   const { allTeams } = useTeamStore();
-  const hitterStat = {
+  const hitterStat: { [key: string]: keyof Hitter } = {
     타격: 'batting_all',
     장타: 'long_all',
     선구: 'eye_all',
     주루: 'running',
     수비: 'defense',
   };
-  const pitcherStat = {
+  const pitcherStat: { [key: string]: keyof Pitcher } = {
     변화: 'pitch_all',
     제구: 'control_all',
     구위: 'stuff_all',
     멘탈: 'mental',
     체력: 'stamina',
   };
-  const hitterStatDetail = {
+  const hitterStatDetail: { [key: string]: keyof Hitter } = {
     '타격(우투)': 'batting_right',
     '장타(우투)': 'long_right',
     '타격(좌투)': 'batting_left',
@@ -35,7 +35,7 @@ const PlayerDetail = () => {
     '타격(언더)': 'batting_under',
     '장타(언더)': 'long_under',
   };
-  const pitcherStatDetail = {
+  const pitcherStatDetail: { [key: string]: keyof Pitcher } = {
     '변화(우타)': 'pitch_right',
     '변화(좌타)': 'pitch_left',
     '제구(우타)': 'control_right',
@@ -104,7 +104,9 @@ const PlayerDetail = () => {
                   {Object.entries(hitterStat).map((value, index) => (
                     <S.MainStatWrapper key={index}>
                       <span>{value[0]}</span>
-                      <S.MainStatValue $stat={selectedPlayer[value[1]]}>{selectedPlayer[value[1]]}</S.MainStatValue>
+                      <S.MainStatValue $stat={selectedPlayer[value[1]] as number}>
+                        {selectedPlayer[value[1]]}
+                      </S.MainStatValue>
                     </S.MainStatWrapper>
                   ))}
                 </S.MainStatContainer>
@@ -142,7 +144,9 @@ const PlayerDetail = () => {
                   {Object.entries(pitcherStat).map((value, index) => (
                     <S.MainStatWrapper key={index}>
                       <span>{value[0]}</span>
-                      <S.MainStatValue $stat={selectedPlayer[value[1]]}>{selectedPlayer[value[1]]}</S.MainStatValue>
+                      <S.MainStatValue $stat={selectedPlayer[value[1]] as number}>
+                        {selectedPlayer[value[1]]}
+                      </S.MainStatValue>
                     </S.MainStatWrapper>
                   ))}
                 </S.MainStatContainer>
