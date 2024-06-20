@@ -5,6 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 
+import { isHitter } from '@/app/util/decideType';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 
 import * as S from './styles';
@@ -205,12 +206,6 @@ const PlayerDetail = () => {
     </AnimatePresence>
   );
 };
-
-function isHitter(player: Hitter | Pitcher): player is Hitter {
-  const hitterPositionList = ['포수', '1루수', '2루수', '3루수', '유격수', '외야수'];
-
-  return hitterPositionList.includes(player.position);
-}
 
 function setPitchesFourAmount(pitches: string[]) {
   const newPitches = [...pitches];

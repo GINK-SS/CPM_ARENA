@@ -5,6 +5,7 @@ import useBuffStore from '@/app/stores/buff';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 
 import * as S from './styles';
+import { isHitter } from '@/app/util/decideType';
 
 type TableItemProps = {
   player: Hitter | Pitcher;
@@ -29,8 +30,8 @@ const TablePlayer = ({ player }: TableItemProps) => {
       return;
     }
 
-    if (!!player.batting_all && selectedLineup.filter((player) => !!player.batting_all).length >= 9) return;
-    if (!!player.pitch_all && selectedLineup.filter((player) => !player.batting_all).length >= 10) return;
+    if (isHitter(player) && selectedLineup.filter((player) => isHitter(player)).length >= 9) return;
+    if (!isHitter(player) && selectedLineup.filter((player) => !isHitter(player)).length >= 10) return;
 
     setSelectedLineup({ player, action: 'ADD' });
     setBuff({ player, teamIdx, action: 'ADD' });

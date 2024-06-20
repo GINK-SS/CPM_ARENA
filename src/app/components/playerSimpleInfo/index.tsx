@@ -4,6 +4,8 @@ import { IoSearchOutline } from 'react-icons/io5';
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 
+import { isHitter } from '@/app/util/decideType';
+
 import * as S from './styles';
 
 const PlayerSimpleInfo = () => {
@@ -47,33 +49,33 @@ const PlayerSimpleInfo = () => {
 
             <S.StatContainer>
               <S.StatWrapper>
-                <S.StatName>{selectedPlayer.batting_all ? '타격' : '변화'}</S.StatName>
-                <S.StatValue $stat={selectedPlayer.batting_all ?? selectedPlayer.pitch_all}>
-                  {selectedPlayer.batting_all ?? selectedPlayer.pitch_all}
+                <S.StatName>{isHitter(selectedPlayer) ? '타격' : '변화'}</S.StatName>
+                <S.StatValue $stat={isHitter(selectedPlayer) ? selectedPlayer.batting_all : selectedPlayer.pitch_all}>
+                  {isHitter(selectedPlayer) ? selectedPlayer.batting_all : selectedPlayer.pitch_all}
                 </S.StatValue>
               </S.StatWrapper>
               <S.StatWrapper>
-                <S.StatName>{selectedPlayer.long_all ? '장타' : '제구'}</S.StatName>
-                <S.StatValue $stat={selectedPlayer.long_all ?? selectedPlayer.control_all}>
-                  {selectedPlayer.long_all ?? selectedPlayer.control_all}
+                <S.StatName>{isHitter(selectedPlayer) ? '장타' : '제구'}</S.StatName>
+                <S.StatValue $stat={isHitter(selectedPlayer) ? selectedPlayer.long_all : selectedPlayer.control_all}>
+                  {isHitter(selectedPlayer) ? selectedPlayer.long_all : selectedPlayer.control_all}
                 </S.StatValue>
               </S.StatWrapper>
               <S.StatWrapper>
-                <S.StatName>{selectedPlayer.eye_all ? '선구' : '구위'}</S.StatName>
-                <S.StatValue $stat={selectedPlayer.eye_all ?? selectedPlayer.stuff_all}>
-                  {selectedPlayer.eye_all ?? selectedPlayer.stuff_all}
+                <S.StatName>{isHitter(selectedPlayer) ? '선구' : '구위'}</S.StatName>
+                <S.StatValue $stat={isHitter(selectedPlayer) ? selectedPlayer.eye_all : selectedPlayer.stuff_all}>
+                  {isHitter(selectedPlayer) ? selectedPlayer.eye_all : selectedPlayer.stuff_all}
                 </S.StatValue>
               </S.StatWrapper>
               <S.StatWrapper>
-                <S.StatName>{selectedPlayer.running ? '주루' : '멘탈'}</S.StatName>
-                <S.StatValue $stat={selectedPlayer.running ?? selectedPlayer.mental}>
-                  {selectedPlayer.running ?? selectedPlayer.mental}
+                <S.StatName>{isHitter(selectedPlayer) ? '주루' : '멘탈'}</S.StatName>
+                <S.StatValue $stat={isHitter(selectedPlayer) ? selectedPlayer.running : selectedPlayer.mental}>
+                  {isHitter(selectedPlayer) ? selectedPlayer.running : selectedPlayer.mental}
                 </S.StatValue>
               </S.StatWrapper>
               <S.StatWrapper>
-                <S.StatName>{selectedPlayer.defense ? '수비' : '체력'}</S.StatName>
-                <S.StatValue $stat={selectedPlayer.defense ?? selectedPlayer.stamina}>
-                  {selectedPlayer.defense ?? selectedPlayer.stamina}
+                <S.StatName>{isHitter(selectedPlayer) ? '수비' : '체력'}</S.StatName>
+                <S.StatValue $stat={isHitter(selectedPlayer) ? selectedPlayer.defense : selectedPlayer.stamina}>
+                  {isHitter(selectedPlayer) ? selectedPlayer.defense : selectedPlayer.stamina}
                 </S.StatValue>
               </S.StatWrapper>
             </S.StatContainer>
