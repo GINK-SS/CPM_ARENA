@@ -27,7 +27,6 @@ export type Hitter = {
   golden_glove: boolean;
   mvp_league: boolean;
   mvp_korea: boolean;
-  [key: string]: any;
 };
 
 export type Pitcher = {
@@ -53,7 +52,6 @@ export type Pitcher = {
   golden_glove: boolean;
   mvp_league: boolean;
   mvp_korea: boolean;
-  [key: string]: any;
 };
 
 export type PlayerStoreState = {
