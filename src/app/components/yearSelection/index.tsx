@@ -2,11 +2,12 @@ import React from 'react';
 
 import useYearStore from '@/app/stores/year';
 import useTeamStore from '@/app/stores/team';
+import { YEAR_LIST } from '@/app/const';
 
 import * as S from './styles';
 
 const YearSelection = () => {
-  const { selectedYear, yearList, setYear, setShowYearList } = useYearStore();
+  const { selectedYear, setYear, setShowYearList } = useYearStore();
   const { resetTeams } = useTeamStore();
 
   const onYearClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -26,7 +27,7 @@ const YearSelection = () => {
         damping: 20,
       }}
     >
-      {yearList.map((item, index) => (
+      {YEAR_LIST.map((item, index) => (
         <S.Item
           key={index}
           value={item ?? 0}

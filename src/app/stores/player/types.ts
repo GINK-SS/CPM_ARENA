@@ -67,7 +67,3 @@ export type PlayerStoreState = {
   fetchAllHitters: () => Promise<void>;
   fetchAllPitchers: () => Promise<void>;
 };
-
-export type PositionLimit = {
-  [key: string]: number;
-};

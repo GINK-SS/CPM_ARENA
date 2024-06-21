@@ -6,6 +6,7 @@ import useYearStore from '@/app/stores/year';
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
+import { HITTER_POSITION_ORDER, PITCHER_POSITION_ORDER, POSITION_LIMIT } from '@/app/const';
 import TablePlayer from '../tablePlayer';
 import PlayerDetail from '../playerDetail';
 import PlayerSimpleInfo from '../playerSimpleInfo';
@@ -13,7 +14,7 @@ import LineUpInfo from '../lineUpInfo';
 import Menu from '../menu';
 import Loading from '../loading';
 
-import { Hitter, Pitcher, PositionLimit } from '@/app/stores/player/types';
+import { Hitter, Pitcher } from '@/app/stores/player/types';
 
 import * as S from './styles';
 
@@ -24,19 +25,6 @@ const TablePosition = () => {
   const { isMenu, overallLimit, closeMenu } = useTableStore();
   const [isLoading, setIsLoading] = useState(true);
   const [tableComponent, setTableComponent] = useState<ReactNode>();
-  const positionLimit: PositionLimit = {
-    포수: 2,
-    '1루수': 2,
-    '2루수': 2,
-    '3루수': 2,
-    유격수: 2,
-    외야수: 5,
-    선발: 5,
-    계투: 5,
-    마무리: 2,
-  };
-  const hitterPositionOrder = ['포수', '1루수', '2루수', '3루수', '유격수', '외야수'];
-  const pitcherPositionOrder = ['선발', '계투', '마무리'];
 
   useEffect(() => {
     if (!selectedTeams.length) return;
@@ -108,13 +96,13 @@ const TablePosition = () => {
   }, [selectedTeams, overallLimit]);
 
   const hitArrangePlayers = (players: (Hitter | Pitcher)[]) => {
-    const arranged = hitterPositionOrder.map((position) => ({
+    const arranged = HITTER_POSITION_ORDER.map((position) => ({
       position,
       players: players.filter((player) => player.position === position),
     }));
 
     arranged.forEach((item) => {
-      const limit = positionLimit[item.position];
+      const limit = POSITION_LIMIT[item.position];
       const shortage = limit - item.players.length;
 
       if (shortage > 0) {
@@ -128,13 +116,13 @@ const TablePosition = () => {
   };
 
   const pitchArrangePlayers = (players: (Hitter | Pitcher)[]) => {
-    const arranged = pitcherPositionOrder.map((position) => ({
+    const arranged = PITCHER_POSITION_ORDER.map((position) => ({
       position,
       players: players.filter((player) => player.position === position),
     }));
 
     arranged.forEach((item) => {
-      const limit = positionLimit[item.position];
+      const limit = POSITION_LIMIT[item.position];
       const shortage = limit - item.players.length;
 
       if (shortage > 0) {
@@ -181,7 +169,7 @@ const TablePosition = () => {
 
         <S.TableContainer>
           <S.PositionTitleBox>
-            {Object.entries(positionLimit).map((limit) => (
+            {Object.entries(POSITION_LIMIT).map((limit) => (
               <S.PositionTitle key={limit[0]} $heightNum={limit[1]}>
                 {limit[0]}
               </S.PositionTitle>

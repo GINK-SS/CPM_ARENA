@@ -4,46 +4,15 @@ import { AnimatePresence } from 'framer-motion';
 
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
+import { HITTER_STAT, HITTER_STAT_DETAIL, PITCHER_STAT, PITCHER_STAT_DETAIL } from '@/app/const';
 
 import { isHitter } from '@/app/util/decideType';
-import { Hitter, Pitcher } from '@/app/stores/player/types';
 
 import * as S from './styles';
 
 const PlayerDetail = () => {
   const { selectedPlayer, isShowDetail } = usePlayerStore();
   const { allTeams } = useTeamStore();
-  const hitterStat: { [key: string]: keyof Hitter } = {
-    타격: 'batting_all',
-    장타: 'long_all',
-    선구: 'eye_all',
-    주루: 'running',
-    수비: 'defense',
-  };
-  const pitcherStat: { [key: string]: keyof Pitcher } = {
-    변화: 'pitch_all',
-    제구: 'control_all',
-    구위: 'stuff_all',
-    멘탈: 'mental',
-    체력: 'stamina',
-  };
-  const hitterStatDetail: { [key: string]: keyof Hitter } = {
-    '타격(우투)': 'batting_right',
-    '장타(우투)': 'long_right',
-    '타격(좌투)': 'batting_left',
-    '장타(좌투)': 'long_left',
-    '타격(언더)': 'batting_under',
-    '장타(언더)': 'long_under',
-  };
-  const pitcherStatDetail: { [key: string]: keyof Pitcher } = {
-    '변화(우타)': 'pitch_right',
-    '변화(좌타)': 'pitch_left',
-    '제구(우타)': 'control_right',
-    '제구(좌타)': 'control_left',
-    '구위(우타)': 'stuff_right',
-    '구위(좌타)': 'stuff_left',
-  };
-
   const [scale, setScale] = useState(1);
 
   useEffect(() => {
@@ -101,7 +70,7 @@ const PlayerDetail = () => {
             {isHitter(selectedPlayer) ? (
               <>
                 <S.MainStatContainer>
-                  {Object.entries(hitterStat).map((value, index) => (
+                  {Object.entries(HITTER_STAT).map((value, index) => (
                     <S.MainStatWrapper key={index}>
                       <span>{value[0]}</span>
                       <S.MainStatValue $stat={selectedPlayer[value[1]] as number}>
@@ -141,7 +110,7 @@ const PlayerDetail = () => {
             ) : (
               <>
                 <S.MainStatContainer>
-                  {Object.entries(pitcherStat).map((value, index) => (
+                  {Object.entries(PITCHER_STAT).map((value, index) => (
                     <S.MainStatWrapper key={index}>
                       <span>{value[0]}</span>
                       <S.MainStatValue $stat={selectedPlayer[value[1]] as number}>
@@ -177,7 +146,7 @@ const PlayerDetail = () => {
           <S.BottomContainer>
             {isHitter(selectedPlayer) ? (
               <S.DetailStatContainer>
-                {Object.entries(hitterStatDetail).map((value, index) => (
+                {Object.entries(HITTER_STAT_DETAIL).map((value, index) => (
                   <S.DetailStatWrapper key={index}>
                     <S.DetailStatName>{value[0]}</S.DetailStatName>
                     <S.DetailStatValue>{selectedPlayer[value[1]]}</S.DetailStatValue>
@@ -186,7 +155,7 @@ const PlayerDetail = () => {
               </S.DetailStatContainer>
             ) : (
               <S.DetailStatContainer>
-                {Object.entries(pitcherStatDetail).map((value, index) => (
+                {Object.entries(PITCHER_STAT_DETAIL).map((value, index) => (
                   <S.DetailStatWrapper key={index}>
                     <S.DetailStatName>{value[0]}</S.DetailStatName>
                     <S.DetailStatValue>{selectedPlayer[value[1]]}</S.DetailStatValue>
