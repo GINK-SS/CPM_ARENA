@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import MainTitle from './components/home/title';
 import Selection from './components/home/selection';
 import SubmitBtn from './components/home/submitBtn';
-import Footer from './components/footer';
+import Footer from './components/home/footer';
 
 export default function Home() {
   return (

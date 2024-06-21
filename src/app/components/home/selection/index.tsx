@@ -1,16 +1,16 @@
-import { useEffect } from 'react';
 import Image from 'next/image';
+import { useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
 import useYearStore from '@/app/stores/year';
 import useTeamStore from '@/app/stores/team';
-import YearSelection from '../../yearSelection';
-import TeamSelection from '../../teamSelection';
+import YearSelection from '../yearSelection';
+import TeamSelection from '../teamSelection';
 
 import * as S from './styles';
 
 const Selection = () => {
-  const { isShow: isShowOfYear, selectedYear, setShowYearList } = useYearStore();
+  const { isPopupActive: isYearPopupActive, selectedYear, openPopup: openYearPopup } = useYearStore();
   const {
     isPopupActive: isTeamPopupActive,
     allTeams,
@@ -19,30 +19,32 @@ const Selection = () => {
     closePopup: closeTeamPopup,
   } = useTeamStore();
 
-  const onTeamList = () => {
+  useEffect(() => {
+    if (selectedTeams.length === 5) {
+      closeTeamPopup();
+    }
+  }, [closeTeamPopup, selectedTeams]);
+
+  const onTeamClick = () => {
     if (!selectedYear) return;
 
     openTeamPopup();
   };
 
-  useEffect(() => {
-    if (selectedTeams.length === 5) closeTeamPopup();
-  }, [closeTeamPopup, selectedTeams]);
-
   return (
     <S.Container>
       <S.Wrapper>
-        <S.Button $hasData={!!selectedYear} onClick={setShowYearList} $isActive>
+        <S.Button $hasData={!!selectedYear} onClick={openYearPopup} $isActive>
           {selectedYear ? `IN ${selectedYear}` : 'YEAR'}
         </S.Button>
 
-        <AnimatePresence>{isShowOfYear && <YearSelection />}</AnimatePresence>
+        <AnimatePresence>{isYearPopupActive && <YearSelection />}</AnimatePresence>
       </S.Wrapper>
 
       <S.Wrapper>
         <S.Button
           $hasData={selectedTeams.length === 5}
-          onClick={onTeamList}
+          onClick={onTeamClick}
           $isActive={!!selectedYear}
           disabled={!selectedYear}
         >

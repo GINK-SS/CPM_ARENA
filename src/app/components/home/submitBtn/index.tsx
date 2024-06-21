@@ -9,7 +9,7 @@ import useBuffStore from '@/app/stores/buff';
 import * as S from './styles';
 
 const SubmitBtn = () => {
-  const { selectedYear, closeYearList } = useYearStore();
+  const { selectedYear, closePopup: closeYearPopup } = useYearStore();
   const { allTeams, selectedTeams, closePopup: closeTeamPopup } = useTeamStore();
   const { setSelectedPlayer, setSelectedLineup } = usePlayerStore();
   const { closeMenu, setOverallLimit } = useTableStore();
@@ -17,7 +17,7 @@ const SubmitBtn = () => {
   const router = useRouter();
 
   const onSubmit = () => {
-    closeYearList();
+    closeYearPopup();
     closeTeamPopup();
     closeMenu();
     setOverallLimit(69);
