@@ -2,13 +2,13 @@ import { create } from 'zustand';
 import { YearStoreState } from './types';
 
 const useYearStore = create<YearStoreState>((set) => ({
-  isShow: false,
+  isPopupActive: false,
   selectedYear: null,
-  setShowYearList: () => {
-    set((state) => ({ isShow: !state.isShow }));
+  openPopup: () => {
+    set(() => ({ isPopupActive: true }));
   },
-  closeYearList: () => {
-    set(() => ({ isShow: false }));
+  closePopup: () => {
+    set(() => ({ isPopupActive: false }));
   },
   setYear: (newYear: number) => {
     set(() => ({ selectedYear: newYear }));

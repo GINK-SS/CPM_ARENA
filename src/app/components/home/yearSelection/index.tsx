@@ -7,12 +7,12 @@ import { YEAR_LIST } from '@/app/const';
 import * as S from './styles';
 
 const YearSelection = () => {
-  const { selectedYear, setYear, setShowYearList } = useYearStore();
+  const { selectedYear, setYear, closePopup } = useYearStore();
   const { resetTeams } = useTeamStore();
 
   const onYearClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setYear(Number(e.currentTarget.value));
-    setShowYearList();
+    closePopup();
     resetTeams();
   };
 

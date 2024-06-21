@@ -9,7 +9,7 @@ import * as S from './styles';
 
 const TeamSelection = () => {
   const { selectedYear } = useYearStore();
-  const { allTeams, selectedTeams, setTeams } = useTeamStore();
+  const { allTeams, selectedTeams, setTeams, closePopup } = useTeamStore();
 
   const onTeamClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const selectedTeam = allTeams.find((team) => team.id === e.currentTarget.value) as Team;

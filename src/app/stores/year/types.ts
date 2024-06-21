@@ -1,7 +1,7 @@
 export type YearStoreState = {
-  isShow: boolean;
+  isPopupActive: boolean;
   selectedYear: number | null;
-  setShowYearList: () => void;
-  closeYearList: () => void;
+  openPopup: () => void;
+  closePopup: () => void;
   setYear: (newYear: number) => void;
 };
