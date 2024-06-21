@@ -4,10 +4,11 @@ import Image from 'next/image';
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
+import { BUFF_LIST } from '@/app/const';
 
 import { isHitter, isTeamBuff } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
-import { Buff, Record } from '@/app/stores/buff/types';
+import { Record } from '@/app/stores/buff/types';
 
 import * as S from './styles';
 
@@ -15,28 +16,6 @@ const LineUpInfo = () => {
   const { selectedLineup, setSelectedLineup } = usePlayerStore();
   const { allTeams, selectedTeams } = useTeamStore();
   const { currentBuff, clearBuff } = useBuffStore();
-
-  const buffList: { [key in Buff]: { name?: string; grades: number[]; gradeValues: number[] } } = {
-    team: {
-      grades: [2, 4, 6, 9],
-      gradeValues: [3, 6, 9, 10],
-    },
-    all_star: {
-      name: '올스타',
-      grades: [5, 9, 12],
-      gradeValues: [2, 3, 4],
-    },
-    golden_glove: {
-      name: '골글',
-      grades: [2, 3, 5],
-      gradeValues: [2, 3, 5],
-    },
-    mvp: {
-      name: 'MVP',
-      grades: [1, 2],
-      gradeValues: [2, 4],
-    },
-  };
   const buffOrder: (Team | Record)[] = [...selectedTeams, 'all_star', 'golden_glove', 'mvp'];
 
   const onReset = () => {
@@ -69,7 +48,7 @@ const LineUpInfo = () => {
             <S.BuffWrapper key={index}>
               <S.BuffTitleWrapper>
                 {!isTeamBuff(buff) ? (
-                  <S.BuffName>{buffList[buff]?.name}</S.BuffName>
+                  <S.BuffName>{BUFF_LIST[buff]?.name}</S.BuffName>
                 ) : (
                   <S.BuffLogo>
                     <Image src={allTeams.find((team) => team === buff)?.logo || ''} alt={buff.id} layout='fill' />
@@ -78,7 +57,7 @@ const LineUpInfo = () => {
 
                 <S.BuffCurrentNumberWrapper
                   $isActive={
-                    buffList[isTeamBuff(buff) ? 'team' : buff].grades[0] <=
+                    BUFF_LIST[isTeamBuff(buff) ? 'team' : buff].grades[0] <=
                     (isTeamBuff(buff) ? currentBuff.teams[selectedTeams.indexOf(buff)] : currentBuff[buff])
                   }
                 >
@@ -92,7 +71,7 @@ const LineUpInfo = () => {
                   </S.BuffCurrentNumber>
                 </S.BuffCurrentNumberWrapper>
                 <S.BuffGradeWrapper>
-                  {(isTeamBuff(buff) ? buffList.team.grades : buffList[buff].grades).map((grade) => (
+                  {(isTeamBuff(buff) ? BUFF_LIST.team.grades : BUFF_LIST[buff].grades).map((grade) => (
                     <S.BuffGrade
                       key={grade}
                       $isActive={
@@ -110,36 +89,36 @@ const LineUpInfo = () => {
               <S.BuffValue
                 $value={
                   isTeamBuff(buff)
-                    ? buffList.team.grades.findLastIndex(
+                    ? BUFF_LIST.team.grades.findLastIndex(
                         (grade) => grade <= currentBuff.teams[selectedTeams.indexOf(buff)]
                       ) === -1
                       ? 0
-                      : buffList.team.gradeValues[
-                          buffList.team.grades.findLastIndex(
+                      : BUFF_LIST.team.gradeValues[
+                          BUFF_LIST.team.grades.findLastIndex(
                             (grade) => grade <= currentBuff.teams[selectedTeams.indexOf(buff)]
                           )
                         ]
-                    : buffList[buff].grades.findLastIndex((grade) => grade <= currentBuff[buff]) === -1
+                    : BUFF_LIST[buff].grades.findLastIndex((grade) => grade <= currentBuff[buff]) === -1
                     ? 0
-                    : buffList[buff]?.gradeValues[
-                        buffList[buff]?.grades.findLastIndex((grade) => grade <= currentBuff[buff])
+                    : BUFF_LIST[buff]?.gradeValues[
+                        BUFF_LIST[buff]?.grades.findLastIndex((grade) => grade <= currentBuff[buff])
                       ]
                 }
               >{`+${
                 isTeamBuff(buff)
-                  ? buffList.team.grades.findLastIndex(
+                  ? BUFF_LIST.team.grades.findLastIndex(
                       (grade) => grade <= currentBuff.teams[selectedTeams.indexOf(buff)]
                     ) === -1
                     ? 0
-                    : buffList.team.gradeValues[
-                        buffList.team.grades.findLastIndex(
+                    : BUFF_LIST.team.gradeValues[
+                        BUFF_LIST.team.grades.findLastIndex(
                           (grade) => grade <= currentBuff.teams[selectedTeams.indexOf(buff)]
                         )
                       ]
-                  : buffList[buff].grades.findLastIndex((grade) => grade <= currentBuff[buff]) === -1
+                  : BUFF_LIST[buff].grades.findLastIndex((grade) => grade <= currentBuff[buff]) === -1
                   ? 0
-                  : buffList[buff]?.gradeValues[
-                      buffList[buff]?.grades.findLastIndex((grade) => grade <= currentBuff[buff])
+                  : BUFF_LIST[buff]?.gradeValues[
+                      BUFF_LIST[buff]?.grades.findLastIndex((grade) => grade <= currentBuff[buff])
                     ]
               }`}</S.BuffValue>
             </S.BuffWrapper>
@@ -156,19 +135,19 @@ const LineUpInfo = () => {
                 (acc, curr) =>
                   acc +
                   (isTeamBuff(curr)
-                    ? buffList.team.grades.findLastIndex(
+                    ? BUFF_LIST.team.grades.findLastIndex(
                         (grade) => grade <= currentBuff.teams[selectedTeams.indexOf(curr)]
                       ) === -1
                       ? 0
-                      : buffList.team.gradeValues[
-                          buffList.team.grades.findLastIndex(
+                      : BUFF_LIST.team.gradeValues[
+                          BUFF_LIST.team.grades.findLastIndex(
                             (grade) => grade <= currentBuff.teams[selectedTeams.indexOf(curr)]
                           )
                         ]
-                    : buffList[curr].grades.findLastIndex((grade) => grade <= currentBuff[curr]) === -1
+                    : BUFF_LIST[curr].grades.findLastIndex((grade) => grade <= currentBuff[curr]) === -1
                     ? 0
-                    : buffList[curr]?.gradeValues[
-                        buffList[curr]?.grades.findLastIndex((grade) => grade <= currentBuff[curr])
+                    : BUFF_LIST[curr]?.gradeValues[
+                        BUFF_LIST[curr]?.grades.findLastIndex((grade) => grade <= currentBuff[curr])
                       ]) *
                     (isTeamBuff(curr) ? currentBuff.teams[selectedTeams.indexOf(curr)] : currentBuff[curr]),
                 0

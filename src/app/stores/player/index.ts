@@ -1,4 +1,7 @@
 import { create } from 'zustand';
+
+import { FIRST_YEAR } from '@/app/const';
+
 import { Hitter, Pitcher, PlayerStoreState } from './types';
 
 const usePlayerStore = create<PlayerStoreState>((set) => ({
@@ -29,7 +32,9 @@ const usePlayerStore = create<PlayerStoreState>((set) => ({
     const hitters: Hitter[] = await fetch('/storage/hitters.json').then((res) => res.json());
 
     set(() => {
-      const allHitters: Map<number, Hitter[]> = new Map(new Array(42).fill(1982).map((year, idx) => [year + idx, []]));
+      const allHitters: Map<number, Hitter[]> = new Map(
+        new Array(42).fill(FIRST_YEAR).map((year, idx) => [year + idx, []])
+      );
       hitters.forEach((hitter) => {
         allHitters.get(hitter.year)?.push(hitter);
       });
@@ -42,7 +47,7 @@ const usePlayerStore = create<PlayerStoreState>((set) => ({
 
     set(() => {
       const allPitchers: Map<number, Pitcher[]> = new Map(
-        new Array(42).fill(1982).map((year, idx) => [year + idx, []])
+        new Array(42).fill(FIRST_YEAR).map((year, idx) => [year + idx, []])
       );
       pitchers.forEach((pitcher) => {
         allPitchers.get(pitcher.year)?.push(pitcher);
