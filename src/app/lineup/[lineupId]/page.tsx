@@ -38,21 +38,25 @@ export async function generateMetadata({ params }: MetaProps, parent: ResolvingM
   }
 
   return {
-    title: `${params.lineupId.slice(0, 4)}년 아레나 [${selectedTeams.join(' ')}] | 컴프매 아레나 도우미`,
-    description: `${params.lineupId.slice(0, 4)}년 [${selectedTeams.join(' ')}] 아레나 - 최적의 라인업을 구성해보세요!`,
+    title: `${paramYear}년 아레나 [${selectedTeams.join(' ')}] | 컴프매 아레나 도우미`,
+    description: `${paramYear}년 [${selectedTeams.join(' ')}] 아레나 - 최적의 라인업을 구성해보세요!`,
     openGraph: {
+      type: 'website',
       url: `/lineup/${lineupId}`,
-      title: `${params.lineupId.slice(0, 4)}년 아레나 [${selectedTeams.join(' ')}] | 컴프매 아레나 도우미`,
-      description: `${params.lineupId.slice(0, 4)}년 [${selectedTeams.join(
-        ' '
-      )}] 아레나 - 최적의 라인업을 구성해보세요!`,
+      title: `${paramYear}년 아레나 [${selectedTeams.join(' ')}] | 컴프매 아레나 도우미`,
+      description: `${paramYear}년 [${selectedTeams.join(' ')}] 아레나 - 최적의 라인업을 구성해보세요!`,
+      siteName: '컴프매 아레나 도우미 | com2usManager Arena Helper',
+      images: [
+        {
+          url: '/assets/metaImg.png',
+        },
+      ],
     },
     twitter: {
       site: `/lineup/${lineupId}`,
-      title: `${params.lineupId.slice(0, 4)}년 아레나 [${selectedTeams.join(' ')}] | 컴프매 아레나 도우미`,
-      description: `${params.lineupId.slice(0, 4)}년 [${selectedTeams.join(
-        ' '
-      )}] 아레나 - 최적의 라인업을 구성해보세요!`,
+      title: `${paramYear}년 아레나 [${selectedTeams.join(' ')}] | 컴프매 아레나 도우미`,
+      description: `${paramYear}년 [${selectedTeams.join(' ')}] 아레나 - 최적의 라인업을 구성해보세요!`,
+      images: '/assets/metaImg.png',
     },
   };
 }
