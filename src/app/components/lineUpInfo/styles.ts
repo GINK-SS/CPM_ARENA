@@ -217,27 +217,6 @@ export const Footer = styled.div`
   justify-content: space-between;
 `;
 
-export const PowerWrapper = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  font-weight: 600;
-  font-size: 24px;
-
-  @media (max-width: 353px) {
-    font-size: 17px;
-  }
-`;
-
-export const PowerValue = styled.span`
-  width: 56px;
-  text-align: center;
-
-  @media (max-width: 353px) {
-    width: 40px;
-  }
-`;
-
 export const ResetBtn = styled.button`
   padding: 4px 10px;
   font-size: 14px;

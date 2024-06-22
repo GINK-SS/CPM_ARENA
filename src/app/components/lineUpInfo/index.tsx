@@ -5,6 +5,7 @@ import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
 import { BUFF_LIST } from '@/app/const';
+import Total from './total';
 
 import { isHitter, isTeamBuff } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
@@ -127,33 +128,7 @@ const LineUpInfo = () => {
 
         <S.Footer>
           <S.ResetBtn onClick={onReset}>선택 초기화</S.ResetBtn>
-
-          <S.PowerWrapper>
-            <span>총 전력</span>
-            <S.PowerValue>
-              {buffOrder.reduce(
-                (acc, curr) =>
-                  acc +
-                  (isTeamBuff(curr)
-                    ? BUFF_LIST.team.grades.findLastIndex(
-                        (grade) => grade <= currentBuff.teams[selectedTeams.indexOf(curr)]
-                      ) === -1
-                      ? 0
-                      : BUFF_LIST.team.gradeValues[
-                          BUFF_LIST.team.grades.findLastIndex(
-                            (grade) => grade <= currentBuff.teams[selectedTeams.indexOf(curr)]
-                          )
-                        ]
-                    : BUFF_LIST[curr].grades.findLastIndex((grade) => grade <= currentBuff[curr]) === -1
-                    ? 0
-                    : BUFF_LIST[curr]?.gradeValues[
-                        BUFF_LIST[curr]?.grades.findLastIndex((grade) => grade <= currentBuff[curr])
-                      ]) *
-                    (isTeamBuff(curr) ? currentBuff.teams[selectedTeams.indexOf(curr)] : currentBuff[curr]),
-                0
-              ) + selectedLineup.reduce((acc, curr) => acc + curr.overall, 0)}
-            </S.PowerValue>
-          </S.PowerWrapper>
+          <Total />
         </S.Footer>
       </S.Content>
     </S.Container>
