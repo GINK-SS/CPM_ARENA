@@ -3,6 +3,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
+import InfoBox from '../infoBox';
 import Stat from './stat';
 
 import * as S from './styles';
@@ -16,19 +17,16 @@ const PlayerSimpleInfo = () => {
   };
 
   return (
-    <S.Container>
-      <S.Header>
-        <S.HeaderLeft>
-          ARENA <span>선수 정보</span>
-        </S.HeaderLeft>
-
+    <InfoBox
+      title='선수 정보'
+      headerRight={
         <S.RecordWrapper>
           <S.Record $value={selectedPlayer?.all_star ? 'A' : ''}>A</S.Record>
           <S.Record $value={selectedPlayer?.golden_glove ? 'G' : ''}>G</S.Record>
           <S.Record $value={selectedPlayer?.mvp_korea || selectedPlayer?.mvp_league ? 'M' : ''}>M</S.Record>
         </S.RecordWrapper>
-      </S.Header>
-
+      }
+    >
       <S.Content>
         {selectedPlayer && (
           <>
@@ -54,7 +52,7 @@ const PlayerSimpleInfo = () => {
           </>
         )}
       </S.Content>
-    </S.Container>
+    </InfoBox>
   );
 };
 
