@@ -7,12 +7,12 @@ import { BUFF_LIST } from '@/app/const';
 
 import { isTeamBuff } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
-import { Record } from '@/app/stores/buff/types';
+import { Records } from '@/app/stores/buff/types';
 
 import * as S from './styles';
 
 type BuffItemProps = {
-  buff: Team | Record;
+  buff: Team | Records;
 };
 
 const BuffItem = ({ buff }: BuffItemProps) => {

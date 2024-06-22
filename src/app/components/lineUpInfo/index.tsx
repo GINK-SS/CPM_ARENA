@@ -6,7 +6,7 @@ import Total from './total';
 
 import { isHitter } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
-import { Record } from '@/app/stores/buff/types';
+import { Records } from '@/app/stores/buff/types';
 
 import * as S from './styles';
 
@@ -14,7 +14,7 @@ const LineUpInfo = () => {
   const { selectedLineup, setSelectedLineup } = usePlayerStore();
   const { selectedTeams } = useTeamStore();
   const { clearBuff } = useBuffStore();
-  const buffOrder: (Team | Record)[] = [...selectedTeams, 'all_star', 'golden_glove', 'mvp'];
+  const buffOrder: (Team | Records)[] = [...selectedTeams, 'all_star', 'golden_glove', 'mvp'];
 
   const onReset = () => {
     setSelectedLineup({ action: 'CLEAR' });

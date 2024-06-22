@@ -5,7 +5,7 @@ import { BUFF_LIST } from '@/app/const';
 
 import { isTeamBuff } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
-import { Record } from '@/app/stores/buff/types';
+import { Records } from '@/app/stores/buff/types';
 
 import * as S from './styles';
 
@@ -13,7 +13,7 @@ const Total = () => {
   const { selectedTeams } = useTeamStore();
   const { selectedLineup } = usePlayerStore();
   const { currentBuff } = useBuffStore();
-  const buffOrder: (Team | Record)[] = [...selectedTeams, 'all_star', 'golden_glove', 'mvp'];
+  const buffOrder: (Team | Records)[] = [...selectedTeams, 'all_star', 'golden_glove', 'mvp'];
 
   return (
     <S.Wrapper>

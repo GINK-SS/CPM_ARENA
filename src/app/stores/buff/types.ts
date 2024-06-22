@@ -19,6 +19,6 @@ export type BuffStoreState = {
   clearBuff: () => void;
 };
 
-export type Buff = 'team' | Record;
+export type Buff = 'team' | Records;
 
-export type Record = 'all_star' | 'golden_glove' | 'mvp';
+export type Records = 'all_star' | 'golden_glove' | 'mvp';
