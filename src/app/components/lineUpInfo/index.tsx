@@ -1,6 +1,7 @@
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
+import InfoBox from '../infoBox';
 import BuffItem from './buffItem';
 import Total from './total';
 
@@ -22,24 +23,21 @@ const LineUpInfo = () => {
   };
 
   return (
-    <S.Container>
-      <S.Header>
-        <S.HeaderLeft>
-          ARENA <span>시너지 및 전력</span>
-        </S.HeaderLeft>
-
-        <S.HeaderRight>
-          <S.PlayerNumberWrapper>
+    <InfoBox
+      title='시너지 및 전력'
+      headerRight={
+        <S.PlayerNumber>
+          <S.Wrapper>
             <span>타자</span>
             <span>{`${selectedLineup.filter((player) => isHitter(player)).length} / 9`}</span>
-          </S.PlayerNumberWrapper>
-          <S.PlayerNumberWrapper>
+          </S.Wrapper>
+          <S.Wrapper>
             <span>투수</span>
             <span>{`${selectedLineup.filter((player) => !isHitter(player)).length} / 10`}</span>
-          </S.PlayerNumberWrapper>
-        </S.HeaderRight>
-      </S.Header>
-
+          </S.Wrapper>
+        </S.PlayerNumber>
+      }
+    >
       <S.Content>
         <S.BuffContainer>
           {buffOrder.map((buff, index) => (
@@ -52,7 +50,7 @@ const LineUpInfo = () => {
           <Total />
         </S.Footer>
       </S.Content>
-    </S.Container>
+    </InfoBox>
   );
 };
 
