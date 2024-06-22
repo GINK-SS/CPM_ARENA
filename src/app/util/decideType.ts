@@ -2,7 +2,7 @@ import { HITTER_POSITION_ORDER } from '../const';
 
 import { Hitter, Pitcher } from '../stores/player/types';
 import { Team } from '../stores/team/types';
-import { Record } from '../stores/buff/types';
+import { Records } from '../stores/buff/types';
 
 export const isHitter = (player: Hitter | Pitcher): player is Hitter => {
   const hitterPositionList = new Set(HITTER_POSITION_ORDER);
@@ -10,4 +10,4 @@ export const isHitter = (player: Hitter | Pitcher): player is Hitter => {
   return hitterPositionList.has(player.position);
 };
 
-export const isTeamBuff = (buff: Team | Record): buff is Team => !!(buff as Team).id;
+export const isTeamBuff = (buff: Team | Records): buff is Team => !!(buff as Team).id;
