@@ -26,10 +26,6 @@ const Menu = () => {
 
   const onReStart = () => {
     router.replace('/');
-    setOverallLimit(69);
-    setSelectedPlayer(null);
-    setSelectedLineup({ action: 'CLEAR' });
-    clearBuff();
   };
 
   return (
