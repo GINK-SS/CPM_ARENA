@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 
 import useTeamStore from './stores/team';
 import usePlayerStore from './stores/player';
-import Loading from './components/loading';
-import Background from './components/background';
+import Loading from './components/common/loading';
+import Background from './components/common/background';
 
 const Init = ({ children }: { children: ReactNode }) => {
   const { fetchAllHitters, fetchAllPitchers } = usePlayerStore();

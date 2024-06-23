@@ -26,7 +26,7 @@ const SubmitBtn = () => {
     clearBuff();
 
     router.push(
-      `/lineup/${selectedYear}${selectedTeams
+      `/entry/${selectedYear}${selectedTeams
         .map((selectedTeam) => allTeams.find((team) => team === selectedTeam)?.shorten)
         .join('')}`
     );

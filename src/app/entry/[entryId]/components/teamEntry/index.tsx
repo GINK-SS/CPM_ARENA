@@ -3,7 +3,8 @@ import Image from 'next/image';
 import useYearStore from '@/app/stores/year';
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
-import TablePlayer from '../tablePlayer';
+import EntryItem from '../entryItem';
+
 import { HITTER_POSITION_ORDER, PITCHER_POSITION_ORDER, POSITION_LIMIT } from '@/app/const';
 
 import { Team } from '@/app/stores/team/types';
@@ -70,7 +71,7 @@ const TeamEntry = ({ selectedTeam }: TeamEntryProps) => {
       {arrangePlayers().map((group, index) => (
         <S.PositionGroup key={index}>
           {group.players.map((player, iindex) => (
-            <TablePlayer key={iindex} player={player} />
+            <EntryItem key={iindex} player={player} />
           ))}
         </S.PositionGroup>
       ))}

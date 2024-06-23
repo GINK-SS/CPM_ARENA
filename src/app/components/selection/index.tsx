@@ -4,8 +4,8 @@ import { AnimatePresence } from 'framer-motion';
 
 import useYearStore from '@/app/stores/year';
 import useTeamStore from '@/app/stores/team';
-import YearSelection from '../yearSelection';
-import TeamSelection from '../teamSelection';
+import YearSelection from './yearSelection';
+import TeamSelection from './teamSelection';
 
 import * as S from './styles';
 

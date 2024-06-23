@@ -3,15 +3,15 @@ import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
 
 import { Hitter, Pitcher } from '@/app/stores/player/types';
-
-import * as S from './styles';
 import { isHitter } from '@/app/util/decideType';
 
-type TableItemProps = {
+import * as S from './styles';
+
+type EntryItemProps = {
   player: Hitter | Pitcher;
 };
 
-const TablePlayer = ({ player }: TableItemProps) => {
+const EntryItem = ({ player }: EntryItemProps) => {
   const { selectedTeams } = useTeamStore();
   const { selectedLineup, setSelectedLineup, setSelectedPlayer } = usePlayerStore();
   const { setBuff } = useBuffStore();
@@ -51,4 +51,4 @@ const TablePlayer = ({ player }: TableItemProps) => {
   );
 };
 
-export default TablePlayer;
+export default EntryItem;
