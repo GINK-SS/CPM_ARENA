@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import MainTitle from './components/home/title';
-import Selection from './components/home/selection';
-import SubmitBtn from './components/home/submitBtn';
-import Footer from './components/home/footer';
+import MainTitle from './components/title';
+import Selection from './components/selection';
+import SubmitBtn from './components/submitBtn';
+import Footer from './components/footer';
 
 export default function Home() {
   return (

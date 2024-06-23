@@ -1,16 +1,17 @@
 import { Metadata, ResolvingMetadata } from 'next';
-import LineupPage from './lineupPage';
+
+import EntryView from './components/entryView';
 
 import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
 
 type MetaProps = {
-  params: { lineupId: string };
+  params: { entryId: string };
 };
 
 export async function generateMetadata({ params }: MetaProps, parent: ResolvingMetadata): Promise<Metadata> {
-  const lineupId = params.lineupId;
-  const paramYear = +lineupId.slice(0, 4);
-  const paramTeams = lineupId.slice(4).match(/.{1,2}/g);
+  const entryId = params.entryId;
+  const paramYear = +entryId.slice(0, 4);
+  const paramTeams = entryId.slice(4).match(/.{1,2}/g);
   const selectedTeams = [];
 
   if (
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }: MetaProps, parent: ResolvingM
     description: `${paramYear}년 [${selectedTeams.join(' ')}] 아레나 - 최적의 라인업을 구성해보세요!`,
     openGraph: {
       type: 'website',
-      url: `/lineup/${lineupId}`,
+      url: `/entry/${entryId}`,
       title: `${paramYear}년 아레나 [${selectedTeams.join(' ')}] | 컴프매 아레나 도우미`,
       description: `${paramYear}년 [${selectedTeams.join(' ')}] 아레나 - 최적의 라인업을 구성해보세요!`,
       siteName: '컴프매 아레나 도우미 | com2usManager Arena Helper',
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: MetaProps, parent: ResolvingM
       ],
     },
     twitter: {
-      site: `/lineup/${lineupId}`,
+      site: `/entry/${entryId}`,
       title: `${paramYear}년 아레나 [${selectedTeams.join(' ')}] | 컴프매 아레나 도우미`,
       description: `${paramYear}년 [${selectedTeams.join(' ')}] 아레나 - 최적의 라인업을 구성해보세요!`,
       images: '/assets/metaImg.png',
@@ -62,5 +63,5 @@ export async function generateMetadata({ params }: MetaProps, parent: ResolvingM
 }
 
 export default function Page() {
-  return <LineupPage />;
+  return <EntryView />;
 }
