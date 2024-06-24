@@ -1,4 +1,5 @@
 import React from 'react';
+import { useShallow } from 'zustand/react/shallow';
 
 import useYearStore from '@/app/stores/year';
 import useTeamStore from '@/app/stores/team';
@@ -7,8 +8,10 @@ import { YEAR_LIST } from '@/app/const';
 import * as S from './styles';
 
 const YearSelection = () => {
-  const { selectedYear, setYear, closePopup } = useYearStore();
-  const { resetTeams } = useTeamStore();
+  const [selectedYear, setYear, closePopup] = useYearStore(
+    useShallow((state) => [state.selectedYear, state.setYear, state.closePopup])
+  );
+  const resetTeams = useTeamStore((state) => state.resetTeams);
 
   const onYearClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setYear(Number(e.currentTarget.value));

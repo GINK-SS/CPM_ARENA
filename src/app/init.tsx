@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useShallow } from 'zustand/react/shallow';
 
 import useTeamStore from './stores/team';
 import usePlayerStore from './stores/player';
@@ -9,8 +10,10 @@ import Loading from './components/common/loading';
 import Background from './components/common/background';
 
 const Init = ({ children }: { children: ReactNode }) => {
-  const { fetchAllHitters, fetchAllPitchers } = usePlayerStore();
-  const { fetchAllTeams } = useTeamStore();
+  const [fetchAllHitters, fetchAllPitchers] = usePlayerStore(
+    useShallow((state) => [state.fetchAllHitters, state.fetchAllPitchers])
+  );
+  const fetchAllTeams = useTeamStore((state) => state.fetchAllTeams);
   const [isLoading, setIsLoading] = useState(true);
   const pathname = usePathname();
 
