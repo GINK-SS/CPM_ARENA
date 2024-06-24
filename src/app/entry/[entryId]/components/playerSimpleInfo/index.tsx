@@ -35,7 +35,8 @@ const PlayerSimpleInfo = () => {
                 <Image
                   src={allTeams.find((team) => team.id === selectedPlayer.team)?.logo ?? ''}
                   alt={selectedPlayer.team}
-                  layout='fill'
+                  fill
+                  sizes='25px'
                   style={{ filter: 'drop-shadow(2px 2px 0 #333)' }}
                 />
               </S.Logo>

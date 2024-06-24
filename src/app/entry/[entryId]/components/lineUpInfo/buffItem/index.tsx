@@ -35,7 +35,7 @@ const BuffItem = ({ buff }: BuffItemProps) => {
           <S.Title>{BUFF_LIST[buff]?.name}</S.Title>
         ) : (
           <S.Logo>
-            <Image src={allTeams.find((team) => team === buff)?.logo || ''} alt={buff.id} layout='fill' />
+            <Image src={allTeams.find((team) => team === buff)?.logo || ''} alt={buff.id} fill sizes='20px' />
           </S.Logo>
         )}
 

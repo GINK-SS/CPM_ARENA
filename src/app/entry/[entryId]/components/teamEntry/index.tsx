@@ -60,7 +60,8 @@ const TeamEntry = ({ selectedTeam }: TeamEntryProps) => {
           <Image
             src={selectedTeam.logo}
             alt={selectedTeam.id}
-            layout='fill'
+            fill
+            sizes='60px'
             style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
           />
         </S.Logo>

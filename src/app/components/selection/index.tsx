@@ -55,7 +55,8 @@ const Selection = () => {
                   <Image
                     src={allTeams.find((team) => team.id === selectedTeam.id)?.logo || ''}
                     alt={allTeams.find((team) => team.id === selectedTeam.id)?.id || ''}
-                    layout='fill'
+                    fill
+                    sizes='45px'
                     style={{ filter: 'drop-shadow(3px 3px 0 #333)' }}
                   />
                 </S.Logo>

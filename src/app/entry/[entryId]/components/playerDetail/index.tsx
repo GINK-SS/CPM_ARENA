@@ -57,7 +57,8 @@ const PlayerDetail = () => {
                   <Image
                     src={allTeams.find((team) => team.id === selectedPlayer.team)?.logo || ''}
                     alt={selectedPlayer.team}
-                    layout='fill'
+                    fill
+                    sizes='20px'
                   />
                 </S.TeamLogo>
               </S.TeamWrapper>
@@ -87,7 +88,7 @@ const PlayerDetail = () => {
                   </S.PositionHandTypeWrapper>
 
                   <S.RealLogo>
-                    <Image src='/assets/logo/cpmRealLogo.webp' alt='logo' layout='fill' />
+                    <Image src='/assets/logo/cpmRealLogo.webp' alt='logo' fill sizes='120px' />
                   </S.RealLogo>
 
                   <S.OrderWrapper>

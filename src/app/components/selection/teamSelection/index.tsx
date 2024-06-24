@@ -47,7 +47,8 @@ const TeamSelection = () => {
               alt={team.name}
               placeholder='blur'
               blurDataURL={team.logo}
-              layout='fill'
+              fill
+              sizes='40px'
               style={{
                 filter: selectedTeams.includes(team) ? '' : 'drop-shadow(3px 3px 0 #333)',
               }}

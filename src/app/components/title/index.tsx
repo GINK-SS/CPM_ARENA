@@ -9,8 +9,9 @@ const MainTitle = () => {
         <Image
           src='/assets/logo/mainLogo.webp'
           alt='mainLogo'
-          layout='fill'
-          objectFit='cover'
+          priority
+          fill
+          sizes='100px'
           style={{ borderRadius: '50%' }}
         />
       </S.Logo>
