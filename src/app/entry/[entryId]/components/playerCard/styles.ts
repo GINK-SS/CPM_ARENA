@@ -1,9 +1,20 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isActive: boolean }>`
+  position: relative;
   background-image: url('/assets/card_background.png');
   background-size: cover;
-  cursor: pointer;
+  cursor: ${({ $isActive }) => ($isActive ? 'pointer' : 'default')};
+`;
+
+export const BorderBox = styled.div<{ $isSelected: boolean }>`
+  display: ${({ $isSelected }) => ($isSelected ? 'block' : 'none')};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  box-shadow: inset 0 0 5px 1px #ff5a00, inset 0 -10px 10px 0 rgba(255, 187, 153, 0.4);
+  box-sizing: border-box;
 `;
 
 export const Main = styled.div<{ $imageSrc: string }>`
@@ -11,7 +22,6 @@ export const Main = styled.div<{ $imageSrc: string }>`
   justify-content: space-between;
   width: 73px;
   height: 70px;
-  padding: 1px;
   border: 1px solid #666;
   border-bottom: 1px solid #853326;
   background-image: url(${({ $imageSrc }) => $imageSrc});

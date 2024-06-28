@@ -15,6 +15,7 @@ import Menu from '../menu';
 import TeamEntry from '../teamEntry';
 import PlayerSimpleInfo from '../playerSimpleInfo';
 import LineUpInfo from '../lineUpInfo';
+import Lineup from '../lineup';
 
 import { FIRST_YEAR, LAST_YEAR, POSITION_LIMIT, SHORTEN_DATA } from '@/app/const';
 
@@ -138,6 +139,8 @@ export default function EntryView() {
             <S.Description key={description}>{description}</S.Description>
           ))}
         </S.DescriptionWrapper>
+
+        <Lineup />
 
         <S.InfoWrapper>
           <PlayerSimpleInfo />

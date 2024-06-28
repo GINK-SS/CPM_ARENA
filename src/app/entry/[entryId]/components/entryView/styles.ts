@@ -140,6 +140,7 @@ export const DescriptionWrapper = styled.div`
   justify-content: space-around;
   gap: 3px;
   width: 100%;
+  margin-bottom: 5px;
   border: 1px solid #000;
   box-sizing: border-box;
 `;
