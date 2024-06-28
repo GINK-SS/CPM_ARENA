@@ -6,10 +6,11 @@ import { Hitter, Pitcher, PlayerStoreState } from './types';
 import { isHitter } from '@/app/util/decideType';
 
 const usePlayerStore = create<PlayerStoreState>((set, get) => ({
-  isShowDetail: false,
+  isShowDetail: { isShow: false, target: null },
   allHitters: new Map(),
   allPitchers: new Map(),
   selectedPlayer: null,
+  pinnedPlayer: null,
   hitterLineup: [...Array(9)].map(() => ({ position: null, player: null })),
   pitcherLineup: [...Array(10)].map((_, idx) => {
     const position = idx < 5 ? '선발' : idx < 9 ? '계투' : '마무리';
@@ -82,11 +83,14 @@ const usePlayerStore = create<PlayerStoreState>((set, get) => ({
   setSelectedPlayer: (player) => {
     set(() => ({ selectedPlayer: player }));
   },
-  showDetail: () => {
-    set(() => ({ isShowDetail: true }));
+  setPinnedPlayer: (player) => {
+    set(() => ({ pinnedPlayer: player }));
+  },
+  showDetail: (target) => {
+    set(() => ({ isShowDetail: { isShow: true, target } }));
   },
   clearDetail: () => {
-    set(() => ({ isShowDetail: false }));
+    set(() => ({ isShowDetail: { isShow: false, target: null } }));
   },
   fetchAllHitters: async () => {
     const hitters: Hitter[] = await fetch('/storage/hitters.json').then((res) => res.json());

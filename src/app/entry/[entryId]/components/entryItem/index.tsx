@@ -2,6 +2,7 @@ import { useShallow } from 'zustand/react/shallow';
 
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
+import useTableStore from '@/app/stores/table';
 import useBuffStore from '@/app/stores/buff';
 
 import { Hitter, HitterPosition, Pitcher } from '@/app/stores/player/types';
@@ -24,12 +25,19 @@ const EntryItem = ({ player }: EntryItemProps) => {
       state.setSelectedPlayer,
     ])
   );
+  const [isShowHitterLineup, toggleIsShowHitterLineup] = useTableStore(
+    useShallow((state) => [state.isShowHitterLineup, state.toggleIsShowHitterLineup])
+  );
   const setBuff = useBuffStore((state) => state.setBuff);
 
   const onClick = () => {
     if (!player.name) return;
 
     setSelectedPlayer(player);
+
+    if ((isHitter(player) && !isShowHitterLineup) || (!isHitter(player) && isShowHitterLineup)) {
+      toggleIsShowHitterLineup();
+    }
 
     const teamIdx = selectedTeams.findIndex((selectedTeam) => selectedTeam.id === player.team);
 

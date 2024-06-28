@@ -58,17 +58,22 @@ export type HitterPosition = '포수' | '1루수' | '2루수' | '3루수' | '유
 export type PitcherPosition = '선발' | '계투' | '마무리';
 
 export type PlayerStoreState = {
-  isShowDetail: boolean;
+  isShowDetail: {
+    isShow: boolean;
+    target: 'pinned' | 'selected' | null;
+  };
   allHitters: Map<number, Hitter[]>;
   allPitchers: Map<number, Pitcher[]>;
   selectedPlayer: Hitter | Pitcher | null;
+  pinnedPlayer: Hitter | Pitcher | null;
   hitterLineup: { position: HitterPosition | null; player: Hitter | null }[];
   pitcherLineup: { position: PitcherPosition; player: Pitcher | null }[];
   addToLineup: (selectedPlayer: Hitter | Pitcher, hitterPosition?: HitterPosition) => void;
   deleteFromLineup: (selectedPlayer: Hitter | Pitcher) => void;
   clearLineup: () => void;
   setSelectedPlayer: (player: Hitter | Pitcher | null) => void;
-  showDetail: () => void;
+  setPinnedPlayer: (player: Hitter | Pitcher | null) => void;
+  showDetail: (target: 'pinned' | 'selected') => void;
   clearDetail: () => void;
   fetchAllHitters: () => Promise<void>;
   fetchAllPitchers: () => Promise<void>;

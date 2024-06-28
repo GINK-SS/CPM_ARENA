@@ -7,13 +7,18 @@ export const Container = styled.div<{ $isActive: boolean }>`
   cursor: ${({ $isActive }) => ($isActive ? 'pointer' : 'default')};
 `;
 
-export const BorderBox = styled.div<{ $isSelected: boolean }>`
-  display: ${({ $isSelected }) => ($isSelected ? 'block' : 'none')};
+export const BorderBox = styled.div<{ $isSelected: boolean; $isPinned: boolean }>`
+  display: ${({ $isSelected, $isPinned }) => ($isSelected || $isPinned ? 'block' : 'none')};
   position: absolute;
   width: 100%;
   height: 100%;
+  border: ${({ $isPinned }) => $isPinned && '2px solid #ff5a00'};
   z-index: 1;
-  box-shadow: inset 0 0 5px 1px #ff5a00, inset 0 -10px 10px 0 rgba(255, 187, 153, 0.4);
+  outline: ${({ $isPinned }) => $isPinned && '1px solid #ff5a00'};
+  box-shadow: ${({ $isPinned }) =>
+    $isPinned
+      ? 'inset 0 0 20px 1px #ff5a00, inset 0 -10px 10px 0 rgba(255, 187, 153, 0.5)'
+      : 'inset 0 0 8px 1px #ff5a00, inset 0 -10px 10px 0 rgba(255, 187, 153, 0.4)'};
   box-sizing: border-box;
 `;
 

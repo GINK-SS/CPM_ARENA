@@ -1,14 +1,14 @@
 import Image from 'next/image';
+import { useShallow } from 'zustand/react/shallow';
 
 import useTeamStore from '@/app/stores/team';
+import usePlayerStore from '@/app/stores/player';
 import { TEAMID_TO_SHORTEN } from '@/app/const';
 
 import { isHitter } from '@/app/util/decideType';
 import { Hitter, HitterPosition, Pitcher, PitcherPosition } from '@/app/stores/player/types';
 
 import * as S from './styles';
-import usePlayerStore from '@/app/stores/player';
-import { useShallow } from 'zustand/react/shallow';
 
 type PlayerCardProps = {
   card: {
@@ -19,8 +19,8 @@ type PlayerCardProps = {
 
 const PlayerCard = ({ card: { position, player } }: PlayerCardProps) => {
   const allTeams = useTeamStore((state) => state.allTeams);
-  const [selectedPlayer, setSelectedPlayer] = usePlayerStore(
-    useShallow((state) => [state.selectedPlayer, state.setSelectedPlayer])
+  const [selectedPlayer, pinnedPlayer, setSelectedPlayer, setPinnedPlayer] = usePlayerStore(
+    useShallow((state) => [state.selectedPlayer, state.pinnedPlayer, state.setSelectedPlayer, state.setPinnedPlayer])
   );
   const [pitcherHand, hitterHand] = [player?.hand_type[0], player?.hand_type[2]];
   const imageSrc = !player
@@ -32,12 +32,28 @@ const PlayerCard = ({ card: { position, player } }: PlayerCardProps) => {
   const onClick = () => {
     if (!player) return;
 
+    if (pinnedPlayer === player) {
+      return;
+    }
+
+    if (selectedPlayer === player) {
+      if (pinnedPlayer) return;
+
+      setPinnedPlayer(player);
+      setSelectedPlayer(null);
+
+      return;
+    }
+
     setSelectedPlayer(player);
   };
 
   return (
     <S.Container $isActive={!!player} onClick={onClick}>
-      <S.BorderBox $isSelected={!!selectedPlayer && selectedPlayer === player} />
+      <S.BorderBox
+        $isSelected={!!selectedPlayer && selectedPlayer === player}
+        $isPinned={!!pinnedPlayer && pinnedPlayer === player}
+      />
 
       <S.Main $imageSrc={imageSrc}>
         {player && (

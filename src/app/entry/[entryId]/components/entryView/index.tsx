@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence } from 'framer-motion';
 
 import NotFound from '@/app/not-found';
@@ -25,10 +26,14 @@ import * as S from './styles';
 
 export default function EntryView() {
   const { entryId } = useParams<{ entryId: string }>();
-  const { selectedYear, setYear } = useYearStore();
-  const { allTeams, selectedTeams, setTeams, resetTeams } = useTeamStore();
-  const { isMenu, closeMenu } = useTableStore();
-  const { isShowDetail, selectedPlayer, clearDetail } = usePlayerStore();
+  const [selectedYear, setYear] = useYearStore(useShallow((state) => [state.selectedYear, state.setYear]));
+  const [allTeams, selectedTeams, setTeams, resetTeams] = useTeamStore(
+    useShallow((state) => [state.allTeams, state.selectedTeams, state.setTeams, state.resetTeams])
+  );
+  const [isMenu, closeMenu] = useTableStore(useShallow((state) => [state.isMenu, state.closeMenu]));
+  const [isShowDetail, selectedPlayer, pinnedPlayer, clearDetail] = usePlayerStore(
+    useShallow((state) => [state.isShowDetail, state.selectedPlayer, state.pinnedPlayer, state.clearDetail])
+  );
   const [status, setStatus] = useState('pending');
   const [isLoading, setIsLoading] = useState(true);
   const descriptionList = ['올스타', '골든 글러브', 'MVP', '오버롤 80 이상'];
@@ -98,7 +103,7 @@ export default function EntryView() {
   return (
     <>
       <AnimatePresence>
-        {(isShowDetail || isMenu) && (
+        {(isShowDetail.isShow || isMenu) && (
           <S.Outer
             onClick={onOuterClick}
             $isActive={!!selectedPlayer}
@@ -143,9 +148,10 @@ export default function EntryView() {
         <Lineup />
 
         <S.InfoWrapper>
-          <PlayerSimpleInfo />
-          <LineUpInfo />
+          <PlayerSimpleInfo player={pinnedPlayer ?? selectedPlayer} />
+          <PlayerSimpleInfo player={pinnedPlayer ? selectedPlayer : null} />
         </S.InfoWrapper>
+        <LineUpInfo />
       </S.Container>
     </>
   );

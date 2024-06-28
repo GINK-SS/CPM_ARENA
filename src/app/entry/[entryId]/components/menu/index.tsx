@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import { useShallow } from 'zustand/react/shallow';
 import { IoMenuOutline } from 'react-icons/io5';
 
 import useTableStore from '@/app/stores/table';
@@ -8,9 +9,13 @@ import useBuffStore from '@/app/stores/buff';
 import * as S from './styles';
 
 const Menu = () => {
-  const { isMenu, openMenu, overallLimit, setOverallLimit } = useTableStore();
-  const { setSelectedPlayer, clearLineup } = usePlayerStore();
-  const { clearBuff } = useBuffStore();
+  const [isMenu, openMenu, overallLimit, setOverallLimit] = useTableStore(
+    useShallow((state) => [state.isMenu, state.openMenu, state.overallLimit, state.setOverallLimit])
+  );
+  const [setSelectedPlayer, setPinnedPlayer, clearLineup] = usePlayerStore(
+    useShallow((state) => [state.setSelectedPlayer, state.setPinnedPlayer, state.clearLineup])
+  );
+  const clearBuff = useBuffStore((state) => state.clearBuff);
   const router = useRouter();
 
   const onBtnClick = () => {
@@ -20,6 +25,7 @@ const Menu = () => {
   const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setOverallLimit(Number(e.currentTarget.value));
     setSelectedPlayer(null);
+    setPinnedPlayer(null);
     clearLineup();
     clearBuff();
   };

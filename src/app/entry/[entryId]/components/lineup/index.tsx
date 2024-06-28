@@ -9,9 +9,17 @@ import usePlayerStore from '@/app/stores/player';
 import * as S from './styles';
 
 const Lineup = () => {
-  const [hitterLineup, pitcherLineup, selectedPlayer, setSelectedPlayer] = usePlayerStore(
-    useShallow((state) => [state.hitterLineup, state.pitcherLineup, state.selectedPlayer, state.setSelectedPlayer])
-  );
+  const [hitterLineup, pitcherLineup, selectedPlayer, pinnedPlayer, setSelectedPlayer, setPinnedPlayer] =
+    usePlayerStore(
+      useShallow((state) => [
+        state.hitterLineup,
+        state.pitcherLineup,
+        state.selectedPlayer,
+        state.pinnedPlayer,
+        state.setSelectedPlayer,
+        state.setPinnedPlayer,
+      ])
+    );
   const [isShowHitterLineup, toggleIsShowHitterLineup] = useTableStore(
     useShallow((state) => [state.isShowHitterLineup, state.toggleIsShowHitterLineup])
   );
@@ -31,10 +39,12 @@ const Lineup = () => {
 
   const onCancel = () => {
     setSelectedPlayer(null);
+    setPinnedPlayer(null);
   };
 
   const onSwitchLineup = () => {
     setSelectedPlayer(null);
+    setPinnedPlayer(null);
     toggleIsShowHitterLineup();
   };
 
@@ -53,7 +63,7 @@ const Lineup = () => {
       </S.CardWrapper>
 
       <S.ButtonWrapper>
-        <S.Button onClick={onCancel} $isActive={!!selectedPlayer}>
+        <S.Button onClick={onCancel} $isActive={!!selectedPlayer || !!pinnedPlayer}>
           <span>취</span>
           <span>소</span>
         </S.Button>
