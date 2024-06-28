@@ -19,7 +19,7 @@ export type Hitter = {
   eye_under: number;
   running: number;
   defense: number;
-  position: string;
+  position: HitterPosition;
   hand_type: string;
   order_type: string;
   order_numbers: string[];
@@ -45,7 +45,7 @@ export type Pitcher = {
   stuff_left: number;
   mental: number;
   stamina: number;
-  position: string;
+  position: PitcherPosition;
   hand_type: string;
   pitches: string;
   all_star: boolean;
@@ -54,13 +54,19 @@ export type Pitcher = {
   mvp_korea: boolean;
 };
 
+export type HitterPosition = '포수' | '1루수' | '2루수' | '3루수' | '유격수' | '외야수' | '지명타자';
+export type PitcherPosition = '선발' | '계투' | '마무리';
+
 export type PlayerStoreState = {
   isShowDetail: boolean;
   allHitters: Map<number, Hitter[]>;
   allPitchers: Map<number, Pitcher[]>;
   selectedPlayer: Hitter | Pitcher | null;
-  selectedLineup: (Hitter | Pitcher)[];
-  setSelectedLineup: ({ player, action }: { player?: Hitter | Pitcher; action: 'ADD' | 'DELETE' | 'CLEAR' }) => void;
+  hitterLineup: { position: HitterPosition | null; player: Hitter | null }[];
+  pitcherLineup: { position: PitcherPosition; player: Pitcher | null }[];
+  addToLineup: (selectedPlayer: Hitter | Pitcher, hitterPosition?: HitterPosition) => void;
+  deleteFromLineup: (selectedPlayer: Hitter | Pitcher) => void;
+  clearLineup: () => void;
   setSelectedPlayer: (player: Hitter | Pitcher | null) => void;
   showDetail: () => void;
   clearDetail: () => void;

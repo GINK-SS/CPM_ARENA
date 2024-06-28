@@ -9,7 +9,7 @@ import * as S from './styles';
 
 const Menu = () => {
   const { isMenu, openMenu, overallLimit, setOverallLimit } = useTableStore();
-  const { setSelectedPlayer, setSelectedLineup } = usePlayerStore();
+  const { setSelectedPlayer, clearLineup } = usePlayerStore();
   const { clearBuff } = useBuffStore();
   const router = useRouter();
 
@@ -20,7 +20,7 @@ const Menu = () => {
   const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setOverallLimit(Number(e.currentTarget.value));
     setSelectedPlayer(null);
-    setSelectedLineup({ action: 'CLEAR' });
+    clearLineup();
     clearBuff();
   };
 

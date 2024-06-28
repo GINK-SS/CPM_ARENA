@@ -11,7 +11,7 @@ import * as S from './styles';
 const SubmitBtn = () => {
   const { selectedYear, closePopup: closeYearPopup } = useYearStore();
   const { allTeams, selectedTeams, closePopup: closeTeamPopup } = useTeamStore();
-  const { setSelectedPlayer, setSelectedLineup } = usePlayerStore();
+  const { setSelectedPlayer, clearLineup } = usePlayerStore();
   const { closeMenu, setOverallLimit } = useTableStore();
   const { clearBuff } = useBuffStore();
   const router = useRouter();
@@ -22,7 +22,7 @@ const SubmitBtn = () => {
     closeMenu();
     setOverallLimit(69);
     setSelectedPlayer(null);
-    setSelectedLineup({ action: 'CLEAR' });
+    clearLineup();
     clearBuff();
 
     router.push(
