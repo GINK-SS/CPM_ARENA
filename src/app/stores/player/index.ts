@@ -70,6 +70,20 @@ const usePlayerStore = create<PlayerStoreState>((set, get) => ({
       ],
     }));
   },
+  changePositionLineup: ({ selectedPlayer, pinnedPlayer }) => {
+    set((state) => {
+      const newHitterLineup = [...state.hitterLineup];
+      const pinnedIdx = newHitterLineup.findIndex((hitter) => hitter.player === pinnedPlayer);
+      const selectedIdx = newHitterLineup.findIndex((hitter) => hitter.player === selectedPlayer);
+
+      [newHitterLineup[pinnedIdx].position, newHitterLineup[selectedIdx].position] = [
+        newHitterLineup[selectedIdx].position,
+        newHitterLineup[pinnedIdx].position,
+      ];
+
+      return { hitterLineup: newHitterLineup };
+    });
+  },
   clearLineup: () => {
     set(() => ({
       hitterLineup: [...Array(9)].map(() => ({ position: null, player: null })),

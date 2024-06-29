@@ -6,20 +6,30 @@ import InfoBox from '../infoBox';
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
 
+import { isHitter } from '@/app/util/decideType';
+
 import * as S from './styles';
 
 const Lineup = () => {
-  const [hitterLineup, pitcherLineup, selectedPlayer, pinnedPlayer, setSelectedPlayer, setPinnedPlayer] =
-    usePlayerStore(
-      useShallow((state) => [
-        state.hitterLineup,
-        state.pitcherLineup,
-        state.selectedPlayer,
-        state.pinnedPlayer,
-        state.setSelectedPlayer,
-        state.setPinnedPlayer,
-      ])
-    );
+  const [
+    hitterLineup,
+    pitcherLineup,
+    selectedPlayer,
+    pinnedPlayer,
+    setSelectedPlayer,
+    setPinnedPlayer,
+    changePositionLineup,
+  ] = usePlayerStore(
+    useShallow((state) => [
+      state.hitterLineup,
+      state.pitcherLineup,
+      state.selectedPlayer,
+      state.pinnedPlayer,
+      state.setSelectedPlayer,
+      state.setPinnedPlayer,
+      state.changePositionLineup,
+    ])
+  );
   const [isShowHitterLineup, toggleIsShowHitterLineup] = useTableStore(
     useShallow((state) => [state.isShowHitterLineup, state.toggleIsShowHitterLineup])
   );
@@ -38,6 +48,17 @@ const Lineup = () => {
   ];
 
   const onCancel = () => {
+    setSelectedPlayer(null);
+    setPinnedPlayer(null);
+  };
+
+  const onChangePosition = () => {
+    if (!selectedPlayer || !pinnedPlayer) return;
+    if (!isHitter(selectedPlayer) || !isHitter(pinnedPlayer)) return;
+    if (!hitterLineup.some((hitter) => hitter.player === selectedPlayer)) return;
+
+    changePositionLineup({ selectedPlayer, pinnedPlayer });
+
     setSelectedPlayer(null);
     setPinnedPlayer(null);
   };
@@ -69,7 +90,12 @@ const Lineup = () => {
         </S.Button>
 
         {isShowHitterLineup && (
-          <S.Button $isActive={false}>
+          <S.Button
+            onClick={onChangePosition}
+            $isActive={
+              !!pinnedPlayer && !!selectedPlayer && hitterLineup.some((hitter) => hitter.player === selectedPlayer)
+            }
+          >
             <span>수</span>
             <span>비</span>
             <span>변</span>
