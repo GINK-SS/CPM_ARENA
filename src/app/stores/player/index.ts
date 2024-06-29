@@ -84,6 +84,41 @@ const usePlayerStore = create<PlayerStoreState>((set, get) => ({
       return { hitterLineup: newHitterLineup };
     });
   },
+  changeOrderLineup: ({ selectedPlayer, pinnedPlayer }) => {
+    set((state) => {
+      if (isHitter(pinnedPlayer) && isHitter(selectedPlayer)) {
+        const newHitterLineup = [...state.hitterLineup];
+        const pinnedIdx = newHitterLineup.findIndex((lineup) => lineup.player === pinnedPlayer);
+        const selectedIdx = newHitterLineup.findIndex((lineup) => lineup.player === selectedPlayer);
+
+        if (selectedIdx === -1) {
+          newHitterLineup[pinnedIdx].player = selectedPlayer;
+        } else {
+          [newHitterLineup[pinnedIdx], newHitterLineup[selectedIdx]] = [
+            newHitterLineup[selectedIdx],
+            newHitterLineup[pinnedIdx],
+          ];
+        }
+
+        return { hitterLineup: newHitterLineup };
+      }
+
+      const newPitcherLineup = [...state.pitcherLineup];
+      const pinnedIdx = newPitcherLineup.findIndex((lineup) => lineup.player === pinnedPlayer);
+      const selectedIdx = newPitcherLineup.findIndex((lineup) => lineup.player === selectedPlayer);
+
+      if (selectedIdx === -1) {
+        newPitcherLineup[pinnedIdx].player = selectedPlayer as Pitcher;
+      } else {
+        [newPitcherLineup[pinnedIdx], newPitcherLineup[selectedIdx]] = [
+          newPitcherLineup[selectedIdx],
+          newPitcherLineup[pinnedIdx],
+        ];
+      }
+
+      return { pitcherLineup: newPitcherLineup };
+    });
+  },
   clearLineup: () => {
     set(() => ({
       hitterLineup: [...Array(9)].map(() => ({ position: null, player: null })),

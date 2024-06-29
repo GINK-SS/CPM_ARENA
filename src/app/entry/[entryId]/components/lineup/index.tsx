@@ -19,6 +19,7 @@ const Lineup = () => {
     setSelectedPlayer,
     setPinnedPlayer,
     changePositionLineup,
+    changeOrderLineup,
   ] = usePlayerStore(
     useShallow((state) => [
       state.hitterLineup,
@@ -28,6 +29,7 @@ const Lineup = () => {
       state.setSelectedPlayer,
       state.setPinnedPlayer,
       state.changePositionLineup,
+      state.changeOrderLineup,
     ])
   );
   const [isShowHitterLineup, toggleIsShowHitterLineup] = useTableStore(
@@ -58,7 +60,15 @@ const Lineup = () => {
     if (!hitterLineup.some((hitter) => hitter.player === selectedPlayer)) return;
 
     changePositionLineup({ selectedPlayer, pinnedPlayer });
+    setSelectedPlayer(null);
+    setPinnedPlayer(null);
+  };
 
+  const onChangeOrder = () => {
+    if (!selectedPlayer || !pinnedPlayer) return;
+    if (isHitter(selectedPlayer) !== isHitter(pinnedPlayer)) return;
+
+    changeOrderLineup({ selectedPlayer, pinnedPlayer });
     setSelectedPlayer(null);
     setPinnedPlayer(null);
   };
@@ -103,7 +113,10 @@ const Lineup = () => {
           </S.Button>
         )}
 
-        <S.Button $isActive={false}>
+        <S.Button
+          onClick={onChangeOrder}
+          $isActive={!!pinnedPlayer && !!selectedPlayer && isHitter(selectedPlayer) === isHitter(pinnedPlayer)}
+        >
           <span>교</span>
           <span>체</span>
         </S.Button>

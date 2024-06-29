@@ -71,6 +71,13 @@ export type PlayerStoreState = {
   addToLineup: (selectedPlayer: Hitter | Pitcher, hitterPosition?: HitterPosition) => void;
   deleteFromLineup: (selectedPlayer: Hitter | Pitcher) => void;
   changePositionLineup: ({ selectedPlayer, pinnedPlayer }: { selectedPlayer: Hitter; pinnedPlayer: Hitter }) => void;
+  changeOrderLineup: ({
+    selectedPlayer,
+    pinnedPlayer,
+  }: {
+    selectedPlayer: Hitter | Pitcher;
+    pinnedPlayer: Hitter | Pitcher;
+  }) => void;
   clearLineup: () => void;
   setSelectedPlayer: (player: Hitter | Pitcher | null) => void;
   setPinnedPlayer: (player: Hitter | Pitcher | null) => void;
