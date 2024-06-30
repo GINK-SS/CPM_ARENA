@@ -176,7 +176,9 @@ export default function EntryView() {
           ))}
         </S.DescriptionWrapper>
 
-        <Lineup />
+        <S.StickyBox>
+          <Lineup />
+        </S.StickyBox>
 
         <S.InfoWrapper>
           <PlayerSimpleInfo player={pinnedPlayer ?? selectedPlayer} />

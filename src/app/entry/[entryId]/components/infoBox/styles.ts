@@ -6,12 +6,13 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-top: 3px;
   background-color: #222;
   background: linear-gradient(45deg, #000, #111);
   box-sizing: border-box;
 
   @media (max-width: 660px) {
-    width: 100%;
+    margin-top: 2px;
   }
 `;
 

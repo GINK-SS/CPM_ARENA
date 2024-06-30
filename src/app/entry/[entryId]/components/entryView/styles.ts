@@ -150,7 +150,6 @@ export const DescriptionWrapper = styled.div`
   justify-content: space-around;
   gap: 3px;
   width: 100%;
-  margin-bottom: 5px;
   border: 1px solid #000;
   box-sizing: border-box;
 `;
@@ -216,16 +215,17 @@ export const InfoWrapper = styled.div`
   width: 100%;
   justify-content: center;
   align-items: flex-start;
-  gap: 3px;
-  margin-top: 5px;
+  gap: 2px;
 
   @media (max-width: 660px) {
     flex-direction: column;
-    margin-top: 3px;
+    gap: 0;
   }
+`;
 
-  @media (max-width: 353px) {
-    gap: 2px;
-    margin-top: 2px;
-  }
+export const StickyBox = styled.div`
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  z-index: 8;
 `;
