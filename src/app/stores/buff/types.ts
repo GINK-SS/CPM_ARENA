@@ -16,6 +16,17 @@ export type BuffStoreState = {
     teamIdx: number;
     action: 'ADD' | 'DELETE';
   }) => void;
+  changeBuff: ({
+    pinnedPlayer,
+    selectedPlayer,
+    pinTeamIdx,
+    selectTeamIdx,
+  }: {
+    pinnedPlayer: Hitter | Pitcher;
+    selectedPlayer: Hitter | Pitcher;
+    pinTeamIdx: number;
+    selectTeamIdx: number;
+  }) => void;
   clearBuff: () => void;
 };
 

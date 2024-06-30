@@ -39,6 +39,25 @@ const useBuffStore = create<BuffStoreState>((set) => ({
       },
     }));
   },
+  changeBuff: ({ pinnedPlayer, selectedPlayer, pinTeamIdx, selectTeamIdx }) => {
+    set((state) => {
+      const newTeams = [...state.currentBuff.teams];
+      newTeams[pinTeamIdx] -= 1;
+      newTeams[selectTeamIdx] += 1;
+
+      return {
+        currentBuff: {
+          teams: newTeams,
+          all_star: state.currentBuff.all_star - +pinnedPlayer.all_star + +selectedPlayer.all_star,
+          golden_glove: state.currentBuff.golden_glove - +pinnedPlayer.golden_glove + +selectedPlayer.golden_glove,
+          mvp:
+            state.currentBuff.mvp -
+            +(pinnedPlayer.mvp_korea || pinnedPlayer.mvp_league) +
+            +(selectedPlayer.mvp_korea || selectedPlayer.mvp_league),
+        },
+      };
+    });
+  },
   clearBuff: () => {
     set(() => ({
       currentBuff: {

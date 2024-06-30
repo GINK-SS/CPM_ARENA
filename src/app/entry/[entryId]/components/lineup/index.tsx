@@ -9,8 +9,11 @@ import usePlayerStore from '@/app/stores/player';
 import { isHitter } from '@/app/util/decideType';
 
 import * as S from './styles';
+import useBuffStore from '@/app/stores/buff';
+import useTeamStore from '@/app/stores/team';
 
 const Lineup = () => {
+  const selectedTeams = useTeamStore((state) => state.selectedTeams);
   const [
     hitterLineup,
     pitcherLineup,
@@ -35,6 +38,7 @@ const Lineup = () => {
   const [isShowHitterLineup, toggleIsShowHitterLineup] = useTableStore(
     useShallow((state) => [state.isShowHitterLineup, state.toggleIsShowHitterLineup])
   );
+  const changeBuff = useBuffStore((state) => state.changeBuff);
   const hitterOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const pitcherOrder = [
     '1선발',
@@ -67,6 +71,18 @@ const Lineup = () => {
   const onChangeOrder = () => {
     if (!selectedPlayer || !pinnedPlayer) return;
     if (isHitter(selectedPlayer) !== isHitter(pinnedPlayer)) return;
+
+    if (
+      !hitterLineup.some((hitter) => hitter.player === selectedPlayer) &&
+      !pitcherLineup.some((pitcher) => pitcher.player === selectedPlayer)
+    ) {
+      changeBuff({
+        pinnedPlayer,
+        selectedPlayer,
+        pinTeamIdx: selectedTeams.findIndex((selectedTeam) => selectedTeam.id === pinnedPlayer.team),
+        selectTeamIdx: selectedTeams.findIndex((selectedTeam) => selectedTeam.id === selectedPlayer.team),
+      });
+    }
 
     changeOrderLineup({ selectedPlayer, pinnedPlayer });
     setSelectedPlayer(null);
