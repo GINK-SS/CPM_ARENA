@@ -98,3 +98,44 @@ export const Year = styled.span`
 export const Name = styled.span<{ $length: number }>`
   font-size: ${({ $length }) => $length >= 5 && '11px'};
 `;
+
+export const OrderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 15px;
+  padding: 1px;
+  font-weight: 600;
+  background-color: #000;
+`;
+
+export const OrderNumberWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
+`;
+
+export const OrderNumber = styled.div<{ $orderNumber: number }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 11px;
+  height: 11px;
+  padding: 1px;
+  border-radius: 3px;
+  font-size: 11px;
+  background-color: ${({ $orderNumber }) =>
+    $orderNumber <= 2 ? '#6FB0FA' : $orderNumber <= 5 ? '#ff4646' : '#7BCC35'};
+`;
+
+export const OrderType = styled.span<{ $orderType: string }>`
+  font-size: 11px;
+  color: ${({ $orderType }) =>
+    $orderType === '상위'
+      ? '#9cb9d6'
+      : $orderType === '클린업'
+      ? '#f57676'
+      : $orderType === '하위'
+      ? '#B3DC90'
+      : '#9d75c7'};
+`;

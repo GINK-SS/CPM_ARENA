@@ -22,7 +22,7 @@ export type Hitter = {
   position: HitterPosition;
   hand_type: string;
   order_type: string;
-  order_numbers: string[];
+  order_numbers: number[];
   all_star: boolean;
   golden_glove: boolean;
   mvp_league: boolean;

@@ -105,7 +105,7 @@ const Lineup = () => {
 
       <S.CardWrapper>
         {(isShowHitterLineup ? hitterLineup : pitcherLineup).map((value, index) => (
-          <PlayerCard key={index} card={value} />
+          <PlayerCard key={index} card={value} order={index + 1} />
         ))}
       </S.CardWrapper>
 

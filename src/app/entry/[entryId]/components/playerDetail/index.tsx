@@ -97,7 +97,7 @@ const PlayerDetail = () => {
                   <S.OrderWrapper>
                     <S.OrderNumberWrapper>
                       {player.order_numbers.map((orderNumber) => (
-                        <S.OrderNumber key={orderNumber} $orderNumber={Number(orderNumber)}>
+                        <S.OrderNumber key={orderNumber} $orderNumber={orderNumber}>
                           {orderNumber}
                         </S.OrderNumber>
                       ))}

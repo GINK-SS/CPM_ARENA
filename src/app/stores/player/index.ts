@@ -110,9 +110,9 @@ const usePlayerStore = create<PlayerStoreState>((set, get) => ({
       if (selectedIdx === -1) {
         newPitcherLineup[pinnedIdx].player = selectedPlayer as Pitcher;
       } else {
-        [newPitcherLineup[pinnedIdx], newPitcherLineup[selectedIdx]] = [
-          newPitcherLineup[selectedIdx],
-          newPitcherLineup[pinnedIdx],
+        [newPitcherLineup[pinnedIdx].player, newPitcherLineup[selectedIdx].player] = [
+          newPitcherLineup[selectedIdx].player,
+          newPitcherLineup[pinnedIdx].player,
         ];
       }
 

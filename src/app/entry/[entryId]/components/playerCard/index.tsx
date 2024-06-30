@@ -17,9 +17,10 @@ type PlayerCardProps = {
     position: HitterPosition | PitcherPosition | null;
     player: Hitter | Pitcher | null;
   };
+  order: number;
 };
 
-const PlayerCard = ({ card: { position, player } }: PlayerCardProps) => {
+const PlayerCard = ({ card: { position, player }, order }: PlayerCardProps) => {
   const [allTeams, selectedTeams] = useTeamStore(useShallow((state) => [state.allTeams, state.selectedTeams]));
   const [selectedPlayer, pinnedPlayer, setSelectedPlayer, setPinnedPlayer] = usePlayerStore(
     useShallow((state) => [state.selectedPlayer, state.pinnedPlayer, state.setSelectedPlayer, state.setPinnedPlayer])
@@ -56,6 +57,15 @@ const PlayerCard = ({ card: { position, player } }: PlayerCardProps) => {
           : BUFF_LIST[curr].gradeValues[BUFF_LIST[curr].grades.findLastIndex((grade) => grade <= currentBuff[curr])])
       );
     }, 0);
+
+    if (isHitter(player)) {
+      if (player.order_type === '밸런스') calculatedOverall += 1;
+      else if (player.order_type === '상위' && order <= 2) calculatedOverall += 2;
+      else if (player.order_type === '클린업' && order <= 5 && order >= 3) calculatedOverall += 2;
+      else if (player.order_type === '하위' && order >= 6) calculatedOverall += 2;
+
+      if (player.order_numbers.includes(order)) calculatedOverall += 1;
+    }
 
     if (!isHitter(player) && player.position !== position) {
       calculatedOverall -= 3;
@@ -150,6 +160,26 @@ const PlayerCard = ({ card: { position, player } }: PlayerCardProps) => {
             </>
           )}
         </S.BottomWrapper>
+
+        <S.OrderWrapper>
+          {player && isHitter(player) && (
+            <>
+              <S.OrderNumberWrapper>
+                {player.order_numbers.map((orderNumber) => (
+                  <S.OrderNumber key={orderNumber} $orderNumber={orderNumber}>
+                    {orderNumber}
+                  </S.OrderNumber>
+                ))}
+              </S.OrderNumberWrapper>
+
+              <S.OrderType $orderType={player.order_type}>
+                {player.order_type !== '클린업' && player.order_type !== '밸런스'
+                  ? `${player.order_type}타선`
+                  : player.order_type}
+              </S.OrderType>
+            </>
+          )}
+        </S.OrderWrapper>
       </S.Card>
     </S.Container>
   );
