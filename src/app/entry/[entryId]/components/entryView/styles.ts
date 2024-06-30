@@ -9,6 +9,7 @@ export const Outer = styled(motion.div)<{ $isActive: boolean }>`
   left: 0;
   background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
   z-index: 10;
 `;
 
