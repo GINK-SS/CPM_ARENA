@@ -97,53 +97,55 @@ const Lineup = () => {
 
   return (
     <InfoBox title='라인업'>
-      <S.Order>
-        {(isShowHitterLineup ? hitterOrder : pitcherOrder).map((value) => (
-          <S.OrderValue key={value}>{value}</S.OrderValue>
-        ))}
-      </S.Order>
+      <S.Container>
+        <S.Order>
+          {(isShowHitterLineup ? hitterOrder : pitcherOrder).map((value) => (
+            <S.OrderValue key={value}>{value}</S.OrderValue>
+          ))}
+        </S.Order>
 
-      <S.CardWrapper>
-        {(isShowHitterLineup ? hitterLineup : pitcherLineup).map((value, index) => (
-          <PlayerCard key={index} card={value} order={index + 1} />
-        ))}
-      </S.CardWrapper>
+        <S.CardWrapper>
+          {(isShowHitterLineup ? hitterLineup : pitcherLineup).map((value, index) => (
+            <PlayerCard key={index} card={value} order={index + 1} />
+          ))}
+        </S.CardWrapper>
 
-      <S.ButtonWrapper>
-        <S.Button onClick={onCancel} $isActive={!!selectedPlayer || !!pinnedPlayer}>
-          <span>취</span>
-          <span>소</span>
-        </S.Button>
-
-        {isShowHitterLineup && (
-          <S.Button
-            onClick={onChangePosition}
-            $isActive={
-              !!pinnedPlayer && !!selectedPlayer && hitterLineup.some((hitter) => hitter.player === selectedPlayer)
-            }
-          >
-            <span>수</span>
-            <span>비</span>
-            <span>변</span>
-            <span>경</span>
+        <S.ButtonWrapper>
+          <S.Button onClick={onCancel} $isActive={!!selectedPlayer || !!pinnedPlayer}>
+            <span>취</span>
+            <span>소</span>
           </S.Button>
-        )}
 
-        <S.Button
-          onClick={onChangeOrder}
-          $isActive={!!pinnedPlayer && !!selectedPlayer && isHitter(selectedPlayer) === isHitter(pinnedPlayer)}
-        >
-          <span>교</span>
-          <span>체</span>
-        </S.Button>
+          {isShowHitterLineup && (
+            <S.Button
+              onClick={onChangePosition}
+              $isActive={
+                !!pinnedPlayer && !!selectedPlayer && hitterLineup.some((hitter) => hitter.player === selectedPlayer)
+              }
+            >
+              <span>수</span>
+              <span>비</span>
+              <span>변</span>
+              <span>경</span>
+            </S.Button>
+          )}
 
-        <S.Button onClick={onSwitchLineup} $isActive>
-          <span>{isShowHitterLineup ? '투' : '타'}</span>
-          <span>{isShowHitterLineup ? '수' : '자'}</span>
-          <span>로</span>
-          <ImArrowRight />
-        </S.Button>
-      </S.ButtonWrapper>
+          <S.Button
+            onClick={onChangeOrder}
+            $isActive={!!pinnedPlayer && !!selectedPlayer && isHitter(selectedPlayer) === isHitter(pinnedPlayer)}
+          >
+            <span>교</span>
+            <span>체</span>
+          </S.Button>
+
+          <S.Button onClick={onSwitchLineup} $isActive>
+            <span>{isShowHitterLineup ? '투' : '타'}</span>
+            <span>{isShowHitterLineup ? '수' : '자'}</span>
+            <span>로</span>
+            <ImArrowRight />
+          </S.Button>
+        </S.ButtonWrapper>
+      </S.Container>
     </InfoBox>
   );
 };

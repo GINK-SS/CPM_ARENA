@@ -1,5 +1,44 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+  transform-origin: top;
+
+  @media (max-width: 820px) {
+    margin: 0 -40px -20px;
+    transform: scale(0.9);
+  }
+
+  @media (max-width: 726px) {
+    margin: 0 -80px -40px;
+    transform: scale(0.8);
+  }
+
+  @media (max-width: 660px) {
+    margin: 0 -140px -70px;
+    transform: scale(0.65);
+  }
+
+  @media (max-width: 560px) {
+    margin: 0 -160px -80px;
+    transform: scale(0.58);
+  }
+
+  @media (max-width: 470px) {
+    margin: 0 -200px -95px;
+    transform: scale(0.5);
+  }
+
+  @media (max-width: 416px) {
+    margin: 0 -220px -108px;
+    transform: scale(0.44);
+  }
+
+  @media (max-width: 353px) {
+    margin: 0 -250px -122px;
+    transform: scale(0.35);
+  }
+`;
+
 export const Order = styled.div`
   display: flex;
   justify-content: space-between;
