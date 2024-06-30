@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Outer = styled(motion.div)<{ $isActive: boolean }>`
+export const Outer = styled(motion.div)`
   position: fixed;
   top: 0;
   right: 0;

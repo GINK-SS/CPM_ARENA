@@ -134,19 +134,13 @@ export default function EntryView() {
     <>
       <AnimatePresence>
         {(isShowDetail.isShow || isMenu) && (
-          <S.Outer
-            onClick={onOuterClick}
-            $isActive={!!selectedPlayer}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          />
+          <S.Outer onClick={onOuterClick} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <PlayerDetail />
+          </S.Outer>
         )}
       </AnimatePresence>
 
       <S.Container initial={{ y: 25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.2 }}>
-        <PlayerDetail />
-
         <S.Header>
           <S.Title>{selectedYear}년 ARENA</S.Title>
           <Menu />
