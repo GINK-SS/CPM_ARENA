@@ -49,60 +49,73 @@ const PlayerCard = ({ card: { position, player } }: PlayerCardProps) => {
   };
 
   return (
-    <S.Container $isActive={!!player} onClick={onClick}>
-      <S.BorderBox
-        $isSelected={!!selectedPlayer && selectedPlayer === player}
-        $isPinned={!!pinnedPlayer && pinnedPlayer === player}
+    <S.Container>
+      <S.Block
+        $isActive={
+          pinnedPlayer && !isHitter(pinnedPlayer)
+            ? (position === '선발' && pinnedPlayer.position !== '선발') ||
+              (position !== '선발' && pinnedPlayer.position === '선발')
+              ? true
+              : false
+            : false
+        }
       />
 
-      <S.Main $imageSrc={imageSrc}>
-        {player && (
-          <>
-            <S.Wrapper>
-              <S.Overall>{player.overall - +(!isHitter(player) && player.position !== position) * 3}</S.Overall>
-              {player.all_star && <Image src={'/assets/all_star.png'} alt='all_star' width={18} height={18} />}
-            </S.Wrapper>
+      <S.Card $isActive={!!player} onClick={onClick}>
+        <S.BorderBox
+          $isSelected={!!selectedPlayer && selectedPlayer === player}
+          $isPinned={!!pinnedPlayer && pinnedPlayer === player}
+        />
 
-            <S.Wrapper>
-              <S.Position>{isHitter(player) ? position![0] : player.position[0]}</S.Position>
-              {player.golden_glove && (
-                <Image src={'/assets/golden_glove.png'} alt='golden_glove' width={14} height={14} />
-              )}
-              {(player.mvp_korea || player.mvp_league) && (
-                <Image src={'/assets/mvp.png'} alt='mvp' width={14} height={14} />
-              )}
-            </S.Wrapper>
-          </>
-        )}
-      </S.Main>
+        <S.Main $imageSrc={imageSrc}>
+          {player && (
+            <>
+              <S.Wrapper>
+                <S.Overall>{player.overall - +(!isHitter(player) && player.position !== position) * 3}</S.Overall>
+                {player.all_star && <Image src={'/assets/all_star.png'} alt='all_star' width={18} height={18} />}
+              </S.Wrapper>
 
-      <S.TeamWrapper>
-        {player && (
-          <Image
-            src={allTeams.find((team) => team.id === player.team)!.logo}
-            alt='logo'
-            width={30}
-            height={30}
-            style={{
-              position: 'absolute',
-              bottom: '-7px',
-              left: '2px',
-              filter:
-                'drop-shadow(0px 1px 1px #222) drop-shadow(1px 0px 1px #222) drop-shadow(-1px 0px 1px #222) drop-shadow(0px -1px 1px #222)',
-            }}
-          />
-        )}
-        <span>ARENA</span>
-      </S.TeamWrapper>
+              <S.Wrapper>
+                <S.Position>{isHitter(player) ? position![0] : player.position[0]}</S.Position>
+                {player.golden_glove && (
+                  <Image src={'/assets/golden_glove.png'} alt='golden_glove' width={14} height={14} />
+                )}
+                {(player.mvp_korea || player.mvp_league) && (
+                  <Image src={'/assets/mvp.png'} alt='mvp' width={14} height={14} />
+                )}
+              </S.Wrapper>
+            </>
+          )}
+        </S.Main>
 
-      <S.BottomWrapper>
-        {player && (
-          <>
-            <S.Year>{`'${player.year.toString().slice(2)}`}</S.Year>
-            <S.Name $length={player.name.length}>{player.name}</S.Name>
-          </>
-        )}
-      </S.BottomWrapper>
+        <S.TeamWrapper>
+          {player && (
+            <Image
+              src={allTeams.find((team) => team.id === player.team)!.logo}
+              alt='logo'
+              width={30}
+              height={30}
+              style={{
+                position: 'absolute',
+                bottom: '-7px',
+                left: '2px',
+                filter:
+                  'drop-shadow(0px 1px 1px #222) drop-shadow(1px 0px 1px #222) drop-shadow(-1px 0px 1px #222) drop-shadow(0px -1px 1px #222)',
+              }}
+            />
+          )}
+          <span>ARENA</span>
+        </S.TeamWrapper>
+
+        <S.BottomWrapper>
+          {player && (
+            <>
+              <S.Year>{`'${player.year.toString().slice(2)}`}</S.Year>
+              <S.Name $length={player.name.length}>{player.name}</S.Name>
+            </>
+          )}
+        </S.BottomWrapper>
+      </S.Card>
     </S.Container>
   );
 };

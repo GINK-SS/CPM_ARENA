@@ -1,6 +1,19 @@
 import styled from 'styled-components';
 
-export const Container = styled.div<{ $isActive: boolean }>`
+export const Container = styled.div`
+  position: relative;
+`;
+
+export const Block = styled.div<{ $isActive: boolean }>`
+  display: ${({ $isActive }) => ($isActive ? 'block' : 'none')};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 5;
+`;
+
+export const Card = styled.div<{ $isActive: boolean }>`
   position: relative;
   background-image: url('/assets/card_background.png');
   background-size: cover;

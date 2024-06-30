@@ -1,5 +1,35 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &:first-child {
+    border-top: 1px solid #000;
+  }
+`;
+
+export const Block = styled.div<{ $isActive: boolean }>`
+  display: ${({ $isActive }) => ($isActive ? 'block' : 'none')};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-sizing: border-box;
+`;
+
+export const SelectedEffect = styled.div<{ $isActive: boolean; $isPinned: boolean }>`
+  display: ${({ $isActive }) => ($isActive ? 'block' : 'none')};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: ${({ $isPinned }) => ($isPinned ? 'inset 0 0 2px 4px #ff5a00' : 'inset 0 0 2px 2px #ff5a00')};
+  z-index: 3;
+  cursor: pointer;
+`;
+
 export const Wrapper = styled.div<{ $hasData: boolean }>`
   position: relative;
   display: flex;
@@ -10,10 +40,6 @@ export const Wrapper = styled.div<{ $hasData: boolean }>`
   background-color: #fff;
   color: #000;
   cursor: ${({ $hasData }) => $hasData && 'pointer'};
-
-  &:first-child {
-    border-top: 1px solid #000;
-  }
 
   @media (max-width: 820px) {
     width: 120px;

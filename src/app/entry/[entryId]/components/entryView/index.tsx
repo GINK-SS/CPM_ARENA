@@ -18,9 +18,10 @@ import PlayerSimpleInfo from '../playerSimpleInfo';
 import LineUpInfo from '../lineUpInfo';
 import Lineup from '../lineup';
 
-import { FIRST_YEAR, LAST_YEAR, POSITION_LIMIT, SHORTEN_DATA } from '@/app/const';
+import { FIRST_YEAR, LAST_YEAR, PITCHER_POSITION_ORDER, POSITION_LIMIT, SHORTEN_DATA } from '@/app/const';
 
 import { Team } from '@/app/stores/team/types';
+import { isHitter } from '@/app/util/decideType';
 
 import * as S from './styles';
 
@@ -31,8 +32,15 @@ export default function EntryView() {
     useShallow((state) => [state.allTeams, state.selectedTeams, state.setTeams, state.resetTeams])
   );
   const [isMenu, closeMenu] = useTableStore(useShallow((state) => [state.isMenu, state.closeMenu]));
-  const [isShowDetail, selectedPlayer, pinnedPlayer, clearDetail] = usePlayerStore(
-    useShallow((state) => [state.isShowDetail, state.selectedPlayer, state.pinnedPlayer, state.clearDetail])
+  const [isShowDetail, selectedPlayer, pinnedPlayer, hitterLineup, pitcherLineup, clearDetail] = usePlayerStore(
+    useShallow((state) => [
+      state.isShowDetail,
+      state.selectedPlayer,
+      state.pinnedPlayer,
+      state.hitterLineup,
+      state.pitcherLineup,
+      state.clearDetail,
+    ])
   );
   const [status, setStatus] = useState('pending');
   const [isLoading, setIsLoading] = useState(true);
@@ -95,6 +103,28 @@ export default function EntryView() {
     }
   };
 
+  const isBlockActive = (position: string) => {
+    if (!pinnedPlayer) return false;
+
+    if (!isHitter(pinnedPlayer)) {
+      return pinnedPlayer.position === '선발'
+        ? position !== '선발'
+          ? true
+          : false
+        : position === '계투' || position === '마무리'
+        ? false
+        : true;
+    }
+
+    if (PITCHER_POSITION_ORDER.includes(position)) return true;
+
+    if (hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position !== '지명타자') {
+      return position !== hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position;
+    }
+
+    return false;
+  };
+
   if (isLoading) return <Loading text='표를 생성 중입니다.' />;
 
   if (status === 'invalid') return <NotFound />;
@@ -128,6 +158,7 @@ export default function EntryView() {
               const [position, value] = limit;
               return (
                 <S.PositionTitle key={position} $heightNum={value}>
+                  <S.PositionBlock $isActive={isBlockActive(position)} />
                   {position}
                 </S.PositionTitle>
               );

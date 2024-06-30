@@ -10,7 +10,7 @@ export const Container = styled(motion.div)`
   background: linear-gradient(220deg, #9e270e, #82220e);
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px, rgba(0, 0, 0, 0.5) 3px 3px 3px,
     rgba(0, 0, 0, 0.5) -3px 3px 3px;
-  z-index: 5;
+  z-index: 10;
 `;
 
 export const Header = styled.div`

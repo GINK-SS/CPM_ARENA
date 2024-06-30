@@ -9,7 +9,7 @@ export const Outer = styled(motion.div)<{ $isActive: boolean }>`
   left: 0;
   background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(2.5px);
-  z-index: 5;
+  z-index: 10;
 `;
 
 export const Container = styled(motion.div)`
@@ -88,6 +88,7 @@ export const PositionTitle = styled.div<{ $heightNum: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   height: ${({ $heightNum }) => $heightNum * 30 + ($heightNum - 1)}px;
   padding: 0 10px;
   border: 1px solid #000;
@@ -133,6 +134,15 @@ export const PositionTitle = styled.div<{ $heightNum: number }>`
     padding: 0 2px;
     font-size: 6px;
   }
+`;
+
+export const PositionBlock = styled.div<{ $isActive: boolean }>`
+  display: ${({ $isActive }) => ($isActive ? 'block' : 'none')};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0.7);
 `;
 
 export const DescriptionWrapper = styled.div`
