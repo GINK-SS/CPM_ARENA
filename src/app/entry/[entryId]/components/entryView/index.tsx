@@ -44,6 +44,7 @@ export default function EntryView() {
   );
   const [status, setStatus] = useState('pending');
   const [isLoading, setIsLoading] = useState(true);
+  const [isStickyOn, setIsStickyOn] = useState(true);
   const descriptionList = ['올스타', '골든 글러브', 'MVP', '오버롤 80 이상'];
 
   useEffect(() => {
@@ -170,8 +171,8 @@ export default function EntryView() {
           ))}
         </S.DescriptionWrapper>
 
-        <S.StickyBox>
-          <Lineup />
+        <S.StickyBox $isSticky={isStickyOn}>
+          <Lineup isStickyOn={isStickyOn} setIsStickyOn={setIsStickyOn} />
         </S.StickyBox>
 
         <S.InfoWrapper>

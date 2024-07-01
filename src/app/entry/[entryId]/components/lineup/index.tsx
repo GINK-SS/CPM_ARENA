@@ -1,18 +1,25 @@
 import { useShallow } from 'zustand/react/shallow';
 import { ImArrowRight } from 'react-icons/im';
+import { Dispatch, SetStateAction } from 'react';
+import { motion } from 'framer-motion';
 
 import PlayerCard from '../playerCard';
 import InfoBox from '../infoBox';
+import useTeamStore from '@/app/stores/team';
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
+import useBuffStore from '@/app/stores/buff';
 
 import { isHitter } from '@/app/util/decideType';
 
 import * as S from './styles';
-import useBuffStore from '@/app/stores/buff';
-import useTeamStore from '@/app/stores/team';
 
-const Lineup = () => {
+type LineupProps = {
+  isStickyOn: boolean;
+  setIsStickyOn: Dispatch<SetStateAction<boolean>>;
+};
+
+const Lineup = ({ isStickyOn, setIsStickyOn }: LineupProps) => {
   const selectedTeams = useTeamStore((state) => state.selectedTeams);
   const [
     hitterLineup,
@@ -96,7 +103,17 @@ const Lineup = () => {
   };
 
   return (
-    <InfoBox title='라인업'>
+    <InfoBox
+      title='라인업'
+      headerRight={
+        <S.Right>
+          <p>하단에 고정하기</p>
+          <S.Switch onClick={() => setIsStickyOn((prev) => !prev)} $isActive={isStickyOn}>
+            <motion.div className='handle' layout transition={{ type: 'spring', stiffness: 700, damping: 30 }} />
+          </S.Switch>
+        </S.Right>
+      }
+    >
       <S.Container>
         <S.Order>
           {(isShowHitterLineup ? hitterOrder : pitcherOrder).map((value) => (

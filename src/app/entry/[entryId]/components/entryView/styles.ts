@@ -224,9 +224,9 @@ export const InfoWrapper = styled.div`
   }
 `;
 
-export const StickyBox = styled.div`
+export const StickyBox = styled.div<{ $isSticky: boolean }>`
   width: 100%;
-  position: sticky;
+  position: ${({ $isSticky }) => ($isSticky ? 'sticky' : 'relative')};
   bottom: 0;
   z-index: 8;
 `;

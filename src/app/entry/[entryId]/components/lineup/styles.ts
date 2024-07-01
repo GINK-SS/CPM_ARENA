@@ -1,5 +1,32 @@
 import styled from 'styled-components';
 
+export const Right = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 600;
+`;
+
+export const Switch = styled.div<{ $isActive: boolean }>`
+  display: flex;
+  justify-content: ${({ $isActive }) => ($isActive ? 'flex-start' : 'flex-end')};
+  width: 20px;
+  height: 10px;
+  margin-right: 5px;
+  padding: 3px;
+  border-radius: 20px;
+  background-color: ${({ $isActive }) => ($isActive ? '#a82919' : 'rgba(255, 255, 255, 0.4)')};
+  cursor: pointer;
+
+  & > div {
+    width: 10px;
+    height: 10px;
+    border-radius: 20px;
+    background-color: white;
+  }
+`;
+
 export const Container = styled.div`
   transform-origin: top;
 
