@@ -37,12 +37,16 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
+
+  @media (max-width: 470px) {
+    gap: 10px;
+  }
 `;
 
 export const BuffContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
   box-sizing: border-box;

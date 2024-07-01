@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useShallow } from 'zustand/react/shallow';
 import { IoPerson } from 'react-icons/io5';
 
 import useTeamStore from '@/app/stores/team';
@@ -16,17 +17,26 @@ type BuffItemProps = {
 };
 
 const BuffItem = ({ buff }: BuffItemProps) => {
-  const { allTeams, selectedTeams } = useTeamStore();
-  const { currentBuff } = useBuffStore();
-  const value = isTeamBuff(buff)
-    ? BUFF_LIST.team.grades.findLastIndex((grade) => grade <= currentBuff.teams[selectedTeams.indexOf(buff)]) === -1
+  const [allTeams, selectedTeams] = useTeamStore(useShallow((state) => [state.allTeams, state.selectedTeams]));
+  const currentBuff = useBuffStore((state) => state.currentBuff);
+
+  const getGradeIdxAndValue = () => {
+    const gradeIdx = isTeamBuff(buff)
+      ? BUFF_LIST.team.grades.findLastIndex((grade) => grade <= currentBuff.teams[selectedTeams.indexOf(buff)])
+      : BUFF_LIST[buff].grades.findLastIndex((grade) => grade <= currentBuff[buff]);
+
+    const value = isTeamBuff(buff)
+      ? BUFF_LIST.team.grades.findLastIndex((grade) => grade <= currentBuff.teams[selectedTeams.indexOf(buff)]) === -1
+        ? 0
+        : BUFF_LIST.team.gradeValues[
+            BUFF_LIST.team.grades.findLastIndex((grade) => grade <= currentBuff.teams[selectedTeams.indexOf(buff)])
+          ]
+      : BUFF_LIST[buff].grades.findLastIndex((grade) => grade <= currentBuff[buff]) === -1
       ? 0
-      : BUFF_LIST.team.gradeValues[
-          BUFF_LIST.team.grades.findLastIndex((grade) => grade <= currentBuff.teams[selectedTeams.indexOf(buff)])
-        ]
-    : BUFF_LIST[buff].grades.findLastIndex((grade) => grade <= currentBuff[buff]) === -1
-    ? 0
-    : BUFF_LIST[buff].gradeValues[BUFF_LIST[buff]?.grades.findLastIndex((grade) => grade <= currentBuff[buff])];
+      : BUFF_LIST[buff].gradeValues[BUFF_LIST[buff]?.grades.findLastIndex((grade) => grade <= currentBuff[buff])];
+
+    return [gradeIdx, value];
+  };
 
   return (
     <S.Container>
@@ -67,7 +77,7 @@ const BuffItem = ({ buff }: BuffItemProps) => {
         </S.GradeWrapper>
       </S.Wrapper>
 
-      <S.Value $value={value}>{`+${value}`}</S.Value>
+      <S.Value $gradeIdx={getGradeIdxAndValue()[0]}>{`+${getGradeIdxAndValue()[1]}`}</S.Value>
     </S.Container>
   );
 };
