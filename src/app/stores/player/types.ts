@@ -1,10 +1,4 @@
-export type Team = {
-  id: TeamId;
-  shorten: string;
-  name: string;
-  logo: string;
-  years: number[];
-};
+import { TeamId } from '../team/types';
 
 export type Hitter = {
   name: string;
@@ -25,15 +19,14 @@ export type Hitter = {
   eye_under: number;
   running: number;
   defense: number;
-  position: string;
+  position: HitterPosition;
   hand_type: string;
   order_type: string;
-  order_numbers: string[];
+  order_numbers: number[];
   all_star: boolean;
   golden_glove: boolean;
   mvp_league: boolean;
   mvp_korea: boolean;
-  [key: string]: any;
 };
 
 export type Pitcher = {
@@ -52,79 +45,44 @@ export type Pitcher = {
   stuff_left: number;
   mental: number;
   stamina: number;
-  position: string;
+  position: PitcherPosition;
   hand_type: string;
   pitches: string;
   all_star: boolean;
   golden_glove: boolean;
   mvp_league: boolean;
   mvp_korea: boolean;
-  [key: string]: any;
 };
 
-export type TeamId =
-  | 'KIA'
-  | 'kt'
-  | 'LG'
-  | 'MBC'
-  | 'NC'
-  | 'OB'
-  | 'SK'
-  | 'SSG'
-  | '넥센'
-  | '두산'
-  | '롯데'
-  | '빙그레'
-  | '삼미'
-  | '삼성'
-  | '쌍방울'
-  | '키움'
-  | '태평양'
-  | '한화'
-  | '해태'
-  | '현대';
-
-export type PointTitle = TeamId | 'all_star' | 'golden_glove' | 'mvp' | 'any_team';
+export type HitterPosition = '포수' | '1루수' | '2루수' | '3루수' | '유격수' | '외야수' | '지명타자';
+export type PitcherPosition = '선발' | '계투' | '마무리';
 
 export type PlayerStoreState = {
-  isShow: boolean;
-  isShowDetail: boolean;
-  allTeams: Team[];
-  allHitters: Hitter[];
-  allPitchers: Pitcher[];
-  selectedTeams: TeamId[];
-  selectedPlayer: Hitter | Pitcher | null;
-  selectedLineUp: {
-    players: (Hitter | Pitcher)[];
-    count: {
-      hitters: number;
-      pitchers: number;
-      teams: number[];
-      all_star: number;
-      golden_glove: number;
-      mvp: number;
-      [key: string]: number | number[];
-    };
+  isShowDetail: {
+    isShow: boolean;
+    target: 'pinned' | 'selected' | null;
   };
-  setSelectedLineUp: (player: Hitter | Pitcher | null, action?: string) => void;
-  showDetail: () => void;
-  clearDetail: () => void;
+  allHitters: Map<number, Hitter[]>;
+  allPitchers: Map<number, Pitcher[]>;
+  selectedPlayer: Hitter | Pitcher | null;
+  pinnedPlayer: Hitter | Pitcher | null;
+  hitterLineup: { position: HitterPosition | null; player: Hitter | null }[];
+  pitcherLineup: { position: PitcherPosition; player: Pitcher | null }[];
+  addToLineup: (selectedPlayer: Hitter | Pitcher, hitterPosition?: HitterPosition) => void;
+  deleteFromLineup: (selectedPlayer: Hitter | Pitcher) => void;
+  changePositionLineup: ({ selectedPlayer, pinnedPlayer }: { selectedPlayer: Hitter; pinnedPlayer: Hitter }) => void;
+  changeOrderLineup: ({
+    selectedPlayer,
+    pinnedPlayer,
+  }: {
+    selectedPlayer: Hitter | Pitcher;
+    pinnedPlayer: Hitter | Pitcher;
+  }) => void;
+  clearLineup: () => void;
   setSelectedPlayer: (player: Hitter | Pitcher | null) => void;
-  setSelectedTeamsReset: () => void;
-  setShowTeamList: () => void;
-  closeTeamList: () => void;
-  setTeams: ({ id, index, action }: SetTeamsPayload) => void;
-  fetchAllTeams: () => Promise<void>;
+  setPinnedPlayer: (player: Hitter | Pitcher | null) => void;
+  showDetail: (target: 'pinned' | 'selected') => void;
+  clearDetail: () => void;
   fetchAllHitters: () => Promise<void>;
   fetchAllPitchers: () => Promise<void>;
-};
-
-export type SetTeamsPayload = {
-  id: TeamId;
-  index: number;
-  action: string;
-};
-
-export type PositionLimit = {
-  [key: string]: number;
 };
