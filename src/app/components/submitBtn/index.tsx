@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import { useShallow } from 'zustand/react/shallow';
 
 import useYearStore from '@/app/stores/year';
 import usePlayerStore from '@/app/stores/player';
@@ -9,11 +10,15 @@ import useBuffStore from '@/app/stores/buff';
 import * as S from './styles';
 
 const SubmitBtn = () => {
-  const { selectedYear, closePopup: closeYearPopup } = useYearStore();
-  const { allTeams, selectedTeams, closePopup: closeTeamPopup } = useTeamStore();
-  const { setSelectedPlayer, setSelectedLineup } = usePlayerStore();
-  const { closeMenu, setOverallLimit } = useTableStore();
-  const { clearBuff } = useBuffStore();
+  const [selectedYear, closeYearPopup] = useYearStore(useShallow((state) => [state.selectedYear, state.closePopup]));
+  const [allTeams, selectedTeams, closeTeamPopup] = useTeamStore(
+    useShallow((state) => [state.allTeams, state.selectedTeams, state.closePopup])
+  );
+  const [setSelectedPlayer, setPinnedPlayer, clearLineup] = usePlayerStore(
+    useShallow((state) => [state.setSelectedPlayer, state.setPinnedPlayer, state.clearLineup])
+  );
+  const [closeMenu, setOverallLimit] = useTableStore(useShallow((state) => [state.closeMenu, state.setOverallLimit]));
+  const clearBuff = useBuffStore((state) => state.clearBuff);
   const router = useRouter();
 
   const onSubmit = () => {
@@ -22,7 +27,8 @@ const SubmitBtn = () => {
     closeMenu();
     setOverallLimit(69);
     setSelectedPlayer(null);
-    setSelectedLineup({ action: 'CLEAR' });
+    setPinnedPlayer(null);
+    clearLineup();
     clearBuff();
 
     router.push(

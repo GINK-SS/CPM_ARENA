@@ -6,18 +6,18 @@ import { isHitter } from '@/app/util/decideType';
 
 import * as S from './styles';
 
-const Stat = () => {
-  const { selectedPlayer } = usePlayerStore();
+type StatProps = {
+  player: Hitter | Pitcher | null;
+};
 
+const Stat = ({ player }: StatProps) => {
   return (
-    selectedPlayer && (
+    player && (
       <S.StatContainer>
-        {Object.entries(isHitter(selectedPlayer) ? HITTER_STAT : PITCHER_STAT).map((value, index) => {
+        {Object.entries(isHitter(player) ? HITTER_STAT : PITCHER_STAT).map((value, index) => {
           const [statName, statKey] = value;
 
-          const statValue = isHitter(selectedPlayer)
-            ? selectedPlayer[statKey as keyof Hitter]
-            : selectedPlayer[statKey as keyof Pitcher];
+          const statValue = isHitter(player) ? player[statKey as keyof Hitter] : player[statKey as keyof Pitcher];
 
           return (
             <S.StatWrapper key={index}>

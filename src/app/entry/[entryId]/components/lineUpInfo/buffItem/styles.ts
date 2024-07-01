@@ -5,6 +5,12 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 5px;
+  transform: scale(1.1);
+  transform-origin: top;
+
+  @media (max-width: 470px) {
+    transform: scale(1);
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -16,14 +22,6 @@ export const Wrapper = styled.div`
 
 export const Title = styled.div`
   height: 20px;
-
-  @media (max-width: 726px) {
-    font-size: 13px;
-  }
-
-  @media (max-width: 660px) {
-    font-size: 16px;
-  }
 
   @media (max-width: 470px) {
     font-size: 14px;
@@ -63,10 +61,10 @@ export const Icon = styled.div`
 `;
 
 export const CurrentNumber = styled.span`
-  font-size: 12px;
+  font-size: 14px;
 
   @media (max-width: 353px) {
-    font-size: 8px;
+    font-size: 10px;
   }
 `;
 
@@ -75,7 +73,7 @@ export const GradeWrapper = styled.div`
 `;
 
 export const Grade = styled.span<{ $isActive: boolean }>`
-  font-size: 8px;
+  font-size: 10px;
   opacity: ${({ $isActive }) => ($isActive ? 1 : 0.2)};
 
   &::before {
@@ -92,10 +90,12 @@ export const Grade = styled.span<{ $isActive: boolean }>`
   }
 `;
 
-export const Value = styled.span<{ $value: number }>`
+export const Value = styled.span<{ $gradeIdx: number }>`
   font-weight: 600;
-  font-size: 18px;
-  opacity: ${({ $value }) => ($value ? 1 : 0.2)};
+  font-size: 20px;
+  opacity: ${({ $gradeIdx }) => ($gradeIdx !== -1 ? 1 : 0.2)};
+  color: ${({ $gradeIdx }) =>
+    $gradeIdx === 3 ? '#DD41FF' : $gradeIdx === 2 ? '#FFE900' : $gradeIdx === 1 ? '#70B3F8' : '#fff'};
 
   @media (max-width: 353px) {
     font-size: 16px;

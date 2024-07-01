@@ -19,10 +19,10 @@ export type Hitter = {
   eye_under: number;
   running: number;
   defense: number;
-  position: string;
+  position: HitterPosition;
   hand_type: string;
   order_type: string;
-  order_numbers: string[];
+  order_numbers: number[];
   all_star: boolean;
   golden_glove: boolean;
   mvp_league: boolean;
@@ -45,7 +45,7 @@ export type Pitcher = {
   stuff_left: number;
   mental: number;
   stamina: number;
-  position: string;
+  position: PitcherPosition;
   hand_type: string;
   pitches: string;
   all_star: boolean;
@@ -54,15 +54,34 @@ export type Pitcher = {
   mvp_korea: boolean;
 };
 
+export type HitterPosition = '포수' | '1루수' | '2루수' | '3루수' | '유격수' | '외야수' | '지명타자';
+export type PitcherPosition = '선발' | '계투' | '마무리';
+
 export type PlayerStoreState = {
-  isShowDetail: boolean;
+  isShowDetail: {
+    isShow: boolean;
+    target: 'pinned' | 'selected' | null;
+  };
   allHitters: Map<number, Hitter[]>;
   allPitchers: Map<number, Pitcher[]>;
   selectedPlayer: Hitter | Pitcher | null;
-  selectedLineup: (Hitter | Pitcher)[];
-  setSelectedLineup: ({ player, action }: { player?: Hitter | Pitcher; action: 'ADD' | 'DELETE' | 'CLEAR' }) => void;
+  pinnedPlayer: Hitter | Pitcher | null;
+  hitterLineup: { position: HitterPosition | null; player: Hitter | null }[];
+  pitcherLineup: { position: PitcherPosition; player: Pitcher | null }[];
+  addToLineup: (selectedPlayer: Hitter | Pitcher, hitterPosition?: HitterPosition) => void;
+  deleteFromLineup: (selectedPlayer: Hitter | Pitcher) => void;
+  changePositionLineup: ({ selectedPlayer, pinnedPlayer }: { selectedPlayer: Hitter; pinnedPlayer: Hitter }) => void;
+  changeOrderLineup: ({
+    selectedPlayer,
+    pinnedPlayer,
+  }: {
+    selectedPlayer: Hitter | Pitcher;
+    pinnedPlayer: Hitter | Pitcher;
+  }) => void;
+  clearLineup: () => void;
   setSelectedPlayer: (player: Hitter | Pitcher | null) => void;
-  showDetail: () => void;
+  setPinnedPlayer: (player: Hitter | Pitcher | null) => void;
+  showDetail: (target: 'pinned' | 'selected') => void;
   clearDetail: () => void;
   fetchAllHitters: () => Promise<void>;
   fetchAllPitchers: () => Promise<void>;

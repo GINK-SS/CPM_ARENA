@@ -1,6 +1,6 @@
 import { Buff } from './stores/buff/types';
 import { Hitter, Pitcher } from './stores/player/types';
-import { TeamId } from './stores/team/types';
+import { TeamId, TeamShorten } from './stores/team/types';
 
 export const FIRST_YEAR = 1982;
 export const LAST_YEAR = 2023;
@@ -80,6 +80,30 @@ export const SHORTEN_DATA: { [key: string]: { name: TeamId; start: number; end: 
   hw: { name: '한화', start: 1994, end: LAST_YEAR },
   ht: { name: '해태', start: FIRST_YEAR, end: 2000 },
   hd: { name: '현대', start: 1996, end: 2007 },
+};
+
+export const TEAMID_TO_SHORTEN: { [key: string]: TeamShorten } = {
+  KIA: 'ka',
+  kt: 'kt',
+  LG: 'lg',
+  MBC: 'mb',
+  NC: 'nc',
+  OB: 'ob',
+  SK: 'sk',
+  SSG: 'sg',
+  넥센: 'nx',
+  두산: 'ds',
+  롯데: 'lt',
+  빙그레: 'bg',
+  삼미: 'sm',
+  삼성: 'ss',
+  쌍방울: 'sb',
+  청보: 'cb',
+  키움: 'kw',
+  태평양: 'tp',
+  한화: 'hw',
+  해태: 'ht',
+  현대: 'hd',
 };
 
 export const BUFF_LIST: { [key in Buff]: { name?: string; grades: number[]; gradeValues: number[] } } = {

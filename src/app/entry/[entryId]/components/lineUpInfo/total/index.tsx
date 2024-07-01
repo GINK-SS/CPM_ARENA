@@ -1,3 +1,5 @@
+import { useShallow } from 'zustand/react/shallow';
+
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
@@ -5,15 +7,33 @@ import { BUFF_LIST } from '@/app/const';
 
 import { isTeamBuff } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
+import { Hitter } from '@/app/stores/player/types';
 import { Records } from '@/app/stores/buff/types';
 
 import * as S from './styles';
 
 const Total = () => {
-  const { selectedTeams } = useTeamStore();
-  const { selectedLineup } = usePlayerStore();
-  const { currentBuff } = useBuffStore();
+  const selectedTeams = useTeamStore((state) => state.selectedTeams);
+  const [hitterLineup, pitcherLineup] = usePlayerStore(
+    useShallow((state) => [state.hitterLineup, state.pitcherLineup])
+  );
+  const currentBuff = useBuffStore((state) => state.currentBuff);
   const buffOrder: (Team | Records)[] = [...selectedTeams, 'all_star', 'golden_glove', 'mvp'];
+
+  const getOrderBuff = (player: Hitter | null, order: number) => {
+    if (!player) return 0;
+
+    let value = 0;
+
+    if (player.order_numbers.includes(order)) value += 1;
+
+    if (player.order_type === '밸런스') value += 1;
+    else if (player.order_type === '상위' && order <= 2) value += 2;
+    else if (player.order_type === '클린업' && order <= 5 && order >= 3) value += 2;
+    else if (player.order_type === '하위' && order >= 6) value += 2;
+
+    return value;
+  };
 
   return (
     <S.Wrapper>
@@ -39,7 +59,18 @@ const Total = () => {
                 ]) *
               (isTeamBuff(curr) ? currentBuff.teams[selectedTeams.indexOf(curr)] : currentBuff[curr]),
           0
-        ) + selectedLineup.reduce((acc, curr) => acc + curr.overall, 0)}
+        ) +
+          hitterLineup.reduce(
+            (acc, curr, index) => acc + (curr.player?.overall ?? 0) + getOrderBuff(curr.player, index + 1),
+            0
+          ) +
+          pitcherLineup.reduce(
+            (acc, curr) =>
+              acc +
+              (curr.player?.overall ?? 0) -
+              (!!curr.player && curr.position !== '선발' && curr.position !== curr.player.position ? 3 : 0),
+            0
+          )}
       </S.Value>
     </S.Wrapper>
   );

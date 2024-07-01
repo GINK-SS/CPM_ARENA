@@ -53,7 +53,7 @@ export const Wrapper = styled.div`
   border: 3px solid #333;
   background-color: white;
   box-shadow: 4px 4px 2px #555;
-  z-index: 5;
+  z-index: 10;
   cursor: default;
 
   &::after {

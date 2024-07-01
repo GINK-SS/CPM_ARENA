@@ -72,7 +72,7 @@ const TeamEntry = ({ selectedTeam }: TeamEntryProps) => {
       {arrangePlayers().map((group, index) => (
         <S.PositionGroup key={index}>
           {group.players.map((player, iindex) => (
-            <EntryItem key={iindex} player={player} />
+            <EntryItem key={iindex} position={group.position} player={player} />
           ))}
         </S.PositionGroup>
       ))}
