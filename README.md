@@ -37,7 +37,7 @@
 <br />
 
 <p align="center">
-  <a href="https://cpm-arena.com/2006ltsklgsshw" target="_blank">
+  <a href="https://cpm-arena.com/entry/2006ltsklgsshw" target="_blank">
     <img src="https://github.com/GINK-SS/CPM_ARENA/assets/66083363/d3155d86-186f-4b76-9c41-59be344ac235"/>
   </a>
   </p>
