@@ -56,7 +56,7 @@
 
 컴프매 아레나 도우미에 기여하고 싶다고 생각하셨다면 아래 문서를 참고해주세요.
 
-[CONTRIBUTING](https://github.com/GINK-SS/CPM-ARENA/blob/develop/.github/CONTRIBUTING.md)
+[CONTRIBUTING](https://github.com/GINK-SS/CPM_ARENA/blob/develop/.github/CONTRIBUTING.md)
 
 ## 라이선스
 
