@@ -4,6 +4,7 @@ import StyledComponentsRegistry from './lib/registry';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import './globals.css';
 import Init from './init';
 
 const notoSansKR = Noto_Sans_KR({
