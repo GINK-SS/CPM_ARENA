@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import MainTitle from './components/title';
+
+import MainTitle from './components/main-title';
 import Selection from './components/selection';
 import SubmitBtn from './components/submitBtn';
 import Footer from './components/footer';
