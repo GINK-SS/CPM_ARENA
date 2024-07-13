@@ -1,4 +1,5 @@
 import { useShallow } from 'zustand/react/shallow';
+import classNames from 'classnames';
 
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
@@ -8,8 +9,6 @@ import { PITCHER_POSITION_ORDER } from '@/app/const';
 
 import { Hitter, HitterPosition, Pitcher } from '@/app/stores/player/types';
 import { isHitter } from '@/app/util/decideType';
-
-import * as S from './styles';
 
 type EntryItemProps = {
   player: Hitter | Pitcher;
@@ -105,8 +104,8 @@ const EntryItem = ({ player, position }: EntryItemProps) => {
           ? true
           : false
         : position === '계투' || position === '마무리'
-        ? false
-        : true;
+          ? false
+          : true;
     }
 
     if (PITCHER_POSITION_ORDER.includes(position)) return true;
@@ -119,31 +118,59 @@ const EntryItem = ({ player, position }: EntryItemProps) => {
   };
 
   return (
-    <S.Container>
-      <S.Block $isActive={isBlockActive()} />
-
-      <S.SelectedEffect
-        $isActive={!!pinnedPlayer && (player === pinnedPlayer || player === selectedPlayer)}
-        $isPinned={player === pinnedPlayer}
+    <div
+      className={classNames(
+        'relative flex flex-1 items-center justify-center overflow-hidden border-t-1 border-black bg-white text-black first:border-t-0',
+        {
+          'cursor-pointer': player.name,
+        }
+      )}
+      onClick={onClick}
+    >
+      <div
+        data-role='orange-check'
+        className={classNames('absolute z-[3] h-full w-full cursor-pointer', {
+          hidden: !pinnedPlayer || (player !== pinnedPlayer && player !== selectedPlayer),
+          'shadow-[inset_0_0_2px_4px_#ff5a00]': player === pinnedPlayer,
+          'shadow-[inset_0_0_2px_2px_#ff5a00]': player !== pinnedPlayer,
+        })}
       />
 
-      <S.Wrapper $hasData={!!player.name} onClick={onClick}>
-        <S.LineUpCheck
-          $isLineUp={
-            isHitter(player)
-              ? hitterLineup.some((hitter) => hitter.player === player)
-              : pitcherLineup.some((pitcher) => pitcher.player === player)
-          }
-        />
+      <div
+        data-role='lineup-check'
+        className={classNames('absolute h-[80%] w-full -rotate-3 bg-black opacity-40', {
+          hidden: isHitter(player)
+            ? !hitterLineup.some((hitter) => hitter.player === player)
+            : !pitcherLineup.some((pitcher) => pitcher.player === player),
+        })}
+      />
 
-        <S.Name $isAllStar={player.all_star} $isMVP={player.mvp_korea || player.mvp_league}>
-          {player.name}
-        </S.Name>
-        <S.Overall $isOver80={player.overall >= 80} $isGoldenGlove={player.golden_glove}>
-          {player.overall}
-        </S.Overall>
-      </S.Wrapper>
-    </S.Container>
+      <div
+        data-role='name'
+        className={classNames(
+          'mobileL:text-14 flex aspect-[3/1] flex-[3] items-center justify-center border-r-1 border-r-black indent-[0.5px] text-[2.2vw] font-semibold tracking-[0.5px] tablet:indent-1 tablet:text-17 tablet:tracking-[1px] laptop:text-20',
+          {
+            'bg-[#f0c2bd]': player.all_star,
+            'font-extrabold text-[#ca4142]': player.mvp_korea || player.mvp_league,
+          }
+        )}
+      >
+        {player.name}
+      </div>
+
+      <div
+        data-role='overall'
+        className={classNames(
+          'mobileL:text-14 flex aspect-square flex-[1] items-center justify-center text-[2.2vw] tablet:text-16 laptop:text-19',
+          {
+            'font-bold text-[#1b1588]': player.overall >= 80,
+            'bg-[#f5df94]': player.golden_glove,
+          }
+        )}
+      >
+        {player.overall}
+      </div>
+    </div>
   );
 };
 
