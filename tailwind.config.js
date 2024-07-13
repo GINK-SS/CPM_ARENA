@@ -15,7 +15,8 @@ module.exports = {
       spacing: px0_200,
     },
     screens: {
-      tablet: '640px',
+      mobileL: '640px',
+      tablet: '768px',
       laptop: '1024px',
       desktop: '1280px',
     },
