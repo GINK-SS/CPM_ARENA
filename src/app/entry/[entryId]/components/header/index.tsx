@@ -40,6 +40,8 @@ export default async function Header() {
             </Link>
           </div>
         </div>
+
+        <Menu />
       </div>
     </div>
   );
