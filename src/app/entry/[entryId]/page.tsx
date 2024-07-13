@@ -1,7 +1,7 @@
 import { Metadata, ResolvingMetadata } from 'next';
 
 import Header from './components/header';
-import EntryView from './components/entryView';
+import EntryView from './components/entry-view';
 
 import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
 
