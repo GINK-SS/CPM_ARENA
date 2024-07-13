@@ -17,7 +17,9 @@ const SubmitBtn = () => {
   const [setSelectedPlayer, setPinnedPlayer, clearLineup] = usePlayerStore(
     useShallow((state) => [state.setSelectedPlayer, state.setPinnedPlayer, state.clearLineup])
   );
-  const [closeMenu, setOverallLimit] = useTableStore(useShallow((state) => [state.closeMenu, state.setOverallLimit]));
+  const [closeMenu, setOverallLimit, closeOverallFilter] = useTableStore(
+    useShallow((state) => [state.closeMenu, state.setOverallLimit, state.closeOverallFilter])
+  );
   const clearBuff = useBuffStore((state) => state.clearBuff);
   const router = useRouter();
 
@@ -25,6 +27,7 @@ const SubmitBtn = () => {
     closeYearPopup();
     closeTeamPopup();
     closeMenu();
+    closeOverallFilter();
     setOverallLimit(69);
     setSelectedPlayer(null);
     setPinnedPlayer(null);

@@ -29,6 +29,8 @@ export default async function Header() {
         </div>
 
         <div data-role='options' className='hidden items-center justify-end tablet:flex'>
+          <OverallFilter />
+
           <div className='ml-20 flex h-25 items-center border-l border-l-slate-200/20 pl-10'>
             <Link
               href='mailto:gink.ss00@gmail.com'
