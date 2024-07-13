@@ -16,6 +16,7 @@ body {
   -webkit-animation: AnimationGradient 10s ease infinite;
   -moz-animation: AnimationGradient 10s ease infinite;
   animation: AnimationGradient 10s ease infinite;
+  line-height: 1;
   color: #fff;
 }
 
