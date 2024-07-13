@@ -12,6 +12,7 @@ export const Container = styled.div`
 `;
 
 export const ClickEffect = styled.div`
+  pointer-events: none;
   position: absolute;
   width: 30px;
   height: 30px;
@@ -22,7 +23,7 @@ export const ClickEffect = styled.div`
   box-shadow: inset 0 0 100px 100px rgba(255, 165, 0, 0.8), 0 0 10px 10px rgba(255, 165, 0, 0.7);
   transform: translate(-50%, -50%);
   animation: click-effect-animation 0.5s forwards;
-  z-index: 20;
+  z-index: 100;
 
   @keyframes click-effect-animation {
     30% {
@@ -43,8 +44,7 @@ export const ClickEffect = styled.div`
 
 export const Content = styled.div`
   position: relative;
-  max-width: 1100px;
-  padding: 30px 0;
+  width: 100%;
   user-select: none;
 
   @media (max-width: 416px) {
