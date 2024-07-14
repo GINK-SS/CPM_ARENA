@@ -1,6 +1,7 @@
 import { Metadata, ResolvingMetadata } from 'next';
 
-import EntryView from './components/entryView';
+import Header from './components/header';
+import EntryView from './components/entry-view';
 
 import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
 
@@ -63,5 +64,10 @@ export async function generateMetadata({ params }: MetaProps, parent: ResolvingM
 }
 
 export default function Page() {
-  return <EntryView />;
+  return (
+    <>
+      <Header />
+      <EntryView />
+    </>
+  );
 }

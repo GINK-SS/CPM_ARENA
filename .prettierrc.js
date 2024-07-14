@@ -6,4 +6,6 @@ module.exports = {
   tabWidth: 2,
   endOfLine: 'auto',
   bracketSpacing: true,
+  plugins: ['prettier-plugin-tailwindcss'],
+  tailwindFunctions: ['classnames'],
 };
