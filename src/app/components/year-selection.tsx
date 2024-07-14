@@ -34,9 +34,9 @@ const YearSelection = () => {
       {YEAR_LIST.map((item, index) => (
         <button
           className={classNames(
-            'flex aspect-square items-center justify-center border-1 border-slate-900 bg-slate-100 text-[2.5vw] tablet:text-16 laptop:text-14',
+            'flex aspect-square items-center justify-center border-1 border-slate-900 text-[2.5vw] tablet:text-16 laptop:text-14',
             {
-              'text-black hover:bg-[#e0a82433]': item && item !== selectedYear,
+              'bg-slate-100 text-black hover:bg-[#e0a82433]': item && item !== selectedYear,
               'bg-[#410] text-white': item && item === selectedYear,
               'opacity-30': !item,
             }

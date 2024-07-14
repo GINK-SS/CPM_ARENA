@@ -38,10 +38,10 @@ const TeamSelection = () => {
       {allTeams.map((team, index) => (
         <button
           className={classNames(
-            'flex flex-col items-center justify-center gap-2 break-keep rounded-md border-1 border-slate-900 bg-white p-5 text-[2vw] tablet:text-14',
+            'flex flex-col items-center justify-center gap-2 break-keep rounded-md border-1 border-slate-900 p-5 text-[2vw] tablet:text-14',
             {
               'bg-[#410] font-semibold text-white': selectedTeams.includes(team),
-              'text-black': !selectedTeams.includes(team),
+              'bg-white text-black': !selectedTeams.includes(team),
               'opacity-20': !selectedYear || !team.years.includes(selectedYear),
               'text-black hover:bg-[#e0a82433]':
                 !selectedTeams.includes(team) && selectedYear && team.years.includes(selectedYear),
