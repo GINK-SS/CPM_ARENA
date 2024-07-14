@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { motion } from 'framer-motion';
 
 import PlayerCard from '../playerCard';
-import InfoBox from '../infoBox';
+import InfoBox from '../info-box';
 import useTeamStore from '@/app/stores/team';
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';

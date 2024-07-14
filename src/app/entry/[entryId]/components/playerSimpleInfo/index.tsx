@@ -4,7 +4,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
-import InfoBox from '../infoBox';
+import InfoBox from '../info-box';
 import Stat from './stat';
 
 import { Hitter, Pitcher } from '@/app/stores/player/types';

@@ -3,7 +3,7 @@ import { useShallow } from 'zustand/react/shallow';
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
-import InfoBox from '../infoBox';
+import InfoBox from '../info-box';
 import BuffItem from './buffItem';
 import Total from './total';
 
