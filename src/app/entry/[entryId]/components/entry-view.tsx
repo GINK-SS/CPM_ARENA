@@ -12,7 +12,7 @@ import useTeamStore from '@/app/stores/team';
 import useYearStore from '@/app/stores/year';
 import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
-import Loading from '@/app/components/common/loading';
+import LoadingText from '@/app/components/common/loading-text';
 import PlayerDetail from './player-detail';
 import SimpleInfo from './simple-info';
 import LineUpInfo from './lineup-info';
@@ -105,7 +105,7 @@ export default function EntryView() {
     }
   };
 
-  if (isLoading) return <Loading text='표를 생성 중입니다.' />;
+  if (isLoading) return <LoadingText text='표를 생성 중입니다.' />;
 
   if (status === 'invalid') return <NotFound />;
   else if (status === 'pending') return null;

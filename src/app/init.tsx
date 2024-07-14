@@ -6,7 +6,7 @@ import { useShallow } from 'zustand/react/shallow';
 
 import useTeamStore from './stores/team';
 import usePlayerStore from './stores/player';
-import Loading from './components/common/loading';
+import LoadingText from './components/common/loading-text';
 import Background from './components/common/background';
 
 const Init = ({ children }: { children: ReactNode }) => {
@@ -29,7 +29,7 @@ const Init = ({ children }: { children: ReactNode }) => {
 
   return (
     <Background>
-      {isLoading ? pathname === '/' ? null : <Loading text='선수 정보를 불러오는 중입니다.' /> : children}
+      {isLoading ? pathname === '/' ? null : <LoadingText text='선수 정보를 불러오는 중입니다.' /> : children}
     </Background>
   );
 };
