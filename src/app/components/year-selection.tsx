@@ -21,7 +21,7 @@ const YearSelection = () => {
 
   return (
     <motion.div
-      className='absolute z-[1] grid w-[95vw] grid-cols-10 gap-2 rounded-sm border-2 bg-slate-200 p-5 tablet:w-[600px] laptop:w-[495px]'
+      className='absolute z-[1] grid w-[95vw] grid-cols-10 gap-2 rounded-sm border-2 bg-slate-200 p-5 mobileL:w-[600px] laptop:w-[495px]'
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0, opacity: 0 }}
@@ -34,7 +34,7 @@ const YearSelection = () => {
       {YEAR_LIST.map((item, index) => (
         <button
           className={classNames(
-            'flex aspect-square items-center justify-center border-1 border-slate-900 text-[2.5vw] tablet:text-16 laptop:text-14',
+            'flex aspect-square items-center justify-center border-1 border-slate-900 text-[2.5vw] mobileL:text-16 laptop:text-14',
             {
               'bg-slate-100 text-black hover:bg-[#e0a82433]': item && item !== selectedYear,
               'bg-[#410] text-white': item && item === selectedYear,

@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className='mx-auto flex max-w-[700px] justify-between gap-3 tablet:flex-col tablet:items-end laptop:max-w-[1000px]'>
+    <div className='mx-auto flex max-w-[700px] justify-between gap-3 mobileL:flex-col mobileL:items-end laptop:max-w-[1000px]'>
       <div>
         <img
           src='https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fwww.cpm-arena.com&count_bg=%23D17407&title_bg=%235E5E5E&icon=angellist.svg&icon_color=%23E7E7E7&title=visits&edge_flat=true'

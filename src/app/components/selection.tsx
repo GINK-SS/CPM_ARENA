@@ -35,8 +35,8 @@ const Selection = () => {
       <motion.div className='flex flex-1 items-center justify-center laptop:justify-start'>
         <button
           className={classNames(
-            'relative inline-block h-45 w-full overflow-hidden border-1 indent-8 text-17 font-semibold tracking-[8px] transition-colors duration-300 ease-in-out tablet:h-60 tablet:text-20 laptop:max-w-[400px]',
-            'before:absolute before:-right-50 before:bottom-0 before:left-0 before:top-0 before:-z-[1] before:-translate-x-full before:border-b-[45px] before:border-r-[50px] before:border-b-white before:border-r-transparent before:transition-transform before:duration-300 before:content-[""] tablet:before:border-b-[60px]',
+            'relative inline-block h-45 w-full overflow-hidden border-1 indent-8 text-17 font-semibold tracking-[8px] transition-colors duration-300 ease-in-out mobileL:h-60 mobileL:text-20 laptop:max-w-[400px]',
+            'before:absolute before:-right-50 before:bottom-0 before:left-0 before:top-0 before:-z-[1] before:-translate-x-full before:border-b-[45px] before:border-r-[50px] before:border-b-white before:border-r-transparent before:transition-transform before:duration-300 before:content-[""] mobileL:before:border-b-[60px]',
             'hover:text-[#a3440f] hover:before:translate-x-0',
             {
               'text-[#a3440f] before:transform-none': selectedYear,
@@ -54,8 +54,8 @@ const Selection = () => {
       <motion.div className='flex flex-1 items-center justify-center laptop:justify-end'>
         <button
           className={classNames(
-            'relative inline-block h-45 w-full overflow-hidden border-1 indent-8 text-17 font-semibold tracking-[8px] transition-colors duration-300 ease-in-out tablet:h-60 tablet:text-20 laptop:max-w-[400px]',
-            'before:absolute before:-right-50 before:bottom-0 before:left-0 before:top-0 before:-z-[1] before:-translate-x-full before:border-b-[45px] before:border-r-[50px] before:border-b-white before:border-r-transparent before:transition-transform before:duration-300 before:content-[""] tablet:before:border-b-[60px]',
+            'relative inline-block h-45 w-full overflow-hidden border-1 indent-8 text-17 font-semibold tracking-[8px] transition-colors duration-300 ease-in-out mobileL:h-60 mobileL:text-20 laptop:max-w-[400px]',
+            'before:absolute before:-right-50 before:bottom-0 before:left-0 before:top-0 before:-z-[1] before:-translate-x-full before:border-b-[45px] before:border-r-[50px] before:border-b-white before:border-r-transparent before:transition-transform before:duration-300 before:content-[""] mobileL:before:border-b-[60px]',
             'hover:text-[#a3440f] hover:before:translate-x-0',
             {
               'text-[#a3440f] before:transform-none': selectedTeams.length === 5,
@@ -67,11 +67,11 @@ const Selection = () => {
           disabled={!selectedYear}
         >
           {selectedTeams.length ? (
-            <div className='flex justify-center gap-20 tablet:gap-18'>
+            <div className='flex justify-center gap-20 mobileL:gap-18'>
               {selectedTeams.map((selectedTeam, idx) => (
                 <div
                   key={idx}
-                  className='relative aspect-square w-30 drop-shadow-[2px_2px_0_#333] tablet:w-45 tablet:drop-shadow-[3px_3px_0_#333]'
+                  className='relative aspect-square w-30 drop-shadow-[2px_2px_0_#333] mobileL:w-45 mobileL:drop-shadow-[3px_3px_0_#333]'
                 >
                   <Image
                     src={allTeams.find((team) => team.id === selectedTeam.id)?.logo || ''}

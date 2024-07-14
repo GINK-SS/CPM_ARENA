@@ -24,7 +24,7 @@ const TeamSelection = () => {
   return (
     <motion.div
       className={classNames(
-        'absolute z-[1] grid w-[95vw] grid-cols-7 gap-2 rounded-sm border-2 bg-slate-200 p-5 tablet:w-[600px] laptop:w-[495px]'
+        'absolute z-[1] grid w-[95vw] grid-cols-7 gap-2 rounded-sm border-2 bg-slate-200 p-5 mobileL:w-[600px] laptop:w-[495px]'
       )}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
@@ -38,7 +38,7 @@ const TeamSelection = () => {
       {allTeams.map((team, index) => (
         <button
           className={classNames(
-            'flex flex-col items-center justify-center gap-2 break-keep rounded-md border-1 border-slate-900 p-5 text-[2vw] tablet:text-14',
+            'flex flex-col items-center justify-center gap-2 break-keep rounded-md border-1 border-slate-900 p-5 text-[2vw] mobileL:text-14',
             {
               'bg-[#410] font-semibold text-white': selectedTeams.includes(team),
               'bg-white text-black': !selectedTeams.includes(team),
@@ -52,11 +52,11 @@ const TeamSelection = () => {
           onClick={onTeamClick}
           disabled={!selectedYear || !team.years.includes(selectedYear)}
         >
-          <div className='relative aspect-square w-[8vw] drop-shadow-[0.5vw_0.5vw_0_#333] tablet:w-45 tablet:drop-shadow-[3px_3px_0_#333] laptop:w-40'>
+          <div className='relative aspect-square w-[8vw] drop-shadow-[0.5vw_0.5vw_0_#333] mobileL:w-45 mobileL:drop-shadow-[3px_3px_0_#333] laptop:w-40'>
             <Image src={team.logo} alt={team.name} placeholder='blur' blurDataURL={team.logo} fill sizes='50px' />
           </div>
 
-          <div className='flex w-full flex-1 items-center justify-center leading-[2.2vw] tablet:h-35 tablet:flex-none tablet:leading-16'>
+          <div className='flex w-full flex-1 items-center justify-center leading-[2.2vw] mobileL:h-35 mobileL:flex-none mobileL:leading-16'>
             <span>{team.name}</span>
           </div>
         </button>
