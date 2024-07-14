@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
-import StyledComponentsRegistry from './lib/registry';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
@@ -55,9 +54,7 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className={notoSansKR.className}>
-        <StyledComponentsRegistry>
-          <Init>{children}</Init>
-        </StyledComponentsRegistry>
+        <Init>{children}</Init>
         <Analytics />
         <SpeedInsights />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />
