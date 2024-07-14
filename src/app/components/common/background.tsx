@@ -1,6 +1,5 @@
 import { ReactNode, useState } from 'react';
-
-import * as S from './styles';
+import classNames from 'classnames';
 
 type BackgroundProps = {
   children: ReactNode;
@@ -23,12 +22,22 @@ const Background = ({ children }: BackgroundProps) => {
   };
 
   return (
-    <S.Container onClick={handleClick}>
+    <div
+      className='relative flex min-h-full flex-col items-center justify-center bg-[url("/assets/hideout.svg")] bg-[length:100px_100px]'
+      onClick={handleClick}
+    >
       {clicks.map((click) => (
-        <S.ClickEffect key={click.id} style={{ left: click.x, top: click.y }}></S.ClickEffect>
+        <div
+          key={click.id}
+          className={classNames(
+            'pointer-events-none absolute z-50 h-30 w-30 -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent outline-white',
+            'animate-[click-effect_0.5s_forwards]'
+          )}
+          style={{ left: click.x, top: click.y }}
+        ></div>
       ))}
-      <S.Content>{children}</S.Content>
-    </S.Container>
+      <div className='relative w-full select-none'>{children}</div>
+    </div>
   );
 };
 
