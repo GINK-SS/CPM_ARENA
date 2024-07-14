@@ -14,7 +14,7 @@ import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
 import Loading from '@/app/components/common/loading';
 import PlayerDetail from './player-detail';
-import PlayerSimpleInfo from './playerSimpleInfo';
+import SimpleInfo from './simple-info';
 import LineUpInfo from './lineUpInfo';
 import Lineup from './lineup';
 import PositionEntry from './position-entry';
@@ -127,15 +127,15 @@ export default function EntryView() {
       </AnimatePresence>
 
       <motion.div
-        className='mobileL:max-w-[630px] mobileL:my-20 relative mx-auto my-10 flex w-full flex-col items-center tablet:max-w-[750px] laptop:max-w-[850px]'
+        className='relative mx-auto my-10 flex w-full flex-col items-center mobileL:my-20 mobileL:max-w-[630px] tablet:max-w-[750px] laptop:max-w-[850px]'
         initial={{ y: 25, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.2 }}
       >
-        <div data-role='header' className='mobileL:mb-20 mb-10 flex items-center justify-center'>
+        <div data-role='header' className='mb-10 flex items-center justify-center mobileL:mb-20'>
           <h1
             data-role='title'
-            className='mobileL:indent-15 mobileL:tracking-[15px] mobileL:text-40 indent-8 text-[6vw] font-extrabold tracking-[8px] drop-shadow-[1px_1px_1px_#555] tablet:text-45 tablet:drop-shadow-[3px_3px_2px_#555] laptop:text-55'
+            className='indent-8 text-[6vw] font-extrabold tracking-[8px] drop-shadow-[1px_1px_1px_#555] mobileL:indent-15 mobileL:text-40 mobileL:tracking-[15px] tablet:text-45 tablet:drop-shadow-[3px_3px_2px_#555] laptop:text-55'
           >
             {selectedYear}년 ARENA
           </h1>
@@ -143,23 +143,23 @@ export default function EntryView() {
 
         <div data-role='entry-container' className='w-full'>
           <div data-role='teams-container' className='mb-5 flex justify-between tablet:mb-8 laptop:mb-10'>
-            <div data-role='empty-position-space' className='mobileL:w-70 w-[10vw] tablet:w-90 laptop:w-100' />
+            <div data-role='empty-position-space' className='w-[10vw] mobileL:w-70 tablet:w-90 laptop:w-100' />
             {selectedTeams.map((selectedTeam) => (
               <div
                 data-role='team-wrapper'
                 key={selectedTeam.id}
-                className='mobileL:gap-2 flex flex-1 flex-col items-center justify-center gap-1 laptop:gap-3'
+                className='flex flex-1 flex-col items-center justify-center gap-1 mobileL:gap-2 laptop:gap-3'
               >
                 <div
                   data-role='logo'
-                  className='mobileL:w-45 mobileL:drop-shadow-[3px_3px_0_#333] relative aspect-square w-[7vw] drop-shadow-[1px_1px_0_#333] tablet:w-55 laptop:w-60'
+                  className='relative aspect-square w-[7vw] drop-shadow-[1px_1px_0_#333] mobileL:w-45 mobileL:drop-shadow-[3px_3px_0_#333] tablet:w-55 laptop:w-60'
                 >
                   <Image src={selectedTeam.logo} alt='logo' fill sizes='60px' />
                 </div>
 
                 <h2
                   data-role='team-name'
-                  className='mobileL:text-12 text-[2vw] font-semibold tablet:text-14 laptop:text-16'
+                  className='text-[2vw] font-semibold mobileL:text-12 tablet:text-14 laptop:text-16'
                 >
                   {selectedTeam.name}
                 </h2>
@@ -188,7 +188,7 @@ export default function EntryView() {
             <div
               className={classNames(
                 'flex-1 py-9 text-center indent-1 text-10 font-semibold tracking-[1px]',
-                'mobileL:text-15 mobileL:py-13 mobileL:tracking-[2px] mobileL:indent-2 tablet:text-17',
+                'mobileL:py-13 mobileL:indent-2 mobileL:text-15 mobileL:tracking-[2px] tablet:text-17',
                 'first:bg-[#f0c2bd] last:text-[#1b1588] [&:nth-child(-n+2)]:text-black [&:nth-child(2)]:bg-[#f5df94] [&:nth-child(3)]:text-[#ca4142] [&:nth-last-child(-n+2)]:bg-white'
               )}
               key={description}
@@ -206,8 +206,8 @@ export default function EntryView() {
           <Lineup isStickyOn={isStickyOn} setIsStickyOn={setIsStickyOn} />
         </div>
         <div className='flex w-full flex-col items-start justify-center tablet:flex-row tablet:gap-2'>
-          <PlayerSimpleInfo player={pinnedPlayer ?? selectedPlayer} />
-          <PlayerSimpleInfo player={pinnedPlayer ? selectedPlayer : null} />
+          <SimpleInfo player={pinnedPlayer ?? selectedPlayer} />
+          <SimpleInfo player={pinnedPlayer ? selectedPlayer : null} />
         </div>
         <LineUpInfo />
       </motion.div>
