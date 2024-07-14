@@ -15,7 +15,7 @@ import useTableStore from '@/app/stores/table';
 import Loading from '@/app/components/common/loading';
 import PlayerDetail from './player-detail';
 import SimpleInfo from './simple-info';
-import LineUpInfo from './lineUpInfo';
+import LineUpInfo from './lineup-info';
 import Lineup from './lineup';
 import PositionEntry from './position-entry';
 

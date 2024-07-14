@@ -10,9 +10,7 @@ import { Team } from '@/app/stores/team/types';
 import { Hitter } from '@/app/stores/player/types';
 import { Records } from '@/app/stores/buff/types';
 
-import * as S from './styles';
-
-const Total = () => {
+const TeamPower = () => {
   const selectedTeams = useTeamStore((state) => state.selectedTeams);
   const [hitterLineup, pitcherLineup] = usePlayerStore(
     useShallow((state) => [state.hitterLineup, state.pitcherLineup])
@@ -36,9 +34,9 @@ const Total = () => {
   };
 
   return (
-    <S.Wrapper>
+    <div className='flex items-center gap-10 text-17 font-semibold mobileL:text-24'>
       <span>총 전력</span>
-      <S.Value>
+      <span className='w-40 text-center mobileL:w-56'>
         {buffOrder.reduce(
           (acc, curr) =>
             acc +
@@ -53,10 +51,10 @@ const Total = () => {
                     )
                   ]
               : BUFF_LIST[curr].grades.findLastIndex((grade) => grade <= currentBuff[curr]) === -1
-              ? 0
-              : BUFF_LIST[curr]?.gradeValues[
-                  BUFF_LIST[curr]?.grades.findLastIndex((grade) => grade <= currentBuff[curr])
-                ]) *
+                ? 0
+                : BUFF_LIST[curr]?.gradeValues[
+                    BUFF_LIST[curr]?.grades.findLastIndex((grade) => grade <= currentBuff[curr])
+                  ]) *
               (isTeamBuff(curr) ? currentBuff.teams[selectedTeams.indexOf(curr)] : currentBuff[curr]),
           0
         ) +
@@ -71,9 +69,9 @@ const Total = () => {
               (!!curr.player && curr.position !== '선발' && curr.position !== curr.player.position ? 3 : 0),
             0
           )}
-      </S.Value>
-    </S.Wrapper>
+      </span>
+    </div>
   );
 };
 
-export default Total;
+export default TeamPower;
