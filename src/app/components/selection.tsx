@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import classNames from 'classnames';
-import { twMerge } from 'tailwind-merge';
 
 import useYearStore from '@/app/stores/year';
 import useTeamStore from '@/app/stores/team';
@@ -54,17 +53,15 @@ const Selection = () => {
 
       <motion.div className='flex flex-1 items-center justify-center laptop:justify-end'>
         <button
-          className={twMerge(
-            classNames(
-              'relative inline-block h-45 w-full overflow-hidden border-1 indent-8 text-17 font-semibold tracking-[8px] transition-colors duration-300 ease-in-out tablet:h-60 tablet:text-20 laptop:max-w-[400px]',
-              'before:absolute before:-right-50 before:bottom-0 before:left-0 before:top-0 before:-z-[1] before:-translate-x-full before:border-b-[45px] before:border-r-[50px] before:border-b-white before:border-r-transparent before:transition-transform before:duration-300 before:content-[""] tablet:before:border-b-[60px]',
-              'hover:text-[#a3440f] hover:before:translate-x-0',
-              {
-                'text-[#a3440f] before:transform-none': selectedTeams.length === 5,
-                'text-inherit': selectedTeams.length !== 5,
-                'opacity-30 before:content-none hover:text-inherit': !selectedYear,
-              }
-            )
+          className={classNames(
+            'relative inline-block h-45 w-full overflow-hidden border-1 indent-8 text-17 font-semibold tracking-[8px] transition-colors duration-300 ease-in-out tablet:h-60 tablet:text-20 laptop:max-w-[400px]',
+            'before:absolute before:-right-50 before:bottom-0 before:left-0 before:top-0 before:-z-[1] before:-translate-x-full before:border-b-[45px] before:border-r-[50px] before:border-b-white before:border-r-transparent before:transition-transform before:duration-300 before:content-[""] tablet:before:border-b-[60px]',
+            'hover:text-[#a3440f] hover:before:translate-x-0',
+            {
+              'text-[#a3440f] before:transform-none': selectedTeams.length === 5,
+              'text-inherit': selectedTeams.length !== 5,
+              'opacity-30 before:content-none hover:text-inherit': !selectedYear,
+            }
           )}
           onClick={onTeamClick}
           disabled={!selectedYear}
