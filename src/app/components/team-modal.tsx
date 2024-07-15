@@ -51,8 +51,16 @@ const TeamModal = ({ allTeams, setIsOpen }: TeamModalProps) => {
     setIsOpen(false);
   };
 
+  const onOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.currentTarget === e.target) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
+      <div className='fixed inset-0 z-10' onClick={onOuterClick} />
+
       <motion.div
         className={classNames(
           'absolute z-10 grid w-[95vw] grid-cols-6 gap-2 rounded-sm border-2 bg-slate-200 p-5 mobileL:w-[600px] laptop:w-[495px]'

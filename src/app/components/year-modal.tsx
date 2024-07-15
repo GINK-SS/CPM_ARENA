@@ -20,8 +20,16 @@ const YearModal = ({ setIsOpen }: { setIsOpen: (value: boolean) => void }) => {
     setIsOpen(false);
   };
 
+  const onOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.currentTarget === e.target) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
+      <div className='fixed inset-0 z-10' onClick={onOuterClick} />
+
       <motion.div
         className='absolute z-10 grid w-[95vw] grid-cols-10 gap-2 rounded-sm border-2 bg-slate-200 p-5 mobileL:w-[600px] laptop:w-[495px]'
         initial={{ scale: 0, opacity: 0 }}
