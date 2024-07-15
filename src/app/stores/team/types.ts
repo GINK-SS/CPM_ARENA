@@ -72,6 +72,7 @@ export type Team = {
   shorten: TeamShorten;
   name: TeamName;
   logo: string;
+  blur: string;
   years: number[];
 };
 
@@ -82,12 +83,9 @@ export type SetTeamsPayload = {
 };
 
 export type TeamStoreState = {
-  isPopupActive: boolean;
   allTeams: Team[];
   selectedTeams: Team[];
-  openPopup: () => void;
-  closePopup: () => void;
-  setTeams: ({ team, index, action }: SetTeamsPayload) => void;
+  setTeams: (teams: Team[]) => void;
   resetTeams: () => void;
   fetchAllTeams: () => Promise<void>;
 };

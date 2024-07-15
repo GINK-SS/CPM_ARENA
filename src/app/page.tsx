@@ -1,27 +1,37 @@
-'use client';
-
-import { motion } from 'framer-motion';
-
 import MainTitle from './components/main-title';
-import Selection from './components/selection';
+import YearButton from './components/year-button';
+import TeamButton from './components/team-button';
 import SubmitBtn from './components/submit-button';
 import Footer from './components/footer';
+import getBase64 from './util/getBase64';
 
-export default function Home() {
+import { Team } from './stores/team/types';
+
+export default async function Home() {
+  const teamData: Team[] = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/storage/teams.json`).then((res) =>
+    res.json()
+  );
+
+  const newTeamsPromises = teamData.map(async (team) => {
+    const { base64 } = await getBase64(team.logo);
+
+    return { ...team, blur: base64 };
+  });
+
+  const allTeams = await Promise.all(newTeamsPromises);
+
   return (
-    <motion.div
-      initial={{ y: 25, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className='px-5 py-20 mobileL:px-10'
-    >
+    <div className='px-5 py-20 mobileL:px-10'>
       <MainTitle />
 
-      <Selection />
+      <div className='mx-auto mb-60 flex max-w-[700px] flex-col justify-between gap-10 laptop:max-w-[1000px] laptop:flex-row'>
+        <YearButton />
+        <TeamButton allTeams={allTeams} />
+      </div>
 
       <SubmitBtn />
 
       <Footer />
-    </motion.div>
+    </div>
   );
 }

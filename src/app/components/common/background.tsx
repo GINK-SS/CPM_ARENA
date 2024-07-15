@@ -1,5 +1,8 @@
+'use client';
+
 import { ReactNode, useState } from 'react';
 import classNames from 'classnames';
+import { motion } from 'framer-motion';
 
 type BackgroundProps = {
   children: ReactNode;
@@ -36,7 +39,15 @@ const Background = ({ children }: BackgroundProps) => {
           style={{ left: click.x, top: click.y }}
         ></div>
       ))}
-      <div className='relative w-full select-none'>{children}</div>
+
+      <motion.div
+        initial={{ y: 25, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.2 }}
+        className='relative w-full select-none'
+      >
+        {children}
+      </motion.div>
     </div>
   );
 };
