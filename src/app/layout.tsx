@@ -9,7 +9,7 @@ import Init from './init';
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
   weight: ['200', '400', '700', '900'],
-  display: 'block',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
