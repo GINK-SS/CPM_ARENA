@@ -18,6 +18,10 @@ body {
   animation: AnimationGradient 10s ease infinite;
   line-height: 1;
   color: #fff;
+
+  :disabled {
+    pointer-events: none;
+  }
 }
 
 @-webkit-keyframes AnimationGradient {
