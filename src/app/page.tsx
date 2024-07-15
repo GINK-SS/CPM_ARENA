@@ -24,7 +24,7 @@ export default async function Home() {
     <div className='px-5 py-20 mobileL:px-10'>
       <MainTitle />
 
-      <div className='mx-auto mb-60 flex max-w-[700px] flex-col justify-between gap-10 laptop:max-w-[1000px] laptop:flex-row'>
+      <div className='mx-auto mb-60 flex max-w-[700px] flex-col justify-between gap-10 laptop:mb-140 laptop:max-w-[1000px] laptop:flex-row'>
         <YearButton />
         <TeamButton allTeams={allTeams} />
       </div>
