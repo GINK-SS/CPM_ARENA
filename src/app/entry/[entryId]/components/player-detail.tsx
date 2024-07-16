@@ -3,7 +3,9 @@ import Image from 'next/image';
 import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence, motion } from 'framer-motion';
 import classNames from 'classnames';
+import cpmLogo from '@/public/assets/logo/cpmRealLogo.webp';
 
+import TeamLogo from '@/app/components/common/team-logo';
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import { HITTER_STAT, HITTER_STAT_DETAIL, PITCHER_STAT, PITCHER_STAT_DETAIL } from '@/app/const';
@@ -61,12 +63,7 @@ const PlayerDetail = () => {
                   {allTeams.find((team) => team.id === player.team)?.name || ''}
                 </span>
                 <div className='relative h-20 w-20'>
-                  <Image
-                    src={allTeams.find((team) => team.id === player.team)?.logo || ''}
-                    alt={player.team}
-                    fill
-                    sizes='20px'
-                  />
+                  <TeamLogo teamId={player.team} />
                 </div>
               </div>
 
@@ -104,7 +101,7 @@ const PlayerDetail = () => {
                   </div>
 
                   <div className='relative h-43 w-122'>
-                    <Image src='/assets/logo/cpmRealLogo.webp' alt='logo' fill sizes='120px' />
+                    <Image src={cpmLogo} alt='logo' fill sizes='120px' />
                   </div>
 
                   <div className='flex items-center justify-between border-1 border-[#00000010] bg-[#52160a] font-semibold'>

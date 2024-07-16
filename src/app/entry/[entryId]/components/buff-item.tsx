@@ -1,8 +1,7 @@
-import Image from 'next/image';
-import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 import { IoPerson } from 'react-icons/io5';
 
+import TeamLogo from '@/app/components/common/team-logo';
 import useTeamStore from '@/app/stores/team';
 import useBuffStore from '@/app/stores/buff';
 import { BUFF_LIST } from '@/app/const';
@@ -16,7 +15,7 @@ type BuffItemProps = {
 };
 
 const BuffItem = ({ buff }: BuffItemProps) => {
-  const [allTeams, selectedTeams] = useTeamStore(useShallow((state) => [state.allTeams, state.selectedTeams]));
+  const selectedTeams = useTeamStore((state) => state.selectedTeams);
   const currentBuff = useBuffStore((state) => state.currentBuff);
 
   const getGradeIdxAndValue = () => {
@@ -44,7 +43,7 @@ const BuffItem = ({ buff }: BuffItemProps) => {
           <div className='h-16 text-12 mobileL:h-20 mobileL:text-14 tablet:text-16'>{BUFF_LIST[buff]?.name}</div>
         ) : (
           <div className='relative aspect-square w-16 mobileL:w-20'>
-            <Image src={allTeams.find((team) => team === buff)?.logo || ''} alt={buff.id} fill sizes='20px' />
+            <TeamLogo teamId={buff.id} />
           </div>
         )}
 

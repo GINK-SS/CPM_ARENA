@@ -1,9 +1,8 @@
-import Image from 'next/image';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 import { IoSearchOutline } from 'react-icons/io5';
 
-import useTeamStore from '@/app/stores/team';
+import TeamLogo from '@/app/components/common/team-logo';
 import usePlayerStore from '@/app/stores/player';
 import InfoBox from './info-box';
 import SimpleStat from './simple-stat';
@@ -16,7 +15,6 @@ type SimpleInfoProps = {
 
 const SimpleInfo = ({ player }: SimpleInfoProps) => {
   const [showDetail, pinnedPlayer] = usePlayerStore(useShallow((state) => [state.showDetail, state.pinnedPlayer]));
-  const allTeams = useTeamStore((state) => state.allTeams);
 
   const onDetailClick = () => {
     showDetail(player === pinnedPlayer ? 'pinned' : 'selected');
@@ -67,14 +65,9 @@ const SimpleInfo = ({ player }: SimpleInfoProps) => {
         {player && (
           <>
             <div className='flex items-center gap-3 tablet:gap-5'>
-              <Image
-                src={allTeams.find((team) => team.id === player.team)?.logo ?? ''}
-                alt={player.team}
-                width={25}
-                height={25}
-                sizes='25px'
-                style={{ filter: 'drop-shadow(2px 2px 0 #333)' }}
-              />
+              <div className='aspect-square w-25 drop-shadow-[2px_2px_0_#333]'>
+                <TeamLogo teamId={player.team} />
+              </div>
               <span
                 className={classNames('font-semibold', {
                   'text-15': player.name.length >= 4,

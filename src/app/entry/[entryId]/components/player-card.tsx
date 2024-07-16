@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 
+import TeamLogo from '@/app/components/common/team-logo';
 import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
@@ -20,7 +21,7 @@ type PlayerCardProps = {
 };
 
 const PlayerCard = ({ card: { position, player }, order }: PlayerCardProps) => {
-  const [allTeams, selectedTeams] = useTeamStore(useShallow((state) => [state.allTeams, state.selectedTeams]));
+  const selectedTeams = useTeamStore((state) => state.selectedTeams);
   const [selectedPlayer, pinnedPlayer, setSelectedPlayer, setPinnedPlayer] = usePlayerStore(
     useShallow((state) => [state.selectedPlayer, state.pinnedPlayer, state.setSelectedPlayer, state.setPinnedPlayer])
   );
@@ -173,14 +174,9 @@ const PlayerCard = ({ card: { position, player }, order }: PlayerCardProps) => {
 
         <div className='relative flex h-[1.7vw] justify-end border-b-1 border-b-black bg-gradient-to-r from-[#853326] from-30% to-[#150401] to-80% pl-2 pr-1 pt-1 font-semibold mobileL:h-7 mobileL:border-b-2 mobileL:pr-4'>
           {player && (
-            <Image
-              src={allTeams.find((team) => team.id === player.team)!.logo}
-              alt='logo'
-              width={30}
-              height={30}
-              sizes='30px'
-              className='absolute bottom-[-0.5vw] left-[0.3vw] aspect-square h-auto w-[4vw] drop-shadow-[0_1px_1px_#222,_1px_0_1px_#222] mobileL:bottom-[-3px] mobileL:left-2 mobileL:w-30'
-            />
+            <div className='absolute bottom-[-0.5vw] left-[0.3vw] aspect-square h-auto w-[4vw] drop-shadow-[0_1px_1px_#222,_1px_0_1px_#222] mobileL:bottom-[-3px] mobileL:left-2 mobileL:w-30'>
+              <TeamLogo teamId={player.team} />
+            </div>
           )}
           <span className='text-[0.8vw] text-[#948585] mobileL:text-7'>ARENA</span>
         </div>
