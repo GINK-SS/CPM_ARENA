@@ -1,5 +1,3 @@
-import withPlaiceholder from '@plaiceholder/next';
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
@@ -10,4 +8,4 @@ const nextConfig = {
   compiler: {},
 };
 
-export default withPlaiceholder(nextConfig);
+export default nextConfig;

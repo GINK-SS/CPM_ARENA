@@ -71,8 +71,6 @@ export type Team = {
   id: TeamId;
   shorten: TeamShorten;
   name: TeamName;
-  logo: string;
-  blur: string;
   years: number[];
 };
 

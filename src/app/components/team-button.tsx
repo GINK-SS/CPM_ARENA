@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
 import classNames from 'classnames';
 
@@ -10,6 +9,7 @@ import useYearStore from '@/app/stores/year';
 import useTeamStore from '@/app/stores/team';
 
 import { Team } from '../stores/team/types';
+import TeamLogo from './common/team-logo';
 
 type TeamButtonProps = {
   allTeams: Team[];
@@ -49,13 +49,7 @@ export default function TeamButton({ allTeams }: TeamButtonProps) {
                 key={idx}
                 className='relative aspect-square w-30 drop-shadow-[2px_2px_0_#333] mobileL:w-45 mobileL:drop-shadow-[3px_3px_0_#333]'
               >
-                <Image
-                  src={selectedTeam.logo}
-                  alt={selectedTeam.id}
-                  fill
-                  sizes='45px'
-                  blurDataURL={selectedTeam.blur}
-                />
+                <TeamLogo teamId={selectedTeam.id} />
               </div>
             ))}
           </div>
