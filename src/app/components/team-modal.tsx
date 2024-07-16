@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useShallow } from 'zustand/react/shallow';
@@ -8,6 +8,7 @@ import useYearStore from '@/app/stores/year';
 import useTeamStore from '@/app/stores/team';
 
 import { Team } from '@/app/stores/team/types';
+import TeamLogo from './common/team-logo';
 
 type TeamModalProps = {
   allTeams: Team[];
@@ -18,16 +19,6 @@ const TeamModal = ({ allTeams, setIsOpen }: TeamModalProps) => {
   const selectedYear = useYearStore((state) => state.selectedYear);
   const [selectedTeams, setTeams] = useTeamStore(useShallow((state) => [state.selectedTeams, state.setTeams]));
   const [selected, setSelected] = useState<Team[]>(selectedTeams);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    if (!isMounted) {
-      setIsMounted(true);
-      return;
-    }
-
-    setSelected([]);
-  }, [selectedYear]);
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const selectedTeam = allTeams.find((team) => team.id === e.currentTarget.value)!;
@@ -90,7 +81,7 @@ const TeamModal = ({ allTeams, setIsOpen }: TeamModalProps) => {
             disabled={!selectedYear || !team.years.includes(selectedYear)}
           >
             <div className='relative aspect-square w-[8vw] rounded-full drop-shadow-[0.5vw_0.5vw_0_#333] mobileL:w-45 mobileL:drop-shadow-[3px_3px_0_#333] laptop:w-40'>
-              <Image src={team.logo} alt='logo' placeholder='blur' blurDataURL={team.blur} fill sizes='50px' />
+              <TeamLogo teamId={team.id} />
             </div>
 
             <div className='flex w-full flex-1 items-center justify-center text-[2.2vw] mobileL:h-35 mobileL:flex-none mobileL:text-15'>
