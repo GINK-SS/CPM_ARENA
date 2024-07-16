@@ -18,6 +18,20 @@ type LineupProps = {
   selectedTeams: Team[];
 };
 
+const hitterOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const pitcherOrder = [
+  '1선발',
+  '2선발',
+  '3선발',
+  '4선발',
+  '5선발',
+  '승리조A',
+  '승리조B',
+  '추격조A',
+  '추격조B',
+  '마무리',
+];
+
 const Lineup = ({ selectedTeams }: LineupProps) => {
   const [isStickyOn, setIsStickyOn] = useState(true);
   const [
@@ -45,19 +59,6 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
     useShallow((state) => [state.isShowHitterLineup, state.toggleIsShowHitterLineup])
   );
   const changeBuff = useBuffStore((state) => state.changeBuff);
-  const hitterOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const pitcherOrder = [
-    '1선발',
-    '2선발',
-    '3선발',
-    '4선발',
-    '5선발',
-    '승리조A',
-    '승리조B',
-    '추격조A',
-    '추격조B',
-    '마무리',
-  ];
 
   const onCancel = () => {
     setSelectedPlayer(null);

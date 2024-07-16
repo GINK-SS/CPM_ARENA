@@ -3,7 +3,6 @@ import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 
 import TeamLogo from '@/app/components/common/team-logo';
-import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
 import { BUFF_LIST, TEAMID_TO_SHORTEN } from '@/app/const';
@@ -11,6 +10,7 @@ import { BUFF_LIST, TEAMID_TO_SHORTEN } from '@/app/const';
 import { isHitter } from '@/app/util/decideType';
 import { Hitter, HitterPosition, Pitcher, PitcherPosition } from '@/app/stores/player/types';
 import { Records } from '@/app/stores/buff/types';
+import { Team } from '@/app/stores/team/types';
 
 type PlayerCardProps = {
   card: {
@@ -18,10 +18,10 @@ type PlayerCardProps = {
     player: Hitter | Pitcher | null;
   };
   order: number;
+  selectedTeams: Team[];
 };
 
-const PlayerCard = ({ card: { position, player }, order }: PlayerCardProps) => {
-  const selectedTeams = useTeamStore((state) => state.selectedTeams);
+const PlayerCard = ({ card: { position, player }, order, selectedTeams }: PlayerCardProps) => {
   const [selectedPlayer, pinnedPlayer, setSelectedPlayer, setPinnedPlayer] = usePlayerStore(
     useShallow((state) => [state.selectedPlayer, state.pinnedPlayer, state.setSelectedPlayer, state.setPinnedPlayer])
   );
