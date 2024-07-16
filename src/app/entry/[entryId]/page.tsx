@@ -8,7 +8,7 @@ import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 import { Team } from '@/app/stores/team/types';
 import EntryView from './components/entry-view';
-import classNames from 'classnames';
+import EntryDescription from './components/entry-description';
 
 type MetaProps = {
   params: { entryId: string };
@@ -100,12 +100,12 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
     selectedTeams.push(allTeams.find((team) => team.id === selectedTeam.name)!);
   });
 
-  const hittersData: Hitter[] = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/storage/hitters.json`).then((res) =>
-    res.json()
-  );
-  const pitchersData: Pitcher[] = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/storage/pitchers.json`).then((res) =>
-    res.json()
-  );
+  const hittersData: Hitter[] = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/storage/hitter/hitters-${paramYear.toString()[2]}0.json`
+  ).then((res) => res.json());
+  const pitchersData: Pitcher[] = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/storage/pitcher/pitchers-${paramYear.toString()[2]}0.json`
+  ).then((res) => res.json());
 
   const currentHitters = hittersData.filter((hitter) => hitter.year === paramYear);
   const currentPitchers = pitchersData.filter((pitcher) => pitcher.year === paramYear);
@@ -113,7 +113,6 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
     selectedTeams.map((team) => team.id).includes(player.team)
   );
 
-  const descriptionList = ['올스타', '골든 글러브', 'MVP', '오버롤 80 이상'];
   const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit;
 
   return (
