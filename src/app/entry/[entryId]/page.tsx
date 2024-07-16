@@ -6,7 +6,7 @@ import NotFound from '@/app/not-found';
 
 import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
-import { Team } from '@/app/stores/team/types';
+import { Team, TeamId } from '@/app/stores/team/types';
 import EntryView from './components/entry-view';
 import EntryDescription from './components/entry-description';
 
@@ -89,6 +89,7 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
     res.json()
   );
   const selectedTeams: Team[] = [];
+  const selectedTeamIds: Set<TeamId> = new Set();
 
   paramTeams.forEach((team) => {
     const selectedTeam = SHORTEN_DATA[team];
@@ -98,6 +99,7 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
     }
 
     selectedTeams.push(allTeams.find((team) => team.id === selectedTeam.name)!);
+    selectedTeamIds.add(selectedTeam.name);
   });
 
   const hittersData: Hitter[] = await fetch(
@@ -107,8 +109,10 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
     `${process.env.NEXT_PUBLIC_BASE_URL}/storage/pitcher/pitchers-${paramYear.toString()[2]}0.json`
   ).then((res) => res.json());
 
-  const currentHitters = hittersData.filter((hitter) => hitter.year === paramYear);
-  const currentPitchers = pitchersData.filter((pitcher) => pitcher.year === paramYear);
+  const currentHitters = hittersData.filter((hitter) => hitter.year === paramYear && selectedTeamIds.has(hitter.team));
+  const currentPitchers = pitchersData.filter(
+    (pitcher) => pitcher.year === paramYear && selectedTeamIds.has(pitcher.team)
+  );
   const playersOfSelectedTeams = [...currentHitters, ...currentPitchers].filter((player) =>
     selectedTeams.map((team) => team.id).includes(player.team)
   );
