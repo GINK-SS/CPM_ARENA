@@ -5,20 +5,20 @@ import classNames from 'classnames';
 
 import PlayerCard from './player-card';
 import InfoBox from './info-box';
-import useTeamStore from '@/app/stores/team';
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
 
 import { isHitter } from '@/app/util/decideType';
+import { Team } from '@/app/stores/team/types';
 
 type LineupProps = {
   isStickyOn: boolean;
   setIsStickyOn: Dispatch<SetStateAction<boolean>>;
+  selectedTeams: Team[];
 };
 
-const Lineup = ({ isStickyOn, setIsStickyOn }: LineupProps) => {
-  const selectedTeams = useTeamStore((state) => state.selectedTeams);
+const Lineup = ({ isStickyOn, setIsStickyOn, selectedTeams }: LineupProps) => {
   const [
     hitterLineup,
     pitcherLineup,

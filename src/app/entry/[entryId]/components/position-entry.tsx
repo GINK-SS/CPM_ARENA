@@ -2,7 +2,6 @@ import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 
 import useTableStore from '@/app/stores/table';
-import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import EntryItem from './entry-item';
 
@@ -13,13 +12,13 @@ import { Hitter, Pitcher } from '@/app/stores/player/types';
 import { isHitter } from '@/app/util/decideType';
 
 type PositionEntryProps = {
+  selectedTeams: Team[];
   position: string;
   showLimit: number;
   filteredPlayers: (Hitter | Pitcher)[];
 };
 
-export default function PositionEntry({ position, showLimit, filteredPlayers }: PositionEntryProps) {
-  const selectedTeams = useTeamStore((state) => state.selectedTeams);
+export default function PositionEntry({ selectedTeams, position, showLimit, filteredPlayers }: PositionEntryProps) {
   const overallLimit = useTableStore((state) => state.overallLimit);
   const [pinnedPlayer, hitterLineup] = usePlayerStore(useShallow((state) => [state.pinnedPlayer, state.hitterLineup]));
 
@@ -70,7 +69,7 @@ export default function PositionEntry({ position, showLimit, filteredPlayers }: 
 
       <div
         data-role='position-box'
-        className='mobileL:w-70 mobileL:text-15 relative flex w-[10vw] items-center justify-center border-black bg-white text-[2.4vw] font-semibold text-black tablet:w-90 tablet:text-18 laptop:w-100 laptop:text-20'
+        className='relative flex w-[10vw] items-center justify-center border-black bg-white text-[2.4vw] font-semibold text-black mobileL:w-70 mobileL:text-15 tablet:w-90 tablet:text-18 laptop:w-100 laptop:text-20'
       >
         <span>{position}</span>
       </div>

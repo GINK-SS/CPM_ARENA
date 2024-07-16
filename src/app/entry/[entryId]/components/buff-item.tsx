@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import { IoPerson } from 'react-icons/io5';
 
 import TeamLogo from '@/app/components/common/team-logo';
-import useTeamStore from '@/app/stores/team';
 import useBuffStore from '@/app/stores/buff';
 import { BUFF_LIST } from '@/app/const';
 
@@ -12,10 +11,10 @@ import { Records } from '@/app/stores/buff/types';
 
 type BuffItemProps = {
   buff: Team | Records;
+  selectedTeams: Team[];
 };
 
-const BuffItem = ({ buff }: BuffItemProps) => {
-  const selectedTeams = useTeamStore((state) => state.selectedTeams);
+const BuffItem = ({ buff, selectedTeams }: BuffItemProps) => {
   const currentBuff = useBuffStore((state) => state.currentBuff);
 
   const getGradeIdxAndValue = () => {

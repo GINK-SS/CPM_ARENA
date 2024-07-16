@@ -1,101 +1,40 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence, motion } from 'framer-motion';
 import classNames from 'classnames';
 
-import NotFound from '@/app/not-found';
-import useTeamStore from '@/app/stores/team';
-import useYearStore from '@/app/stores/year';
+import TeamLogo from '@/app/components/common/team-logo';
 import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
-import LoadingText from '@/app/components/common/loading-text';
 import PlayerDetail from './player-detail';
 import SimpleInfo from './simple-info';
 import LineUpInfo from './lineup-info';
 import Lineup from './lineup';
 import PositionEntry from './position-entry';
 
-import { FIRST_YEAR, LAST_YEAR, POSITION_LIMIT, SHORTEN_DATA } from '@/app/const';
+import { POSITION_LIMIT } from '@/app/const';
 
 import { Team } from '@/app/stores/team/types';
+import { Hitter, Pitcher } from '@/app/stores/player/types';
 
-export default function EntryView() {
-  const { entryId } = useParams<{ entryId: string }>();
-  const [selectedYear, setYear] = useYearStore(useShallow((state) => [state.selectedYear, state.setYear]));
-  const [allTeams, selectedTeams, setTeams, resetTeams] = useTeamStore(
-    useShallow((state) => [state.allTeams, state.selectedTeams, state.setTeams, state.resetTeams])
-  );
+type EntryViewProps = {
+  selectedTeams: Team[];
+  currentHitters: Hitter[];
+  currentPitchers: Pitcher[];
+  selectedYear: number;
+};
+
+export default function EntryView({ selectedTeams, currentHitters, currentPitchers, selectedYear }: EntryViewProps) {
   const [isMenu, closeMenu, isOverallFilter, closeOverallFilter] = useTableStore(
     useShallow((state) => [state.isMenu, state.closeMenu, state.isOverallFilter, state.closeOverallFilter])
   );
-  const [isShowDetail, allHitters, allPitchers, selectedPlayer, pinnedPlayer, clearDetail] = usePlayerStore(
-    useShallow((state) => [
-      state.isShowDetail,
-      state.allHitters,
-      state.allPitchers,
-      state.selectedPlayer,
-      state.pinnedPlayer,
-      state.clearDetail,
-    ])
+  const [isShowDetail, selectedPlayer, pinnedPlayer, clearDetail] = usePlayerStore(
+    useShallow((state) => [state.isShowDetail, state.selectedPlayer, state.pinnedPlayer, state.clearDetail])
   );
-  const [status, setStatus] = useState('pending');
-  const [isLoading, setIsLoading] = useState(true);
   const [isStickyOn, setIsStickyOn] = useState(true);
   const descriptionList = ['올스타', '골든 글러브', 'MVP', '오버롤 80 이상'];
-
-  useEffect(() => {
-    init();
-    makeTimeout();
-  }, []);
-
-  const init = () => {
-    const paramYear = +entryId.slice(0, 4);
-    const paramTeams = entryId.slice(4).match(/.{1,2}/g);
-
-    if (
-      isNaN(paramYear) ||
-      paramYear < FIRST_YEAR ||
-      paramYear > LAST_YEAR ||
-      !paramTeams ||
-      new Set(paramTeams).size !== 5
-    ) {
-      setStatus('invalid');
-      return;
-    }
-
-    if (selectedTeams.length === 5 && selectedYear) {
-      setStatus('valid');
-      return;
-    }
-
-    for (let idx = 0; idx < 5; idx += 1) {
-      const selectedTeam = SHORTEN_DATA[paramTeams[idx]];
-
-      if (!selectedTeam || selectedTeam.start > paramYear || selectedTeam.end < paramYear) {
-        resetTeams();
-        setStatus('invalid');
-        return;
-      }
-
-      setTeams({
-        team: allTeams.find((team) => team.id === selectedTeam.name) as Team,
-        index: idx,
-        action: 'ADD',
-      });
-    }
-
-    setYear(paramYear);
-    setStatus('valid');
-  };
-
-  const makeTimeout = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    setIsLoading(false);
-  };
 
   const onOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.currentTarget === e.target) {
@@ -104,11 +43,6 @@ export default function EntryView() {
       closeOverallFilter();
     }
   };
-
-  if (isLoading) return <LoadingText text='표를 생성 중입니다.' />;
-
-  if (status === 'invalid') return <NotFound />;
-  else if (status === 'pending') return null;
 
   return (
     <>
@@ -154,7 +88,7 @@ export default function EntryView() {
                   data-role='logo'
                   className='relative aspect-square w-[7vw] drop-shadow-[1px_1px_0_#333] mobileL:w-45 mobileL:drop-shadow-[3px_3px_0_#333] tablet:w-55 laptop:w-60'
                 >
-                  <Image src={selectedTeam.logo} alt='logo' fill sizes='60px' />
+                  <TeamLogo teamId={selectedTeam.id} />
                 </div>
 
                 <h2
@@ -170,14 +104,19 @@ export default function EntryView() {
           <div data-role='table' className='flex w-full flex-col items-center gap-2 tablet:gap-3'>
             {Object.entries(POSITION_LIMIT).map((limit) => {
               const [position, value] = limit;
-              const playersOfSelectedTeams = [
-                ...allHitters.get(selectedYear!)!,
-                ...allPitchers.get(selectedYear!)!,
-              ].filter((player) => selectedTeams.map((team) => team.id).includes(player.team));
+              const playersOfSelectedTeams = [...currentHitters, ...currentPitchers].filter((player) =>
+                selectedTeams.map((team) => team.id).includes(player.team)
+              );
               const filteredPlayers = playersOfSelectedTeams.filter((player) => player.position === position);
 
               return (
-                <PositionEntry key={position} position={position} showLimit={value} filteredPlayers={filteredPlayers} />
+                <PositionEntry
+                  key={position}
+                  selectedTeams={selectedTeams}
+                  position={position}
+                  showLimit={value}
+                  filteredPlayers={filteredPlayers}
+                />
               );
             })}
           </div>
@@ -203,13 +142,13 @@ export default function EntryView() {
             relative: !isStickyOn,
           })}
         >
-          <Lineup isStickyOn={isStickyOn} setIsStickyOn={setIsStickyOn} />
+          <Lineup isStickyOn={isStickyOn} setIsStickyOn={setIsStickyOn} selectedTeams={selectedTeams} />
         </div>
         <div className='flex w-full flex-col items-start justify-center tablet:flex-row tablet:gap-2'>
           <SimpleInfo player={pinnedPlayer ?? selectedPlayer} />
           <SimpleInfo player={pinnedPlayer ? selectedPlayer : null} />
         </div>
-        <LineUpInfo />
+        <LineUpInfo selectedTeams={selectedTeams} />
       </motion.div>
     </>
   );

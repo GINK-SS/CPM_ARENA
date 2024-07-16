@@ -2,8 +2,11 @@ import { Metadata, ResolvingMetadata } from 'next';
 
 import Header from './components/header';
 import EntryView from './components/entry-view';
+import NotFound from '@/app/not-found';
 
 import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
+import { Hitter, Pitcher } from '@/app/stores/player/types';
+import { Team } from '@/app/stores/team/types';
 
 type MetaProps = {
   params: { entryId: string };
@@ -63,11 +66,55 @@ export async function generateMetadata({ params }: MetaProps, parent: ResolvingM
   };
 }
 
-export default function Page() {
+export default async function Page({ params }: MetaProps) {
+  const entryId = params.entryId;
+  const paramYear = +entryId.slice(0, 4);
+  const paramTeams = entryId.slice(4).match(/.{1,2}/g);
+
+  if (
+    isNaN(paramYear) ||
+    paramYear < FIRST_YEAR ||
+    paramYear > LAST_YEAR ||
+    !paramTeams ||
+    new Set(paramTeams).size !== 5
+  ) {
+    return <NotFound />;
+  }
+
+  const allTeams: Team[] = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/storage/teams.json`).then((res) =>
+    res.json()
+  );
+  const selectedTeams: Team[] = [];
+
+  paramTeams.forEach((team) => {
+    const selectedTeam = SHORTEN_DATA[team];
+
+    if (!selectedTeam || selectedTeam.start > paramYear || selectedTeam.end < paramYear) {
+      return <NotFound />;
+    }
+
+    selectedTeams.push(allTeams.find((team) => team.id === selectedTeam.name)!);
+  });
+
+  const hittersData: Hitter[] = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/storage/hitters.json`).then((res) =>
+    res.json()
+  );
+  const pitchersData: Pitcher[] = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/storage/pitchers.json`).then((res) =>
+    res.json()
+  );
+
+  const currentHitters = hittersData.filter((hitter) => hitter.year === paramYear);
+  const currentPitchers = pitchersData.filter((pitcher) => pitcher.year === paramYear);
+
   return (
     <>
       <Header />
-      <EntryView />
+      <EntryView
+        selectedTeams={selectedTeams}
+        currentHitters={currentHitters}
+        currentPitchers={currentPitchers}
+        selectedYear={paramYear}
+      />
     </>
   );
 }
