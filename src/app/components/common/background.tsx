@@ -25,10 +25,7 @@ const Background = ({ children }: BackgroundProps) => {
   };
 
   return (
-    <div
-      className='relative flex min-h-full flex-col items-center justify-center bg-[url("/assets/hideout.svg")] bg-[length:100px_100px]'
-      onClick={handleClick}
-    >
+    <div className='relative min-h-full bg-[url("/assets/hideout.svg")] bg-[length:100px_100px]' onClick={handleClick}>
       {clicks.map((click) => (
         <div
           key={click.id}
@@ -44,7 +41,7 @@ const Background = ({ children }: BackgroundProps) => {
         initial={{ y: 25, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.2 }}
-        className='relative w-full select-none'
+        className='relative select-none'
       >
         {children}
       </motion.div>

@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const MainTitle = () => {
   return (
-    <div className='mb-60 flex flex-col items-center mobileL:mb-80 laptop:mb-140'>
+    <div className='mb-60 flex flex-col items-center mobileL:mb-80 laptop:mb-170'>
       <div className='relative h-[min(100px,_13vw)] w-[min(100px,_13vw)]'>
         <Image src='/assets/logo/mainLogo.webp' alt='mainLogo' priority fill sizes='100px' className='rounded-full' />
       </div>

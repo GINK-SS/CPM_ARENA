@@ -21,17 +21,19 @@ export default async function Home() {
   const allTeams = await Promise.all(newTeamsPromises);
 
   return (
-    <div className='px-5 py-20 mobileL:px-10'>
-      <MainTitle />
+    <div className='flex min-h-screen flex-col items-center justify-center'>
+      <div className='w-full px-5 pb-20 pt-80 mobileL:px-10'>
+        <MainTitle />
 
-      <div className='mx-auto mb-60 flex max-w-[700px] flex-col justify-between gap-10 laptop:mb-140 laptop:max-w-[1000px] laptop:flex-row'>
-        <YearButton />
-        <TeamButton allTeams={allTeams} />
+        <div className='mx-auto mb-60 flex max-w-[700px] flex-col justify-between gap-10 laptop:mb-170 laptop:max-w-[1000px] laptop:flex-row'>
+          <YearButton />
+          <TeamButton allTeams={allTeams} />
+        </div>
+
+        <SubmitBtn />
+
+        <Footer />
       </div>
-
-      <SubmitBtn />
-
-      <Footer />
     </div>
   );
 }
