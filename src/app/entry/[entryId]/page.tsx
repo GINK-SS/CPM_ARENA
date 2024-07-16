@@ -12,10 +12,13 @@ import classNames from 'classnames';
 
 type MetaProps = {
   params: { entryId: string };
+  searchParams: { limit: string | undefined };
 };
 
-export async function generateMetadata({ params }: MetaProps, parent: ResolvingMetadata): Promise<Metadata> {
-  const entryId = params.entryId;
+export async function generateMetadata(
+  { params: { entryId } }: MetaProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const paramYear = +entryId.slice(0, 4);
   const paramTeams = entryId.slice(4).match(/.{1,2}/g);
   const selectedTeams = [];
@@ -68,8 +71,7 @@ export async function generateMetadata({ params }: MetaProps, parent: ResolvingM
   };
 }
 
-export default async function Page({ params }: MetaProps) {
-  const entryId = params.entryId;
+export default async function Page({ params: { entryId }, searchParams: { limit } }: MetaProps) {
   const paramYear = +entryId.slice(0, 4);
   const paramTeams = entryId.slice(4).match(/.{1,2}/g);
 
@@ -112,10 +114,11 @@ export default async function Page({ params }: MetaProps) {
   );
 
   const descriptionList = ['올스타', '골든 글러브', 'MVP', '오버롤 80 이상'];
+  const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit;
 
   return (
     <>
-      <Header />
+      <Header overallLimit={overallLimit} />
 
       <EntryPage
         selectedTeams={selectedTeams}
@@ -130,7 +133,11 @@ export default async function Page({ params }: MetaProps) {
           {paramYear}년 ARENA
         </h1>
 
-        <EntryView selectedTeams={selectedTeams} playersOfSelectedTeams={playersOfSelectedTeams} />
+        <EntryView
+          selectedTeams={selectedTeams}
+          playersOfSelectedTeams={playersOfSelectedTeams}
+          overallLimit={overallLimit}
+        />
 
         <div className='flex w-full justify-around gap-2 border-t-2 border-t-black tablet:gap-3 tablet:border-t-3'>
           {descriptionList.map((description) => (

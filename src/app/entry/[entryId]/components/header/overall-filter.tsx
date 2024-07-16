@@ -3,41 +3,38 @@
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
+import { usePathname, useRouter } from 'next/navigation';
 
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
 
-export default function OverallFilter() {
-  const [overallLimit, isOverallFilter, setOverallLimit, openOverallFilter, closeOverallFilter] = useTableStore(
-    useShallow((state) => [
-      state.overallLimit,
-      state.isOverallFilter,
-      state.setOverallLimit,
-      state.openOverallFilter,
-      state.closeOverallFilter,
-    ])
+export default function OverallFilter({ overallLimit }: { overallLimit: number }) {
+  const [isOverallFilter, openOverallFilter, closeOverallFilter] = useTableStore(
+    useShallow((state) => [state.isOverallFilter, state.openOverallFilter, state.closeOverallFilter])
   );
   const [setSelectedPlayer, setPinnedPlayer, clearLineup] = usePlayerStore(
     useShallow((state) => [state.setSelectedPlayer, state.setPinnedPlayer, state.clearLineup])
   );
   const clearBuff = useBuffStore((state) => state.clearBuff);
+  const router = useRouter();
+  const pathname = usePathname();
   const buttonValueList = [55, 60, 65, 69];
 
   const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setOverallLimit(Number(e.currentTarget.value));
     setSelectedPlayer(null);
     setPinnedPlayer(null);
     clearLineup();
     clearBuff();
     closeOverallFilter();
+    router.replace(`${pathname}?limit=${Number(e.currentTarget.value)}`);
   };
 
   return (
     <div className='relative w-120'>
       <div className='flex cursor-pointer items-center justify-end gap-5 text-17' onClick={() => openOverallFilter()}>
         <span className='font-semibold text-[#F98A58]'>
-          {overallLimit === 55 ? '전체' : `${overallLimit} 이상`} 보기
+          {overallLimit <= 55 ? '전체' : `${overallLimit} 이상`} 보기
         </span>
         {isOverallFilter ? <IoCaretUp className='text-white/50' /> : <IoCaretDown className='text-white/50' />}
       </div>
@@ -54,7 +51,7 @@ export default function OverallFilter() {
                 value={value}
                 onClick={onFilterClick}
               >
-                {value === 55 ? '전체' : `${value} 이상`} 보기
+                {value <= 55 ? '전체' : `${value} 이상`} 보기
               </button>
             </li>
           ))}

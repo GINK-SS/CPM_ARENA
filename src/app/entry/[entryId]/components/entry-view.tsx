@@ -9,9 +9,10 @@ import { Hitter, Pitcher } from '@/app/stores/player/types';
 type EntryViewProps = {
   selectedTeams: Team[];
   playersOfSelectedTeams: (Hitter | Pitcher)[];
+  overallLimit: number;
 };
 
-export default function EntryView({ selectedTeams, playersOfSelectedTeams }: EntryViewProps) {
+export default function EntryView({ selectedTeams, playersOfSelectedTeams, overallLimit }: EntryViewProps) {
   return (
     <>
       <div className='relative mx-auto my-10 flex w-full flex-col items-center mobileL:my-20 mobileL:max-w-[630px] tablet:max-w-[750px] laptop:max-w-[850px]'>
@@ -54,6 +55,7 @@ export default function EntryView({ selectedTeams, playersOfSelectedTeams }: Ent
                   position={position}
                   showLimit={value}
                   filteredPlayers={filteredPlayers}
+                  overallLimit={overallLimit}
                 />
               );
             })}

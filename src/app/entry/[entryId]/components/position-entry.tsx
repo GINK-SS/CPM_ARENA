@@ -3,7 +3,6 @@
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 
-import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
 import EntryItem from './entry-item';
 
@@ -18,10 +17,16 @@ type PositionEntryProps = {
   position: string;
   showLimit: number;
   filteredPlayers: (Hitter | Pitcher)[];
+  overallLimit: number;
 };
 
-export default function PositionEntry({ selectedTeams, position, showLimit, filteredPlayers }: PositionEntryProps) {
-  const overallLimit = useTableStore((state) => state.overallLimit);
+export default function PositionEntry({
+  selectedTeams,
+  position,
+  showLimit,
+  filteredPlayers,
+  overallLimit,
+}: PositionEntryProps) {
   const [pinnedPlayer, hitterLineup] = usePlayerStore(useShallow((state) => [state.pinnedPlayer, state.hitterLineup]));
 
   const arrangePlayers = (selectedTeam: Team): (Hitter | Pitcher)[] => {
