@@ -1,7 +1,6 @@
 import { Metadata, ResolvingMetadata } from 'next';
 
 import Header from './components/header';
-import EntryPage from './components/entry-page';
 import NotFound from '@/app/not-found';
 
 import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
@@ -9,6 +8,9 @@ import { Hitter, Pitcher } from '@/app/stores/player/types';
 import { Team, TeamId } from '@/app/stores/team/types';
 import EntryView from './components/entry-view';
 import EntryDescription from './components/entry-description';
+import Lineup from './components/lineup';
+import LineUpInfo from './components/lineup-info';
+import SimpleWrapper from './components/simple-wrapper';
 
 type MetaProps = {
   params: { entryId: string };
@@ -116,33 +118,29 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
   const playersOfSelectedTeams = [...currentHitters, ...currentPitchers].filter((player) =>
     selectedTeams.map((team) => team.id).includes(player.team)
   );
-
   const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit;
 
   return (
     <>
       <Header overallLimit={overallLimit} />
-
-      <EntryPage
-        selectedTeams={selectedTeams}
-        currentHitters={currentHitters}
-        currentPitchers={currentPitchers}
-        selectedYear={paramYear}
-      >
+      <div className='relative mx-auto my-10 flex w-full flex-col items-center mobileL:my-20 mobileL:max-w-[630px] tablet:max-w-[750px] laptop:max-w-[850px]'>
         <h1
           data-role='title'
           className='mb-10 text-center indent-8 text-[6vw] font-extrabold tracking-[8px] drop-shadow-[1px_1px_1px_#555] mobileL:mb-20 mobileL:indent-15 mobileL:text-40 mobileL:tracking-[15px] tablet:text-45 tablet:drop-shadow-[3px_3px_2px_#555] laptop:text-55'
         >
           {paramYear}년 ARENA
         </h1>
-
         <EntryView
           selectedTeams={selectedTeams}
           playersOfSelectedTeams={playersOfSelectedTeams}
           overallLimit={overallLimit}
         />
         <EntryDescription />
-      </EntryPage>
+
+        <Lineup selectedTeams={selectedTeams} />
+        <SimpleWrapper />
+        <LineUpInfo selectedTeams={selectedTeams} />
+      </div>
     </>
   );
 }

@@ -10,7 +10,6 @@ import useBuffStore from '@/app/stores/buff';
 import { Hitter, HitterPosition, Pitcher } from '@/app/stores/player/types';
 import { isHitter } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
-import { memo } from 'react';
 
 type EntryItemProps = {
   player: Hitter | Pitcher;

@@ -1,3 +1,6 @@
+'use client';
+
+import { useMemo } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
 import usePlayerStore from '@/app/stores/player';
@@ -14,7 +17,10 @@ const LineUpInfo = ({ selectedTeams }: { selectedTeams: Team[] }) => {
     useShallow((state) => [state.hitterLineup, state.pitcherLineup, state.clearLineup])
   );
   const clearBuff = useBuffStore((state) => state.clearBuff);
-  const buffOrder: (Team | Records)[] = [...selectedTeams, 'all_star', 'golden_glove', 'mvp'];
+  const buffOrder: (Team | Records)[] = useMemo(
+    () => [...selectedTeams, 'all_star', 'golden_glove', 'mvp'],
+    [selectedTeams]
+  );
 
   const onReset = () => {
     clearLineup();
@@ -51,7 +57,7 @@ const LineUpInfo = ({ selectedTeams }: { selectedTeams: Team[] }) => {
           >
             선택 초기화
           </button>
-          <TeamPower />
+          <TeamPower selectedTeams={selectedTeams} />
         </div>
       </div>
     </InfoBox>
