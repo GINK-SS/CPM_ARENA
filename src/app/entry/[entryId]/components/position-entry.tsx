@@ -1,16 +1,7 @@
-'use client';
-
-import { useShallow } from 'zustand/react/shallow';
-import classNames from 'classnames';
-
-import usePlayerStore from '@/app/stores/player';
+import EntryBlock from './entry-block';
 import EntryItem from './entry-item';
-
-import { PITCHER_POSITION_ORDER } from '@/app/const';
-
 import { Team } from '@/app/stores/team/types';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
-import { isHitter } from '@/app/util/decideType';
 
 type PositionEntryProps = {
   selectedTeams: Team[];
@@ -27,8 +18,6 @@ export default function PositionEntry({
   filteredPlayers,
   overallLimit,
 }: PositionEntryProps) {
-  const [pinnedPlayer, hitterLineup] = usePlayerStore(useShallow((state) => [state.pinnedPlayer, state.hitterLineup]));
-
   const arrangePlayers = (selectedTeam: Team): (Hitter | Pitcher)[] => {
     const players = filteredPlayers.filter(
       (player) =>
@@ -44,35 +33,9 @@ export default function PositionEntry({
     return shortage > 0 ? [...players, ...Array(shortage).fill({ name: '' })] : players.slice(0, showLimit);
   };
 
-  const isBlockActive = (position: string) => {
-    if (!pinnedPlayer) return false;
-
-    if (!isHitter(pinnedPlayer)) {
-      return pinnedPlayer.position === '선발'
-        ? position !== '선발'
-          ? true
-          : false
-        : position === '계투' || position === '마무리'
-          ? false
-          : true;
-    }
-
-    if (PITCHER_POSITION_ORDER.includes(position)) return true;
-
-    if (hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position !== '지명타자') {
-      return position !== hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position;
-    }
-
-    return false;
-  };
-
   return (
     <div data-role='container' className='relative flex w-full gap-2 tablet:gap-3'>
-      <div
-        className={classNames('absolute z-[5] h-full w-full bg-black/70', {
-          hidden: !isBlockActive(position),
-        })}
-      />
+      <EntryBlock position={position} />
 
       <div
         data-role='position-box'
@@ -83,7 +46,7 @@ export default function PositionEntry({
       {selectedTeams.map((selectedTeam) => (
         <div data-role='team-players-box' key={selectedTeam.id} className='flex flex-1 flex-col'>
           {arrangePlayers(selectedTeam).map((player, idx) => (
-            <EntryItem key={idx} player={player} position={position} />
+            <EntryItem key={idx} player={player} selectedTeams={selectedTeams} />
           ))}
         </div>
       ))}
