@@ -1,12 +1,14 @@
 import { Metadata, ResolvingMetadata } from 'next';
 
 import Header from './components/header';
-import EntryView from './components/entry-view';
+import EntryPage from './components/entry-page';
 import NotFound from '@/app/not-found';
 
 import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 import { Team } from '@/app/stores/team/types';
+import EntryView from './components/entry-view';
+import classNames from 'classnames';
 
 type MetaProps = {
   params: { entryId: string };
@@ -105,16 +107,46 @@ export default async function Page({ params }: MetaProps) {
 
   const currentHitters = hittersData.filter((hitter) => hitter.year === paramYear);
   const currentPitchers = pitchersData.filter((pitcher) => pitcher.year === paramYear);
+  const playersOfSelectedTeams = [...currentHitters, ...currentPitchers].filter((player) =>
+    selectedTeams.map((team) => team.id).includes(player.team)
+  );
+
+  const descriptionList = ['올스타', '골든 글러브', 'MVP', '오버롤 80 이상'];
 
   return (
     <>
       <Header />
-      <EntryView
+
+      <EntryPage
         selectedTeams={selectedTeams}
         currentHitters={currentHitters}
         currentPitchers={currentPitchers}
         selectedYear={paramYear}
-      />
+      >
+        <h1
+          data-role='title'
+          className='mb-10 text-center indent-8 text-[6vw] font-extrabold tracking-[8px] drop-shadow-[1px_1px_1px_#555] mobileL:mb-20 mobileL:indent-15 mobileL:text-40 mobileL:tracking-[15px] tablet:text-45 tablet:drop-shadow-[3px_3px_2px_#555] laptop:text-55'
+        >
+          {paramYear}년 ARENA
+        </h1>
+
+        <EntryView selectedTeams={selectedTeams} playersOfSelectedTeams={playersOfSelectedTeams} />
+
+        <div className='flex w-full justify-around gap-2 border-t-2 border-t-black tablet:gap-3 tablet:border-t-3'>
+          {descriptionList.map((description) => (
+            <div
+              className={classNames(
+                'flex-1 py-9 text-center indent-1 text-10 font-semibold tracking-[1px]',
+                'mobileL:py-13 mobileL:indent-2 mobileL:text-15 mobileL:tracking-[2px] tablet:text-17',
+                'first:bg-[#f0c2bd] last:text-[#1b1588] [&:nth-child(-n+2)]:text-black [&:nth-child(2)]:bg-[#f5df94] [&:nth-child(3)]:text-[#ca4142] [&:nth-last-child(-n+2)]:bg-white'
+              )}
+              key={description}
+            >
+              {description}
+            </div>
+          ))}
+        </div>
+      </EntryPage>
     </>
   );
 }
