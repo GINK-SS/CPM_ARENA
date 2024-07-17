@@ -65,7 +65,7 @@ const SimpleInfo = ({ player }: SimpleInfoProps) => {
         {player && (
           <>
             <div className='flex items-center gap-3 tablet:gap-5'>
-              <div className='aspect-square w-25 drop-shadow-[2px_2px_0_#333]'>
+              <div className='relative aspect-square w-25 drop-shadow-[2px_2px_0_#333]'>
                 <TeamLogo teamId={player.team} />
               </div>
               <span

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';

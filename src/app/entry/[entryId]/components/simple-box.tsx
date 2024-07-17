@@ -5,7 +5,7 @@ import { useShallow } from 'zustand/react/shallow';
 import usePlayerStore from '@/app/stores/player';
 import SimpleInfo from './simple-info';
 
-export default function SimpleWrapper() {
+export default function SimpleBox() {
   const [pinnedPlayer, selectedPlayer] = usePlayerStore(
     useShallow((state) => [state.pinnedPlayer, state.selectedPlayer])
   );

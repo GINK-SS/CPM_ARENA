@@ -10,7 +10,7 @@ import EntryView from './components/entry-view';
 import EntryDescription from './components/entry-description';
 import Lineup from './components/lineup';
 import LineUpInfo from './components/lineup-info';
-import SimpleWrapper from './components/simple-wrapper';
+import SimpleBox from './components/simple-box';
 
 type MetaProps = {
   params: { entryId: string };
@@ -123,7 +123,7 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
   return (
     <>
       <Header overallLimit={overallLimit} />
-      <div className='relative mx-auto my-10 flex w-full flex-col items-center mobileL:my-20 mobileL:max-w-[630px] tablet:max-w-[750px] laptop:max-w-[850px]'>
+      <div className='relative mx-auto flex w-full flex-col items-center py-10 mobileL:max-w-[630px] mobileL:py-20 tablet:max-w-[750px] laptop:max-w-[850px]'>
         <h1
           data-role='title'
           className='mb-10 text-center indent-8 text-[6vw] font-extrabold tracking-[8px] drop-shadow-[1px_1px_1px_#555] mobileL:mb-20 mobileL:indent-15 mobileL:text-40 mobileL:tracking-[15px] tablet:text-45 tablet:drop-shadow-[3px_3px_2px_#555] laptop:text-55'
@@ -138,7 +138,7 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
         <EntryDescription />
 
         <Lineup selectedTeams={selectedTeams} />
-        <SimpleWrapper />
+        <SimpleBox />
         <LineUpInfo selectedTeams={selectedTeams} />
       </div>
     </>
