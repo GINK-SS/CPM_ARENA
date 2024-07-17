@@ -81,9 +81,7 @@ export type SetTeamsPayload = {
 };
 
 export type TeamStoreState = {
-  allTeams: Team[];
   selectedTeams: Team[];
   setTeams: (teams: Team[]) => void;
   resetTeams: () => void;
-  fetchAllTeams: () => Promise<void>;
 };
