@@ -89,6 +89,7 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
   }
 
   const BASE_URL = process.env.VERCEL_ENV === 'preview' ? `https://${process.env.VERCEL_URL}` : process.env.BASE_URL;
+  console.log('process.env.VERCEL_ENV', process.env.VERCEL_ENV, 'process.env.VERCEL_URL', process.env.VERCEL_URL);
   const allTeams: Team[] = await fetch(`${BASE_URL}/storage/teams.json`).then((res) => res.json());
   const selectedTeams: Team[] = [];
   const selectedTeamIds: Set<TeamId> = new Set();
