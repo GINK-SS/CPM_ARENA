@@ -3,11 +3,11 @@ import YearButton from './components/year-button';
 import TeamButton from './components/team-button';
 import SubmitBtn from './components/submit-button';
 import Footer from './components/footer';
-import { BASE_URL } from './const';
 
 import { Team } from './stores/team/types';
 
 export default async function Home() {
+  const BASE_URL = process.env.VERCEL_ENV === 'preview' ? `https://${process.env.VERCEL_URL}` : process.env.BASE_URL;
   const teamData: Team[] = await fetch(`${BASE_URL}/storage/teams.json`).then((res) => res.json());
 
   return (

@@ -174,6 +174,3 @@ export const POSITION_LIMIT: { [key: string]: number } = {
 export const HITTER_POSITION_ORDER = ['포수', '1루수', '2루수', '3루수', '유격수', '외야수'];
 
 export const PITCHER_POSITION_ORDER = ['선발', '계투', '마무리'];
-
-export const BASE_URL =
-  process.env.VERCEL_ENV === 'preview' ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_BASE_URL;
