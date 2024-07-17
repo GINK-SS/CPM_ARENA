@@ -11,6 +11,7 @@ import EntryDescription from './components/entry-description';
 import Lineup from './components/lineup';
 import LineUpInfo from './components/lineup-info';
 import SimpleBox from './components/simple-box';
+import PlayerDetail from './components/player-detail';
 
 type MetaProps = {
   params: { entryId: string };
@@ -123,6 +124,9 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
   return (
     <>
       <Header overallLimit={overallLimit} />
+
+      <PlayerDetail selectedTeams={selectedTeams} />
+
       <div className='relative mx-auto flex w-full flex-col items-center py-10 mobileL:max-w-[630px] mobileL:py-20 tablet:max-w-[750px] laptop:max-w-[850px]'>
         <h1
           data-role='title'
