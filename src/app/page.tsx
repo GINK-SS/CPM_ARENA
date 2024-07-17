@@ -7,8 +7,7 @@ import Footer from './components/footer';
 import { Team } from './stores/team/types';
 
 export default async function Home() {
-  const BASE_URL = process.env.VERCEL_URL ?? process.env.BASE_URL;
-  const teamData: Team[] = await fetch(`${BASE_URL}/storage/teams.json`).then((res) => res.json());
+  const teamData: Team[] = await fetch(`${process.env.BASE_URL}/storage/teams.json`).then((res) => res.json());
 
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
