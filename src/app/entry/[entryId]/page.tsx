@@ -88,9 +88,9 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
     return <NotFound />;
   }
 
-  const allTeams: Team[] = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/storage/teams.json`).then((res) =>
-    res.json()
-  );
+  const BASE_URL = process.env.VERCEL_URL ?? process.env.NEXT_PUBLIC_BASE_URL;
+
+  const allTeams: Team[] = await fetch(`${BASE_URL}/storage/teams.json`).then((res) => res.json());
   const selectedTeams: Team[] = [];
   const selectedTeamIds: Set<TeamId> = new Set();
 
@@ -105,11 +105,11 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
     selectedTeamIds.add(selectedTeam.name);
   });
 
-  const hittersData: Hitter[] = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/storage/hitter/hitters-${paramYear.toString()[2]}0.json`
-  ).then((res) => res.json());
+  const hittersData: Hitter[] = await fetch(`${BASE_URL}/storage/hitter/hitters-${paramYear.toString()[2]}0.json`).then(
+    (res) => res.json()
+  );
   const pitchersData: Pitcher[] = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/storage/pitcher/pitchers-${paramYear.toString()[2]}0.json`
+    `${BASE_URL}/storage/pitcher/pitchers-${paramYear.toString()[2]}0.json`
   ).then((res) => res.json());
 
   const currentHitters = hittersData.filter((hitter) => hitter.year === paramYear && selectedTeamIds.has(hitter.team));
