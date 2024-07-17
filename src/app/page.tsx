@@ -3,13 +3,12 @@ import YearButton from './components/year-button';
 import TeamButton from './components/team-button';
 import SubmitBtn from './components/submit-button';
 import Footer from './components/footer';
+import { BASE_URL } from './const';
 
 import { Team } from './stores/team/types';
 
 export default async function Home() {
-  const teamData: Team[] = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/storage/teams.json`).then((res) =>
-    res.json()
-  );
+  const teamData: Team[] = await fetch(`${BASE_URL}/storage/teams.json`).then((res) => res.json());
 
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>

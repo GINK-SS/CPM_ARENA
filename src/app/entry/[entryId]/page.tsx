@@ -3,7 +3,7 @@ import { Metadata, ResolvingMetadata } from 'next';
 import Header from './components/header';
 import NotFound from '@/app/not-found';
 
-import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
+import { BASE_URL, FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 import { Team, TeamId } from '@/app/stores/team/types';
 import EntryView from './components/entry-view';
@@ -87,8 +87,6 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
   ) {
     return <NotFound />;
   }
-
-  const BASE_URL = process.env.VERCEL_URL ?? process.env.NEXT_PUBLIC_BASE_URL;
 
   const allTeams: Team[] = await fetch(`${BASE_URL}/storage/teams.json`).then((res) => res.json());
   const selectedTeams: Team[] = [];
