@@ -12,10 +12,6 @@ import { Hitter, HitterPosition, Pitcher, PitcherPosition } from '@/app/stores/p
 import { Records } from '@/app/stores/buff/types';
 import { Team } from '@/app/stores/team/types';
 
-import allStarImg from '@/public/assets/all_star.png';
-import goldenGloveImg from '@/public/assets/golden_glove.png';
-import mvpImg from '@/public/assets/mvp.png';
-
 type PlayerCardProps = {
   card: {
     position: HitterPosition | PitcherPosition | null;
@@ -140,11 +136,10 @@ const PlayerCard = ({ card: { position, player }, order, selectedTeams }: Player
                 </span>
                 {player.all_star && (
                   <Image
-                    src={allStarImg}
+                    src='/assets/all_star.png'
                     alt='all_star'
                     width={18}
                     height={18}
-                    placeholder='blur'
                     className='aspect-square h-auto w-[2.5vw] mobileL:w-18'
                   />
                 )}
@@ -156,21 +151,19 @@ const PlayerCard = ({ card: { position, player }, order, selectedTeams }: Player
                 </div>
                 {player.golden_glove && (
                   <Image
-                    src={goldenGloveImg}
+                    src='/assets/golden_glove.png'
                     alt='golden_glove'
                     width={14}
                     height={14}
-                    placeholder='blur'
                     className='aspect-square h-auto w-[2vw] mobileL:w-14'
                   />
                 )}
                 {(player.mvp_korea || player.mvp_league) && (
                   <Image
-                    src={mvpImg}
+                    src='/assets/mvp.png'
                     alt='mvp'
                     width={14}
                     height={14}
-                    placeholder='blur'
                     className='aspect-square h-auto w-[2vw] mobileL:w-14'
                   />
                 )}
