@@ -118,7 +118,7 @@ export default function Page({ params: { entryId }, searchParams: { limit } }: M
   const playersOfSelectedTeams = [...currentHitters, ...currentPitchers].filter((player) =>
     selectedTeams.map((team) => team.id).includes(player.team)
   );
-  const overallLimit = !limit || isNaN(+limit) || +limit > 99 || +limit < 55 ? 69 : +limit;
+  const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit < 55 ? 55 : +limit;
 
   return (
     <>

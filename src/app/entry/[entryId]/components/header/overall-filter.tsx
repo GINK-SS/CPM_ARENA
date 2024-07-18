@@ -22,7 +22,7 @@ export default function OverallFilter() {
   const searchParams = useSearchParams();
   const buttonValueList = [55, 60, 65, 69];
   const limit = searchParams.get('limit');
-  const overallLimit = !limit || isNaN(+limit) || +limit > 99 || +limit < 55 ? 69 : +limit;
+  const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit < 55 ? 55 : +limit;
 
   const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setSelectedPlayer(null);
@@ -35,11 +35,14 @@ export default function OverallFilter() {
 
   return (
     <div
-      className={classNames('relative w-120', {
+      className={classNames('relative mr-15 border-r-1 border-r-slate-200/20 pr-15', {
         hidden: !pathname.startsWith('/entry/'),
       })}
     >
-      <div className='flex cursor-pointer items-center justify-end gap-5 text-17' onClick={() => openOverallFilter()}>
+      <div
+        className='flex cursor-pointer items-center justify-end gap-5 py-5 text-17'
+        onClick={() => openOverallFilter()}
+      >
         <span className='font-semibold text-[#F98A58]'>
           {overallLimit <= 55 ? '전체' : `${overallLimit} 이상`} 보기
         </span>
