@@ -33,6 +33,7 @@ export default async function Header({ overallLimit }: { overallLimit: number })
 
           <div className='ml-20 flex h-25 items-center border-l border-l-slate-200/20 pl-10'>
             <Link
+              aria-label='contact'
               href='mailto:gink.ss00@gmail.com'
               className='rounded-full p-10 text-slate-300 duration-150 hover:bg-slate-300/30 hover:text-slate-100'
             >
