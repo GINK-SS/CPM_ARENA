@@ -14,7 +14,7 @@ type EntryViewProps = {
 
 export default function EntryView({ selectedTeams, playersOfSelectedTeams, overallLimit }: EntryViewProps) {
   return (
-    <div data-role='entry-container' className='w-full'>
+    <main data-role='entry-container' className='w-full'>
       <div data-role='teams-container' className='mb-5 flex justify-between tablet:mb-8 laptop:mb-10'>
         <div data-role='empty-position-space' className='w-[10vw] mobileL:w-70 tablet:w-90 laptop:w-100' />
 
@@ -58,6 +58,6 @@ export default function EntryView({ selectedTeams, playersOfSelectedTeams, overa
           );
         })}
       </div>
-    </div>
+    </main>
   );
 }
