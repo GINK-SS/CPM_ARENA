@@ -13,17 +13,28 @@ export default async function Header({ overallLimit }: { overallLimit: number })
   return (
     <div className='sticky top-0 z-20 border-b-1 border-b-slate-400/40 bg-black/70 backdrop-blur'>
       <div className='mx-auto flex max-w-[1280px] items-center justify-between px-15 py-15 mobileL:px-30'>
-        <div data-role='title' className='flex items-end gap-10'>
+        <div data-role='title' className='flex items-end gap-5'>
           <Link href='/'>
-            <Image
-              src={'/assets/main-logo.svg'}
-              alt='main'
-              width={220}
-              height={30}
-              sizes='250px'
-              className='mobileL:h-auto mobileL:w-[250px]'
-              priority
-            />
+            <div className='flex items-center gap-5 mobileL:gap-10'>
+              <Image
+                src={'/assets/main-image.png'}
+                alt='logo'
+                width={30}
+                height={30}
+                sizes='100px'
+                priority
+                className='drop-shadow-[0_0_1px_#fff]'
+              />
+              <Image
+                src={'/assets/main-logo.svg'}
+                alt='main'
+                width={180}
+                height={30}
+                sizes='250px'
+                className='mobileL:h-auto mobileL:w-[250px]'
+                priority
+              />
+            </div>
           </Link>
           <div className='hidden text-slate-400 tablet:block'>{version.name}</div>
         </div>
