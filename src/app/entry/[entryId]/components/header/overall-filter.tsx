@@ -34,7 +34,11 @@ export default function OverallFilter() {
   };
 
   return (
-    <div className='relative w-120'>
+    <div
+      className={classNames('relative w-120', {
+        hidden: !pathname.startsWith('/entry/'),
+      })}
+    >
       <div className='flex cursor-pointer items-center justify-end gap-5 text-17' onClick={() => openOverallFilter()}>
         <span className='font-semibold text-[#F98A58]'>
           {overallLimit <= 55 ? '전체' : `${overallLimit} 이상`} 보기
