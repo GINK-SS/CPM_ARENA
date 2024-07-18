@@ -5,7 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import Background from './components/common/background';
-import Header from './entry/[entryId]/components/header';
+import Header from './components/common/header';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
