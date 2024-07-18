@@ -7,6 +7,7 @@ import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 import { IoCloseOutline } from 'react-icons/io5';
 import { HiEllipsisVertical } from 'react-icons/hi2';
+import { GrFormNextLink } from 'react-icons/gr';
 
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
@@ -106,24 +107,38 @@ export default function Menu() {
           <Link aria-label='dcinside' href='https://gall.dcinside.com/mgallery/manager' target='_blank'>
             <button
               className={classNames(
-                'mb-10 flex h-40 w-full items-center gap-20 rounded-lg border-1 py-8 pl-40 text-slate-200 shadow-sm duration-200',
+                'mb-10 flex h-40 w-full items-center gap-15 rounded-lg border-1 py-8 pl-40 text-slate-200 shadow-sm duration-200',
                 'hover:bg-slate-200 hover:text-slate-800'
               )}
             >
               <Image src={'/assets/dcinside.png'} alt='dc' sizes='50px' width={25} height={25} />
-              디시 컴프매 갤러리
+              <div className='relative flex'>
+                <span>디시 컴프매 갤러리</span>
+                <GrFormNextLink
+                  size={14}
+                  opacity={0.5}
+                  style={{ rotate: '-45deg', top: -2, right: -13, position: 'absolute' }}
+                />
+              </div>
             </button>
           </Link>
 
           <Link aria-label='naver-cafe' href='https://cafe.naver.com/com2usmanager' target='_blank'>
             <button
               className={classNames(
-                'flex h-40 w-full items-center gap-20 rounded-lg border-1 py-8 pl-40 text-slate-200 shadow-sm duration-200',
+                'flex h-40 w-full items-center gap-15 rounded-lg border-1 py-8 pl-40 text-slate-200 shadow-sm duration-200',
                 'hover:bg-slate-200 hover:text-slate-800'
               )}
             >
               <Image src={'/assets/naver_cafe.webp'} alt='cafe' sizes='50px' width={25} height={25} />
-              네이버 공식카페
+              <div className='relative flex'>
+                <span>네이버 공식카페</span>
+                <GrFormNextLink
+                  size={14}
+                  opacity={0.5}
+                  style={{ rotate: '-45deg', top: -2, right: -13, position: 'absolute' }}
+                />
+              </div>
             </button>
           </Link>
 
