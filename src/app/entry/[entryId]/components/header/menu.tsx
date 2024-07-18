@@ -10,6 +10,7 @@ import { HiEllipsisVertical } from 'react-icons/hi2';
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
+import Image from 'next/image';
 
 export default function Menu() {
   const [isMenu, openMenu, closeMenu] = useTableStore(
@@ -40,31 +41,51 @@ export default function Menu() {
       <HiEllipsisVertical className='cursor-pointer text-25 tablet:hidden' onClick={() => openMenu()} />
 
       {isMenu && (
-        <div className='fixed right-12 top-12 z-10 w-full max-w-[300px] rounded-lg bg-slate-800 p-20 text-slate-400 shadow-lg'>
-          <button onClick={() => closeMenu()} className='absolute right-12 top-12 flex items-center justify-center p-4'>
-            <IoCloseOutline className='text-25' />
-          </button>
+        <div className='fixed right-12 top-12 z-10 w-full max-w-[300px] rounded-lg bg-slate-800 p-20 text-slate-300 shadow-lg tablet:hidden'>
+          <div className='mb-20 flex items-center justify-between border-b-2 border-b-slate-200/10 pb-10'>
+            <div className='flex items-center gap-10'>
+              <Image
+                src={'/assets/main-image.png'}
+                alt='logo'
+                width={30}
+                height={30}
+                sizes='100px'
+                priority
+                className='drop-shadow-[0_0_1px_#fff]'
+              />
+              <span className='ml-3 block break-all text-25 font-extrabold'>Menu</span>
+            </div>
 
-          <span className='mb-20 block border-b-1 border-b-slate-200/10 pb-20 text-20 font-semibold'>오버롤 설정</span>
-          <ul className='flex flex-col justify-center gap-30'>
+            <button onClick={() => closeMenu()} className='flex items-center justify-center p-4'>
+              <IoCloseOutline className='text-25' />
+            </button>
+          </div>
+
+          <span className='mb-20 block text-18 font-semibold'>오버롤 설정</span>
+
+          <ul className='flex flex-wrap items-center justify-center gap-5'>
             {buttonValueList.map((value) => (
-              <li key={value}>
+              <li key={value} className='flex-1'>
                 <button
-                  className={classNames('flex-1', {
-                    'font-semibold text-[#F98A58]': value === overallLimit,
-                    'hover:text-[#e0a824]': value !== overallLimit,
-                  })}
+                  className={classNames(
+                    'aspect-square w-full rounded-md border-1 text-15 transition-[color,_background-color,_opacity] duration-200',
+                    {
+                      'bg-[#F98A58] font-semibold text-white': value === overallLimit,
+                      'text-slate-400 opacity-50 hover:bg-[#c4a252] hover:text-white hover:opacity-80':
+                        value !== overallLimit,
+                    }
+                  )}
                   value={value}
                   onClick={onFilterClick}
                 >
-                  {value === 55 ? '전체' : `${value} 이상`} 보기
+                  {value === 55 ? '전체' : `${value} 이상`}
                 </button>
               </li>
             ))}
           </ul>
 
           <div className='mt-20 flex items-center justify-between border-t border-slate-200/10 pt-20'>
-            <span className='font-semibold'>Contact</span>
+            <span className='font-semibold'>Contact.</span>
 
             <Link href='mailto:gink.ss00@gmail.com'>
               <button
