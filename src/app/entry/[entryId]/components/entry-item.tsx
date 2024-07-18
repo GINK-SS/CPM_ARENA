@@ -97,7 +97,7 @@ const EntryItem = ({ player, selectedTeams }: EntryItemProps) => {
 
   return (
     <button
-      aria-label={player.name ? 'player' : 'empty player'}
+      aria-label={player.name ? `${player.year} ${player.name}` : 'empty player'}
       className='relative flex flex-1 items-center justify-center overflow-hidden border-t-1 border-black bg-white text-black first:border-t-0'
       disabled={!player.name}
       onClick={onClick}
