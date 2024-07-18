@@ -1,50 +1,13 @@
-'use client';
-
-import { ReactNode, useState } from 'react';
-import classNames from 'classnames';
-import { motion } from 'framer-motion';
+import { ReactNode } from 'react';
 
 type BackgroundProps = {
   children: ReactNode;
 };
 
 const Background = ({ children }: BackgroundProps) => {
-  const [clicks, setClicks] = useState<{ x: number; y: number; id: number }[]>([]);
-
-  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const newClick = {
-      x: event.pageX,
-      y: event.pageY,
-      id: Date.now(),
-    };
-
-    setClicks((prev) => [...prev, newClick]);
-    setTimeout(() => {
-      setClicks((prev) => prev.filter((click) => click.id !== newClick.id));
-    }, 500);
-  };
-
   return (
-    <div className='relative min-h-full bg-[url("/assets/hideout.svg")] bg-[length:100px_100px]' onClick={handleClick}>
-      {clicks.map((click) => (
-        <div
-          key={click.id}
-          className={classNames(
-            'pointer-events-none absolute z-50 h-30 w-30 -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent outline-white',
-            'animate-[click-effect_0.5s_forwards]'
-          )}
-          style={{ left: click.x, top: click.y }}
-        ></div>
-      ))}
-
-      <motion.div
-        initial={{ y: 25, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.2 }}
-        className='relative select-none'
-      >
-        {children}
-      </motion.div>
+    <div className='relative min-h-full select-none bg-[url("/assets/hideout.svg")] bg-[length:100px_100px]'>
+      {children}
     </div>
   );
 };
