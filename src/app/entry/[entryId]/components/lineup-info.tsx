@@ -1,6 +1,8 @@
+'use client';
+
+import { useMemo } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
-import useTeamStore from '@/app/stores/team';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
 import InfoBox from './info-box';
@@ -10,13 +12,15 @@ import TeamPower from './team-power';
 import { Team } from '@/app/stores/team/types';
 import { Records } from '@/app/stores/buff/types';
 
-const LineUpInfo = () => {
+const LineUpInfo = ({ selectedTeams }: { selectedTeams: Team[] }) => {
   const [hitterLineup, pitcherLineup, clearLineup] = usePlayerStore(
     useShallow((state) => [state.hitterLineup, state.pitcherLineup, state.clearLineup])
   );
-  const selectedTeams = useTeamStore((state) => state.selectedTeams);
   const clearBuff = useBuffStore((state) => state.clearBuff);
-  const buffOrder: (Team | Records)[] = [...selectedTeams, 'all_star', 'golden_glove', 'mvp'];
+  const buffOrder: (Team | Records)[] = useMemo(
+    () => [...selectedTeams, 'all_star', 'golden_glove', 'mvp'],
+    [selectedTeams]
+  );
 
   const onReset = () => {
     clearLineup();
@@ -42,7 +46,7 @@ const LineUpInfo = () => {
       <div className='flex flex-col gap-10 mobileL:gap-20'>
         <div className='flex w-full items-center justify-around'>
           {buffOrder.map((buff, index) => (
-            <BuffItem buff={buff} key={index} />
+            <BuffItem buff={buff} key={index} selectedTeams={selectedTeams} />
           ))}
         </div>
 
@@ -53,7 +57,7 @@ const LineUpInfo = () => {
           >
             선택 초기화
           </button>
-          <TeamPower />
+          <TeamPower selectedTeams={selectedTeams} />
         </div>
       </div>
     </InfoBox>

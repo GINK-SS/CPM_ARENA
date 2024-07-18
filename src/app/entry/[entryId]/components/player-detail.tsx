@@ -1,20 +1,23 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useShallow } from 'zustand/react/shallow';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import classNames from 'classnames';
+import cpmLogo from '@/public/assets/logo/cpmRealLogo.webp';
 
-import useTeamStore from '@/app/stores/team';
+import TeamLogo from '@/app/components/common/team-logo';
 import usePlayerStore from '@/app/stores/player';
 import { HITTER_STAT, HITTER_STAT_DETAIL, PITCHER_STAT, PITCHER_STAT_DETAIL } from '@/app/const';
 
 import { isHitter } from '@/app/util/decideType';
+import { Team } from '@/app/stores/team/types';
 
-const PlayerDetail = () => {
-  const [selectedPlayer, isShowDetail, pinnedPlayer] = usePlayerStore(
-    useShallow((state) => [state.selectedPlayer, state.isShowDetail, state.pinnedPlayer])
+const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
+  const [selectedPlayer, isShowDetail, pinnedPlayer, clearDetail] = usePlayerStore(
+    useShallow((state) => [state.selectedPlayer, state.isShowDetail, state.pinnedPlayer, state.clearDetail])
   );
-  const allTeams = useTeamStore((state) => state.allTeams);
   const [scale, setScale] = useState(1);
   const player =
     isShowDetail.target === 'pinned' ? pinnedPlayer : isShowDetail.target === 'selected' ? selectedPlayer : null;
@@ -40,11 +43,24 @@ const PlayerDetail = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const onOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.currentTarget === e.target) {
+      clearDetail();
+    }
+  };
+
   return (
-    <AnimatePresence>
-      {isShowDetail.isShow && player && (
+    isShowDetail.isShow &&
+    player && (
+      <motion.div
+        className='fixed inset-0 z-40 bg-black/10 backdrop-blur-sm'
+        onClick={onOuterClick}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.2 }}
+      >
         <motion.div
-          className='absolute left-[50%] top-[50%] z-10 w-[370px] border-2 border-[#aaa] bg-gradient-to-tr from-[#9e270e] to-[#82220e] leading-[1] shadow-[0_19px_38px_#00000030,_0_15px_12px_#00000022,_3px_3px_3px_#00000050,_-3px_3px_3px_#00000050]'
+          className='absolute left-[50%] top-[50%] w-[370px] border-2 border-[#aaa] bg-gradient-to-tr from-[#9e270e] to-[#82220e] leading-[1] shadow-[0_19px_38px_#00000030,_0_15px_12px_#00000022,_3px_3px_3px_#00000050,_-3px_3px_3px_#00000050]'
           style={{ scale, translate: '-50% -50%' }}
           initial={{ y: 25, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -58,15 +74,10 @@ const PlayerDetail = () => {
             <div className='flex flex-col items-end'>
               <div className='flex items-center gap-3'>
                 <span className='text-14 font-light'>
-                  {allTeams.find((team) => team.id === player.team)?.name || ''}
+                  {selectedTeams.find((team) => team.id === player.team)?.name || ''}
                 </span>
                 <div className='relative h-20 w-20'>
-                  <Image
-                    src={allTeams.find((team) => team.id === player.team)?.logo || ''}
-                    alt={player.team}
-                    fill
-                    sizes='20px'
-                  />
+                  <TeamLogo teamId={player.team} />
                 </div>
               </div>
 
@@ -104,7 +115,7 @@ const PlayerDetail = () => {
                   </div>
 
                   <div className='relative h-43 w-122'>
-                    <Image src='/assets/logo/cpmRealLogo.webp' alt='logo' fill sizes='120px' />
+                    <Image src={cpmLogo} alt='logo' fill sizes='120px' />
                   </div>
 
                   <div className='flex items-center justify-between border-1 border-[#00000010] bg-[#52160a] font-semibold'>
@@ -247,8 +258,8 @@ const PlayerDetail = () => {
             </div>
           </div>
         </motion.div>
-      )}
-    </AnimatePresence>
+      </motion.div>
+    )
   );
 };
 

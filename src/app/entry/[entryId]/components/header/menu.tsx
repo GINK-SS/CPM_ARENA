@@ -1,34 +1,35 @@
 'use client';
 
-import { IoCloseOutline } from 'react-icons/io5';
-import { HiEllipsisVertical } from 'react-icons/hi2';
-import useTableStore from '@/app/stores/table';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
+import { IoCloseOutline } from 'react-icons/io5';
+import { HiEllipsisVertical } from 'react-icons/hi2';
+
+import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
-import Link from 'next/link';
 
-export default function Menu() {
+export default function Menu({ overallLimit }: { overallLimit: number }) {
   const [isMenu, openMenu, closeMenu] = useTableStore(
     useShallow((state) => [state.isMenu, state.openMenu, state.closeMenu])
-  );
-  const [overallLimit, setOverallLimit] = useTableStore(
-    useShallow((state) => [state.overallLimit, state.setOverallLimit])
   );
   const [setSelectedPlayer, setPinnedPlayer, clearLineup] = usePlayerStore(
     useShallow((state) => [state.setSelectedPlayer, state.setPinnedPlayer, state.clearLineup])
   );
   const clearBuff = useBuffStore((state) => state.clearBuff);
+  const router = useRouter();
+  const pathname = usePathname();
   const buttonValueList = [55, 60, 65, 69];
 
   const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setOverallLimit(Number(e.currentTarget.value));
     setSelectedPlayer(null);
     setPinnedPlayer(null);
     clearLineup();
     clearBuff();
     closeMenu();
+    router.replace(`${pathname}?limit=${Number(e.currentTarget.value)}`);
   };
 
   return (

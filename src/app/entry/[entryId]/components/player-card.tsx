@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 
-import useTeamStore from '@/app/stores/team';
+import TeamLogo from '@/app/components/common/team-logo';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
 import { BUFF_LIST, TEAMID_TO_SHORTEN } from '@/app/const';
@@ -10,6 +10,7 @@ import { BUFF_LIST, TEAMID_TO_SHORTEN } from '@/app/const';
 import { isHitter } from '@/app/util/decideType';
 import { Hitter, HitterPosition, Pitcher, PitcherPosition } from '@/app/stores/player/types';
 import { Records } from '@/app/stores/buff/types';
+import { Team } from '@/app/stores/team/types';
 
 type PlayerCardProps = {
   card: {
@@ -17,10 +18,10 @@ type PlayerCardProps = {
     player: Hitter | Pitcher | null;
   };
   order: number;
+  selectedTeams: Team[];
 };
 
-const PlayerCard = ({ card: { position, player }, order }: PlayerCardProps) => {
-  const [allTeams, selectedTeams] = useTeamStore(useShallow((state) => [state.allTeams, state.selectedTeams]));
+const PlayerCard = ({ card: { position, player }, order, selectedTeams }: PlayerCardProps) => {
   const [selectedPlayer, pinnedPlayer, setSelectedPlayer, setPinnedPlayer] = usePlayerStore(
     useShallow((state) => [state.selectedPlayer, state.pinnedPlayer, state.setSelectedPlayer, state.setPinnedPlayer])
   );
@@ -135,7 +136,7 @@ const PlayerCard = ({ card: { position, player }, order }: PlayerCardProps) => {
                 </span>
                 {player.all_star && (
                   <Image
-                    src={'/assets/all_star.png'}
+                    src='/assets/all_star.png'
                     alt='all_star'
                     width={18}
                     height={18}
@@ -150,7 +151,7 @@ const PlayerCard = ({ card: { position, player }, order }: PlayerCardProps) => {
                 </div>
                 {player.golden_glove && (
                   <Image
-                    src={'/assets/golden_glove.png'}
+                    src='/assets/golden_glove.png'
                     alt='golden_glove'
                     width={14}
                     height={14}
@@ -159,7 +160,7 @@ const PlayerCard = ({ card: { position, player }, order }: PlayerCardProps) => {
                 )}
                 {(player.mvp_korea || player.mvp_league) && (
                   <Image
-                    src={'/assets/mvp.png'}
+                    src='/assets/mvp.png'
                     alt='mvp'
                     width={14}
                     height={14}
@@ -173,14 +174,11 @@ const PlayerCard = ({ card: { position, player }, order }: PlayerCardProps) => {
 
         <div className='relative flex h-[1.7vw] justify-end border-b-1 border-b-black bg-gradient-to-r from-[#853326] from-30% to-[#150401] to-80% pl-2 pr-1 pt-1 font-semibold mobileL:h-7 mobileL:border-b-2 mobileL:pr-4'>
           {player && (
-            <Image
-              src={allTeams.find((team) => team.id === player.team)!.logo}
-              alt='logo'
-              width={30}
-              height={30}
-              sizes='30px'
-              className='absolute bottom-[-0.5vw] left-[0.3vw] aspect-square h-auto w-[4vw] drop-shadow-[0_1px_1px_#222,_1px_0_1px_#222] mobileL:bottom-[-3px] mobileL:left-2 mobileL:w-30'
-            />
+            <div className='absolute bottom-[-0.5vw] left-[0.3vw] mobileL:bottom-[-3px] mobileL:left-2'>
+              <div className='relative aspect-square h-auto w-[4vw] drop-shadow-[0_1px_1px_#222,_1px_0_1px_#222] mobileL:w-30'>
+                <TeamLogo teamId={player.team} />
+              </div>
+            </div>
           )}
           <span className='text-[0.8vw] text-[#948585] mobileL:text-7'>ARENA</span>
         </div>

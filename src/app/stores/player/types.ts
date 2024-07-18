@@ -62,8 +62,6 @@ export type PlayerStoreState = {
     isShow: boolean;
     target: 'pinned' | 'selected' | null;
   };
-  allHitters: Map<number, Hitter[]>;
-  allPitchers: Map<number, Pitcher[]>;
   selectedPlayer: Hitter | Pitcher | null;
   pinnedPlayer: Hitter | Pitcher | null;
   hitterLineup: { position: HitterPosition | null; player: Hitter | null }[];
@@ -83,6 +81,4 @@ export type PlayerStoreState = {
   setPinnedPlayer: (player: Hitter | Pitcher | null) => void;
   showDetail: (target: 'pinned' | 'selected') => void;
   clearDetail: () => void;
-  fetchAllHitters: () => Promise<void>;
-  fetchAllPitchers: () => Promise<void>;
 };

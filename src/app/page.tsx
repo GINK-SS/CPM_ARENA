@@ -1,27 +1,28 @@
-'use client';
-
-import { motion } from 'framer-motion';
-
 import MainTitle from './components/main-title';
-import Selection from './components/selection';
+import YearButton from './components/year-button';
+import TeamButton from './components/team-button';
 import SubmitBtn from './components/submit-button';
 import Footer from './components/footer';
 
-export default function Home() {
+import { Team } from './stores/team/types';
+
+export default async function Home() {
+  const teamData: Team[] = await fetch(`${process.env.BASE_URL}/storage/teams.json`).then((res) => res.json());
+
   return (
-    <motion.div
-      initial={{ y: 25, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className='px-5 py-20 mobileL:px-10'
-    >
-      <MainTitle />
+    <div className='flex min-h-screen flex-col items-center justify-center'>
+      <div className='w-full px-5 pb-20 pt-80 mobileL:px-10'>
+        <MainTitle />
 
-      <Selection />
+        <div className='mx-auto mb-60 flex max-w-[700px] flex-col justify-between gap-10 laptop:mb-170 laptop:max-w-[1000px] laptop:flex-row'>
+          <YearButton />
+          <TeamButton allTeams={teamData} />
+        </div>
 
-      <SubmitBtn />
+        <SubmitBtn />
 
-      <Footer />
-    </motion.div>
+        <Footer />
+      </div>
+    </div>
   );
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
@@ -9,35 +11,26 @@ import useTeamStore from '@/app/stores/team';
 import useBuffStore from '@/app/stores/buff';
 
 const SubmitBtn = () => {
-  const [selectedYear, closeYearPopup] = useYearStore(useShallow((state) => [state.selectedYear, state.closePopup]));
-  const [allTeams, selectedTeams, closeTeamPopup] = useTeamStore(
-    useShallow((state) => [state.allTeams, state.selectedTeams, state.closePopup])
-  );
+  const selectedYear = useYearStore((state) => state.selectedYear);
+  const selectedTeams = useTeamStore((state) => state.selectedTeams);
   const [setSelectedPlayer, setPinnedPlayer, clearLineup] = usePlayerStore(
     useShallow((state) => [state.setSelectedPlayer, state.setPinnedPlayer, state.clearLineup])
   );
-  const [closeMenu, setOverallLimit, closeOverallFilter] = useTableStore(
-    useShallow((state) => [state.closeMenu, state.setOverallLimit, state.closeOverallFilter])
+  const [closeMenu, closeOverallFilter] = useTableStore(
+    useShallow((state) => [state.closeMenu, state.closeOverallFilter])
   );
   const clearBuff = useBuffStore((state) => state.clearBuff);
   const router = useRouter();
 
   const onSubmit = () => {
-    closeYearPopup();
-    closeTeamPopup();
     closeMenu();
     closeOverallFilter();
-    setOverallLimit(69);
     setSelectedPlayer(null);
     setPinnedPlayer(null);
     clearLineup();
     clearBuff();
 
-    router.push(
-      `/entry/${selectedYear}${selectedTeams
-        .map((selectedTeam) => allTeams.find((team) => team === selectedTeam)?.shorten)
-        .join('')}`
-    );
+    router.push(`/entry/${selectedYear}${selectedTeams.map((selectedTeam) => selectedTeam.shorten).join('')}`);
   };
 
   return (
