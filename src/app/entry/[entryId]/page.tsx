@@ -1,8 +1,6 @@
 import { Metadata, ResolvingMetadata } from 'next';
 
-import Header from './components/header';
 import NotFound from '@/app/not-found';
-
 import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 import { Team, TeamId } from '@/app/stores/team/types';
@@ -124,8 +122,6 @@ export default function Page({ params: { entryId }, searchParams: { limit } }: M
 
   return (
     <>
-      <Header overallLimit={overallLimit} />
-
       <PlayerDetail selectedTeams={selectedTeams} />
 
       <div className='relative mx-auto flex w-full flex-col items-center py-10 mobileL:max-w-[630px] mobileL:py-20 tablet:max-w-[750px] laptop:max-w-[850px]'>

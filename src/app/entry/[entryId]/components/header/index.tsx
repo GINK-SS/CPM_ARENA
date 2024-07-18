@@ -5,7 +5,7 @@ import { IoMailOutline } from 'react-icons/io5';
 import OverallFilter from './overall-filter';
 import Menu from './menu';
 
-export default async function Header({ overallLimit }: { overallLimit: number }) {
+export default async function Header() {
   const version = await fetch('https://api.github.com/repos/gink-ss/CPM_ARENA/releases/latest').then((res) =>
     res.json()
   );
@@ -40,7 +40,7 @@ export default async function Header({ overallLimit }: { overallLimit: number })
         </div>
 
         <div data-role='options' className='hidden items-center justify-end tablet:flex'>
-          <OverallFilter overallLimit={overallLimit} />
+          <OverallFilter />
 
           <div className='ml-20 flex h-25 items-center border-l border-l-slate-200/20 pl-10'>
             <Link
@@ -53,7 +53,7 @@ export default async function Header({ overallLimit }: { overallLimit: number })
           </div>
         </div>
 
-        <Menu overallLimit={overallLimit} />
+        <Menu />
       </div>
     </div>
   );

@@ -3,13 +3,13 @@
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
 
-export default function OverallFilter({ overallLimit }: { overallLimit: number }) {
+export default function OverallFilter() {
   const [isOverallFilter, openOverallFilter, closeOverallFilter] = useTableStore(
     useShallow((state) => [state.isOverallFilter, state.openOverallFilter, state.closeOverallFilter])
   );
@@ -19,7 +19,10 @@ export default function OverallFilter({ overallLimit }: { overallLimit: number }
   const clearBuff = useBuffStore((state) => state.clearBuff);
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const buttonValueList = [55, 60, 65, 69];
+  const limit = searchParams.get('limit');
+  const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit;
 
   const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setSelectedPlayer(null);
@@ -27,7 +30,7 @@ export default function OverallFilter({ overallLimit }: { overallLimit: number }
     clearLineup();
     clearBuff();
     closeOverallFilter();
-    router.replace(`${pathname}?limit=${Number(e.currentTarget.value)}`);
+    router.replace(`${pathname}?limit=${Number(e.currentTarget.value)}`, { scroll: false });
   };
 
   return (
