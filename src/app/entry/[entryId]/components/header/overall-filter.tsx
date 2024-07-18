@@ -22,7 +22,7 @@ export default function OverallFilter() {
   const searchParams = useSearchParams();
   const buttonValueList = [55, 60, 65, 69];
   const limit = searchParams.get('limit');
-  const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit;
+  const overallLimit = !limit || isNaN(+limit) || +limit > 99 || +limit < 55 ? 69 : +limit;
 
   const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setSelectedPlayer(null);
