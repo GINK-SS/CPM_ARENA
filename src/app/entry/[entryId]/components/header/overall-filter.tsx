@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
@@ -24,6 +25,15 @@ export default function OverallFilter() {
   const limit = searchParams.get('limit');
   const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit < 55 ? 55 : +limit;
 
+  useEffect(() => {
+    closeOverallFilter();
+  }, [pathname]);
+
+  const onSelectClick = () => {
+    if (isOverallFilter) closeOverallFilter();
+    else openOverallFilter();
+  };
+
   const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setSelectedPlayer(null);
     setPinnedPlayer(null);
@@ -39,10 +49,7 @@ export default function OverallFilter() {
         hidden: !pathname.startsWith('/entry/'),
       })}
     >
-      <div
-        className='flex cursor-pointer items-center justify-end gap-5 py-5 text-17'
-        onClick={() => openOverallFilter()}
-      >
+      <div className='flex cursor-pointer items-center justify-end gap-5 py-5 text-17' onClick={onSelectClick}>
         <span className='font-semibold text-[#F98A58]'>
           {overallLimit <= 55 ? '전체' : `${overallLimit} 이상`} 보기
         </span>
