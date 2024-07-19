@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -14,6 +15,7 @@ import { GrFormNextLink } from 'react-icons/gr';
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
+import useCommonStore from '@/app/stores/common';
 
 export default function Menu() {
   const [isMenu, openMenu, closeMenu] = useTableStore(
@@ -23,6 +25,7 @@ export default function Menu() {
     useShallow((state) => [state.setSelectedPlayer, state.setPinnedPlayer, state.clearLineup])
   );
   const clearBuff = useBuffStore((state) => state.clearBuff);
+  const setIsLoading = useCommonStore((state) => state.setIsLoading);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -34,11 +37,18 @@ export default function Menu() {
     closeMenu();
   }, [pathname]);
 
-  const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  useEffect(() => {
     setSelectedPlayer(null);
     setPinnedPlayer(null);
     clearLineup();
     clearBuff();
+    setIsLoading(false);
+  }, [overallLimit]);
+
+  const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (overallLimit === Number(e.currentTarget.value)) return;
+
+    setIsLoading(true);
     router.replace(`${pathname}?limit=${Number(e.currentTarget.value)}`, { scroll: false });
   };
 

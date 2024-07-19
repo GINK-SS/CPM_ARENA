@@ -4,11 +4,13 @@ import { useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 
 import useTableStore from '@/app/stores/table';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
+import useCommonStore from '@/app/stores/common';
 
 export default function OverallFilter() {
   const [isOverallFilter, openOverallFilter, closeOverallFilter] = useTableStore(
@@ -18,6 +20,7 @@ export default function OverallFilter() {
     useShallow((state) => [state.setSelectedPlayer, state.setPinnedPlayer, state.clearLineup])
   );
   const clearBuff = useBuffStore((state) => state.clearBuff);
+  const setIsLoading = useCommonStore((state) => state.setIsLoading);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -25,23 +28,28 @@ export default function OverallFilter() {
   const limit = searchParams.get('limit');
   const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit < 55 ? 55 : +limit;
 
-  useEffect(() => {
-    closeOverallFilter();
-  }, [pathname]);
-
   const onSelectClick = () => {
     if (isOverallFilter) closeOverallFilter();
     else openOverallFilter();
   };
-
   const onFilterClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (overallLimit === Number(e.currentTarget.value)) return;
+
+    setIsLoading(true);
+    router.replace(`${pathname}?limit=${Number(e.currentTarget.value)}`, { scroll: false });
+  };
+
+  useEffect(() => {
+    closeOverallFilter();
+  }, [pathname]);
+
+  useEffect(() => {
     setSelectedPlayer(null);
     setPinnedPlayer(null);
     clearLineup();
     clearBuff();
-    closeOverallFilter();
-    router.replace(`${pathname}?limit=${Number(e.currentTarget.value)}`, { scroll: false });
-  };
+    setIsLoading(false);
+  }, [overallLimit]);
 
   return (
     <div
