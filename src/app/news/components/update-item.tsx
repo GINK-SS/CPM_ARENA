@@ -20,11 +20,13 @@ export default function UpdateItem({ date, version, contents, isFirst = false }:
   return (
     <div className='border-t-1 border-white/80 leading-[1.3]'>
       <div
-        className='group flex cursor-pointer items-center justify-between gap-10 px-0 py-30 mobileL:gap-15 mobileL:px-10'
+        className='group flex cursor-pointer items-center justify-between gap-8 px-0 py-30 mobileL:gap-15 mobileL:px-10'
         onClick={onClick}
       >
-        <h3 className='rounded-md bg-slate-700 px-8 py-3 indent-1 text-22 font-semibold tracking-[1px] text-[#F98A58] transition-colors duration-200 group-hover:bg-slate-600'>{`Ver. ${version}`}</h3>
-        <span className='opacity-70 transition-opacity duration-200 group-hover:opacity-85'>{date}</span>
+        <h3 className='rounded-md bg-slate-700 px-5 py-2 text-20 font-semibold text-[#F98A58] transition-colors duration-200 group-hover:bg-slate-600 mobileL:px-8 mobileL:py-3 mobileL:indent-1 mobileL:text-22 mobileL:tracking-[1px]'>{`Ver. ${version}`}</h3>
+        <span className='text-14 opacity-70 transition-opacity duration-200 group-hover:opacity-85 mobileL:text-16'>
+          {date}
+        </span>
         <div className='flex-1 border-1 opacity-10 transition-opacity duration-200 group-hover:opacity-20' />
         {isOpen ? (
           <IoRemoveOutline size={25} className='opacity-80 transition-opacity duration-200 group-hover:opacity-100' />
