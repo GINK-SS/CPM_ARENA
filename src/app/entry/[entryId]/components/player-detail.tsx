@@ -24,17 +24,7 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
 
   useEffect(() => {
     function handleResize() {
-      setScale(
-        window.innerWidth <= 416
-          ? 0.6
-          : window.innerWidth <= 470
-            ? 0.7
-            : window.innerWidth <= 560
-              ? 0.8
-              : window.innerWidth <= 660
-                ? 0.9
-                : 1
-      );
+      setScale(window.innerWidth <= 470 ? 0.7 : window.innerWidth <= 560 ? 0.8 : window.innerWidth <= 660 ? 0.9 : 1);
     }
 
     window.addEventListener('resize', handleResize);
