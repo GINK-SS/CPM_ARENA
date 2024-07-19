@@ -53,7 +53,7 @@ export default function OverallFilter() {
 
   return (
     <div
-      className={classNames('relative mr-15 border-r-1 border-r-slate-200/20 pr-15', {
+      className={classNames('relative mr-15 flex items-center justify-center border-r-1 border-r-slate-200/20 pr-15', {
         hidden: !pathname.startsWith('/entry/'),
       })}
     >
@@ -65,14 +65,23 @@ export default function OverallFilter() {
       </div>
 
       {isOverallFilter && (
-        <ul className='absolute top-30 z-10 flex flex-col items-center justify-center bg-white'>
+        <ul className='absolute top-30 z-10 flex w-[200px] flex-col items-center justify-center rounded-lg bg-slate-800 p-15 shadow-lg'>
+          <div className='mb-15 flex flex-col gap-2 border-b-2 border-slate-200/20 pb-15 text-13 text-red-300 opacity-80'>
+            <span>오버롤 필터 변경 시,</span>
+            <span>선택한 선수들이 초기화됩니다.</span>
+          </div>
+
           {buttonValueList.map((value) => (
-            <li key={value}>
+            <li key={value} className='mb-5 w-full flex-1 last:mb-0'>
               <button
-                className={classNames('w-120 p-10 text-black', {
-                  'bg-[#410] text-white': value === overallLimit,
-                  'hover:bg-[#e0a824]/30': value !== overallLimit,
-                })}
+                className={classNames(
+                  'w-full border-1 p-10 transition-[color,_background-color,_opacity] duration-200',
+                  {
+                    'bg-slate-100 font-semibold text-[#e56d36]': value === overallLimit,
+                    'text-slate-400 opacity-50 hover:bg-slate-300 hover:text-slate-800 hover:opacity-90':
+                      value !== overallLimit,
+                  }
+                )}
                 value={value}
                 onClick={onFilterClick}
               >

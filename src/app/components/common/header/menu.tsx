@@ -87,7 +87,11 @@ export default function Menu() {
                 hidden: !pathname.startsWith('/entry/'),
               })}
             >
-              <span className='mb-20 block text-18 font-semibold'>오버롤 설정</span>
+              <span className='mb-10 block text-18 font-semibold'>오버롤 설정</span>
+
+              <span className='mb-10 block text-12 text-red-300 opacity-80'>
+                오버롤 필터 변경 시 선택한 선수들이 초기화됩니다.
+              </span>
 
               <ul className='flex flex-wrap items-center justify-center gap-5'>
                 {buttonValueList.map((value) => (
