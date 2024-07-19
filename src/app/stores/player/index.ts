@@ -1,14 +1,10 @@
 import { create } from 'zustand';
 
-import { FIRST_YEAR } from '@/app/const';
-
-import { Hitter, Pitcher, PlayerStoreState } from './types';
+import { Pitcher, PlayerStoreState } from './types';
 import { isHitter } from '@/app/util/decideType';
 
 const usePlayerStore = create<PlayerStoreState>((set, get) => ({
   isShowDetail: { isShow: false, target: null },
-  allHitters: new Map(),
-  allPitchers: new Map(),
   selectedPlayer: null,
   pinnedPlayer: null,
   hitterLineup: [...Array(9)].map(() => ({ position: null, player: null })),
@@ -140,34 +136,6 @@ const usePlayerStore = create<PlayerStoreState>((set, get) => ({
   },
   clearDetail: () => {
     set(() => ({ isShowDetail: { isShow: false, target: null } }));
-  },
-  fetchAllHitters: async () => {
-    const hitters: Hitter[] = await fetch('/storage/hitters.json').then((res) => res.json());
-
-    set(() => {
-      const allHitters: Map<number, Hitter[]> = new Map(
-        new Array(42).fill(FIRST_YEAR).map((year, idx) => [year + idx, []])
-      );
-      hitters.forEach((hitter) => {
-        allHitters.get(hitter.year)?.push(hitter);
-      });
-
-      return { allHitters };
-    });
-  },
-  fetchAllPitchers: async () => {
-    const pitchers: Pitcher[] = await fetch('/storage/pitchers.json').then((res) => res.json());
-
-    set(() => {
-      const allPitchers: Map<number, Pitcher[]> = new Map(
-        new Array(42).fill(FIRST_YEAR).map((year, idx) => [year + idx, []])
-      );
-      pitchers.forEach((pitcher) => {
-        allPitchers.get(pitcher.year)?.push(pitcher);
-      });
-
-      return { allPitchers };
-    });
   },
 }));
 
