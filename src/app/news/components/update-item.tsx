@@ -41,8 +41,9 @@ export default function UpdateItem({ date, version, contents, isFirst = false }:
               <ul className='ml-20'>
                 {content.descriptions &&
                   content.descriptions.map((description) => (
-                    <li key={description} className='mb-5 text-13 text-slate-200 opacity-90 last:mb-0'>
-                      {`• ${description}`}
+                    <li key={description} className='mb-5 flex gap-5 text-13 text-slate-200 opacity-90 last:mb-0'>
+                      <span>•</span>
+                      <span>{description}</span>
                     </li>
                   ))}
               </ul>
