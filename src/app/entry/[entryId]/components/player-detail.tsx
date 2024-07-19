@@ -43,6 +43,18 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    if (isShowDetail.isShow) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isShowDetail.isShow]);
+
   const onOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.currentTarget === e.target) {
       clearDetail();
