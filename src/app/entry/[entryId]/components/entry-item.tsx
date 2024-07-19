@@ -97,7 +97,7 @@ const EntryItem = ({ player, selectedTeams }: EntryItemProps) => {
 
   return (
     <button
-      aria-label={player.name ? `${player.year} ${player.name}` : 'empty player'}
+      aria-label={player.name ? player.name : 'empty player'}
       className='relative flex flex-1 items-center justify-center overflow-hidden border-t-1 border-black bg-white text-black first:border-t-0'
       disabled={!player.name}
       onClick={onClick}
@@ -123,7 +123,7 @@ const EntryItem = ({ player, selectedTeams }: EntryItemProps) => {
       <div
         data-role='name'
         className={classNames(
-          'flex aspect-[3/1] flex-[3] items-center justify-center border-r-1 border-r-black indent-[0.5px] text-[2.2vw] font-semibold tracking-[0.5px] mobileL:text-14 tablet:indent-1 tablet:text-17 tablet:tracking-[1px] laptop:text-20',
+          'flex aspect-[3/1.3] flex-[3] items-center justify-center border-r-1 border-r-black indent-[0.5px] text-[2.2vw] font-semibold tracking-[0.5px] mobileL:aspect-[3/1] mobileL:text-14 tablet:indent-1 tablet:text-17 tablet:tracking-[1px] laptop:text-20',
           {
             'bg-[#f0c2bd]': player.all_star,
             'font-extrabold text-[#ca4142]': player.mvp_korea || player.mvp_league,
@@ -136,7 +136,7 @@ const EntryItem = ({ player, selectedTeams }: EntryItemProps) => {
       <div
         data-role='overall'
         className={classNames(
-          'flex aspect-square flex-[1] items-center justify-center text-[2.2vw] mobileL:text-14 tablet:text-16 laptop:text-19',
+          'flex aspect-auto h-full flex-[1] items-center justify-center text-[2.2vw] mobileL:aspect-square mobileL:h-auto mobileL:text-14 tablet:text-16 laptop:text-19',
           {
             'font-bold text-[#1b1588]': player.overall >= 80,
             'bg-[#f5df94]': player.golden_glove,

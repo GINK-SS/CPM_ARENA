@@ -51,7 +51,7 @@ function TeamLogo({ teamId }: { teamId: TeamId }) {
   };
 
   return (
-    <Image src={logoList[teamId]} alt='logo' sizes='60px' fill placeholder='blur' style={{ objectFit: 'contain' }} />
+    <Image src={logoList[teamId]} alt='logo' sizes='200px' fill placeholder='blur' style={{ objectFit: 'contain' }} />
   );
 }
 

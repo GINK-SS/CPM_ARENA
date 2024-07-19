@@ -1,6 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useRouter } from 'next-nprogress-bar';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 
@@ -9,6 +10,7 @@ import usePlayerStore from '@/app/stores/player';
 import useTableStore from '@/app/stores/table';
 import useTeamStore from '@/app/stores/team';
 import useBuffStore from '@/app/stores/buff';
+import useCommonStore from '../stores/common';
 
 const SubmitBtn = () => {
   const selectedYear = useYearStore((state) => state.selectedYear);
@@ -20,16 +22,23 @@ const SubmitBtn = () => {
     useShallow((state) => [state.closeMenu, state.closeOverallFilter])
   );
   const clearBuff = useBuffStore((state) => state.clearBuff);
+  const setIsLoading = useCommonStore((state) => state.setIsLoading);
   const router = useRouter();
 
-  const onSubmit = () => {
-    closeMenu();
-    closeOverallFilter();
-    setSelectedPlayer(null);
-    setPinnedPlayer(null);
-    clearLineup();
-    clearBuff();
+  useEffect(() => {
+    return () => {
+      closeMenu();
+      closeOverallFilter();
+      setSelectedPlayer(null);
+      setPinnedPlayer(null);
+      clearLineup();
+      clearBuff();
+      setIsLoading(false);
+    };
+  }, []);
 
+  const onSubmit = () => {
+    setIsLoading(true);
     router.push(`/entry/${selectedYear}${selectedTeams.map((selectedTeam) => selectedTeam.shorten).join('')}`);
   };
 

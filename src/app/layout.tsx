@@ -5,6 +5,9 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import Background from './components/common/background';
+import Header from './components/common/header';
+import Providers from './providers';
+import Loading from './components/common/loading';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -54,7 +57,13 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className={notoSansKR.className}>
-        <Background>{children}</Background>
+        <Providers>
+          <Loading />
+          <Background>
+            <Header />
+            {children}
+          </Background>
+        </Providers>
         <Analytics />
         <SpeedInsights />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />

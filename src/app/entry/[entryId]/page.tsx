@@ -1,8 +1,6 @@
 import { Metadata, ResolvingMetadata } from 'next';
 
-import Header from './components/header';
 import NotFound from '@/app/not-found';
-
 import { FIRST_YEAR, LAST_YEAR, SHORTEN_DATA } from '@/app/const';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
 import { Team, TeamId } from '@/app/stores/team/types';
@@ -120,15 +118,13 @@ export default function Page({ params: { entryId }, searchParams: { limit } }: M
   const playersOfSelectedTeams = [...currentHitters, ...currentPitchers].filter((player) =>
     selectedTeams.map((team) => team.id).includes(player.team)
   );
-  const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit;
+  const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit < 55 ? 55 : +limit;
 
   return (
     <>
-      <Header overallLimit={overallLimit} />
-
       <PlayerDetail selectedTeams={selectedTeams} />
 
-      <div className='relative mx-auto flex w-full flex-col items-center py-10 mobileL:max-w-[630px] mobileL:py-20 tablet:max-w-[750px] laptop:max-w-[850px]'>
+      <div className='relative mx-auto flex w-full flex-col items-center py-25 mobileL:max-w-[630px] mobileL:py-20 tablet:max-w-[750px] laptop:max-w-[850px]'>
         <h1
           data-role='title'
           className='mb-10 text-center indent-8 text-[6vw] font-extrabold tracking-[8px] drop-shadow-[1px_1px_1px_#555] mobileL:mb-20 mobileL:indent-15 mobileL:text-40 mobileL:tracking-[15px] tablet:text-45 tablet:drop-shadow-[3px_3px_2px_#555] laptop:text-55'
