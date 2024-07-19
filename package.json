@@ -15,6 +15,7 @@
     "classnames": "^2.5.1",
     "framer-motion": "^11.1.9",
     "next": "^14.2.3",
+    "next-nprogress-bar": "^2.3.13",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
