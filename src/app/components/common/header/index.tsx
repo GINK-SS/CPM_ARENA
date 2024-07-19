@@ -6,9 +6,9 @@ import Menu from './menu';
 import Links from './links';
 
 export default async function Header() {
-  const version = await fetch('https://api.github.com/repos/gink-ss/CPM_ARENA/releases/latest').then((res) =>
-    res.json()
-  );
+  const version = await fetch('https://api.github.com/repos/gink-ss/CPM_ARENA/releases/latest', {
+    cache: 'no-store',
+  }).then((res) => res.json());
 
   return (
     <div className='sticky top-0 z-10 border-b-1 border-b-slate-400/40 bg-black/70 backdrop-blur'>
