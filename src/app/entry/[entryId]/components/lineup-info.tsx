@@ -13,8 +13,14 @@ import { Team } from '@/app/stores/team/types';
 import { Records } from '@/app/stores/buff/types';
 
 const LineUpInfo = ({ selectedTeams }: { selectedTeams: Team[] }) => {
-  const [hitterLineup, pitcherLineup, clearLineup] = usePlayerStore(
-    useShallow((state) => [state.hitterLineup, state.pitcherLineup, state.clearLineup])
+  const [hitterLineup, pitcherLineup, clearLineup, setPinnedPlayer, setSelectedPlayer] = usePlayerStore(
+    useShallow((state) => [
+      state.hitterLineup,
+      state.pitcherLineup,
+      state.clearLineup,
+      state.setPinnedPlayer,
+      state.setSelectedPlayer,
+    ])
   );
   const clearBuff = useBuffStore((state) => state.clearBuff);
   const buffOrder: (Team | Records)[] = useMemo(
@@ -25,6 +31,8 @@ const LineUpInfo = ({ selectedTeams }: { selectedTeams: Team[] }) => {
   const onReset = () => {
     clearLineup();
     clearBuff();
+    setSelectedPlayer(null);
+    setPinnedPlayer(null);
   };
 
   return (
