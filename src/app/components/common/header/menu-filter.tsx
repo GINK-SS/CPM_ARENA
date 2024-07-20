@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next-nprogress-bar';
 import { useShallow } from 'zustand/react/shallow';
@@ -17,6 +17,7 @@ export default function MenuFilter() {
   );
   const setIsLoading = useCommonStore((state) => state.setIsLoading);
   const clearBuff = useBuffStore((state) => state.clearBuff);
+  const [isMounted, setIsMounted] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const limit = searchParams.get('limit');
@@ -30,6 +31,11 @@ export default function MenuFilter() {
   };
 
   useEffect(() => {
+    if (!isMounted) {
+      setIsMounted(true);
+      return;
+    }
+
     setSelectedPlayer(null);
     setPinnedPlayer(null);
     clearLineup();
