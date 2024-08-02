@@ -5,11 +5,11 @@ import classNames from 'classnames';
 import TeamLogo from '@/app/components/common/team-logo';
 import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
-import { BUFF_LIST, TEAMID_TO_SHORTEN } from '@/app/const';
+import { TEAMID_TO_SHORTEN } from '@/app/const';
+import { getCalculatedBuff } from '@/app/util/calculateBuff';
 
 import { isHitter } from '@/app/util/decideType';
 import { Hitter, HitterPosition, Pitcher, PitcherPosition } from '@/app/stores/player/types';
-import { Records } from '@/app/stores/buff/types';
 import { Team } from '@/app/stores/team/types';
 
 type PlayerCardProps = {
@@ -32,47 +32,6 @@ const PlayerCard = ({ card: { position, player }, order, selectedTeams }: Player
     : isHitter(player)
       ? `/assets/player/${TEAMID_TO_SHORTEN[player.team]}_hitter_${hitterHand === '좌' ? 'left' : 'right'}.png`
       : `/assets/player/${TEAMID_TO_SHORTEN[player.team]}_pitcher_${pitcherHand === '좌' ? 'left' : 'right'}.png`;
-
-  const getCalculatedOverall = (player: Hitter | Pitcher) => {
-    let calculatedOverall = player.overall;
-    const records: Records[] = ['all_star', 'golden_glove', 'mvp'];
-    const teamBuffGradesIdx = BUFF_LIST.team.grades.findLastIndex(
-      (grade) => grade <= currentBuff.teams[selectedTeams.findIndex((selectedTeam) => selectedTeam.id === player.team)]
-    );
-
-    calculatedOverall += teamBuffGradesIdx === -1 ? 0 : BUFF_LIST.team.gradeValues[teamBuffGradesIdx];
-    calculatedOverall += records.reduce((acc, curr) => {
-      if (
-        (curr === 'all_star' && !player.all_star) ||
-        (curr === 'golden_glove' && !player.golden_glove) ||
-        (curr === 'mvp' && !(player.mvp_korea || player.mvp_league))
-      ) {
-        return acc;
-      }
-
-      return (
-        acc +
-        (BUFF_LIST[curr].grades.findLastIndex((grade) => grade <= currentBuff[curr]) === -1
-          ? 0
-          : BUFF_LIST[curr].gradeValues[BUFF_LIST[curr].grades.findLastIndex((grade) => grade <= currentBuff[curr])])
-      );
-    }, 0);
-
-    if (isHitter(player)) {
-      if (player.order_type === '밸런스') calculatedOverall += 1;
-      else if (player.order_type === '상위' && order <= 2) calculatedOverall += 2;
-      else if (player.order_type === '클린업' && order <= 5 && order >= 3) calculatedOverall += 2;
-      else if (player.order_type === '하위' && order >= 6) calculatedOverall += 2;
-
-      if (player.order_numbers.includes(order)) calculatedOverall += 1;
-    }
-
-    if (!isHitter(player) && player.position !== position) {
-      calculatedOverall -= 3;
-    }
-
-    return calculatedOverall;
-  };
 
   const onClick = () => {
     if (!player) return;
@@ -132,7 +91,7 @@ const PlayerCard = ({ card: { position, player }, order, selectedTeams }: Player
             <>
               <div className='flex flex-col items-start gap-1 font-semibold mobileL:gap-2'>
                 <span className='scale-y-125 text-[2.2vw] drop-shadow-[0_1px_5px_#000] mobileL:text-16'>
-                  {getCalculatedOverall(player)}
+                  {getCalculatedBuff({ player, selectedTeams, order, position, currentBuff }) + player.overall}
                 </span>
                 {player.all_star && (
                   <Image
