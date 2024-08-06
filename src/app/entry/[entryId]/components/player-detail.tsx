@@ -9,18 +9,43 @@ import cpmLogo from '@/public/assets/logo/cpmRealLogo.webp';
 
 import TeamLogo from '@/app/components/common/team-logo';
 import usePlayerStore from '@/app/stores/player';
+import useBuffStore from '@/app/stores/buff';
 import { HITTER_STAT, HITTER_STAT_DETAIL, PITCHER_STAT, PITCHER_STAT_DETAIL } from '@/app/const';
 
+import { getCalculatedBuff } from '@/app/util/calculateBuff';
 import { isHitter } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
 
 const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
-  const [selectedPlayer, isShowDetail, pinnedPlayer, clearDetail] = usePlayerStore(
-    useShallow((state) => [state.selectedPlayer, state.isShowDetail, state.pinnedPlayer, state.clearDetail])
+  const [selectedPlayer, isShowDetail, pinnedPlayer, hitterLineup, pitcherLineup, clearDetail] = usePlayerStore(
+    useShallow((state) => [
+      state.selectedPlayer,
+      state.isShowDetail,
+      state.pinnedPlayer,
+      state.hitterLineup,
+      state.pitcherLineup,
+      state.clearDetail,
+    ])
   );
+  const currentBuff = useBuffStore((state) => state.currentBuff);
   const [scale, setScale] = useState(1);
   const player =
     isShowDetail.target === 'pinned' ? pinnedPlayer : isShowDetail.target === 'selected' ? selectedPlayer : null;
+
+  const extraPoints =
+    player &&
+    ((isHitter(player) && hitterLineup.some((hitter) => hitter.player === player)) ||
+      (!isHitter(player) && pitcherLineup.some((pitcher) => pitcher.player === player)))
+      ? getCalculatedBuff({
+          player,
+          selectedTeams,
+          order: isHitter(player) ? hitterLineup.findIndex((lineup) => lineup.player === player) + 1 : 0,
+          position: isHitter(player)
+            ? hitterLineup.find((hitter) => hitter.player === player)!.position
+            : pitcherLineup.find((pitcher) => pitcher.player === player)!.position,
+          currentBuff,
+        })
+      : 0;
 
   useEffect(() => {
     function handleResize() {
@@ -70,7 +95,7 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
         >
           <div className='flex items-center justify-between px-20 py-12'>
             <span className='scale-x-125 scale-y-150 text-30 font-extrabold drop-shadow-[0_0_2px_#222]'>
-              {player.overall}
+              {player.overall + extraPoints}
             </span>
 
             <div className='flex flex-col items-end'>
@@ -96,15 +121,26 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
                       <span>{value[0]}</span>
                       <span
                         className={classNames({
-                          'text-[#e643d8]': (player[value[1]] as number) >= 110,
-                          'text-[#a652e3]': (player[value[1]] as number) >= 100 && (player[value[1]] as number) < 110,
-                          'text-[#e35252]': (player[value[1]] as number) >= 90 && (player[value[1]] as number) < 100,
-                          'text-[#fca96a]': (player[value[1]] as number) >= 80 && (player[value[1]] as number) < 90,
-                          'text-[#fceb6a]': (player[value[1]] as number) >= 70 && (player[value[1]] as number) < 80,
-                          'text-white': (player[value[1]] as number) < 70,
+                          'text-[#e643d8]': (player[value[1]] as number) + extraPoints >= 110,
+                          'text-[#a652e3]':
+                            (player[value[1]] as number) + extraPoints >= 100 &&
+                            (player[value[1]] as number) + extraPoints < 110,
+                          'text-[#e35252]':
+                            (player[value[1]] as number) + extraPoints >= 90 &&
+                            (player[value[1]] as number) + extraPoints < 100,
+                          'text-[#fca96a]':
+                            (player[value[1]] as number) + extraPoints >= 80 &&
+                            (player[value[1]] as number) + extraPoints < 90,
+                          'text-[#fceb6a]':
+                            (player[value[1]] as number) + extraPoints >= 70 &&
+                            (player[value[1]] as number) + extraPoints < 80,
+                          'text-white': (player[value[1]] as number) + extraPoints < 70,
                         })}
                       >
-                        {player[value[1]]}
+                        {(player[value[1]] as number) + extraPoints}
+                        <span className='absolute inline-block pl-3 text-white'>
+                          {extraPoints === 0 ? '' : `(+${extraPoints})`}
+                        </span>
                       </span>
                     </div>
                   ))}
@@ -159,15 +195,26 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
                       <span>{value[0]}</span>
                       <span
                         className={classNames({
-                          'text-[#e643d8]': (player[value[1]] as number) >= 110,
-                          'text-[#a652e3]': (player[value[1]] as number) >= 100 && (player[value[1]] as number) < 110,
-                          'text-[#e35252]': (player[value[1]] as number) >= 90 && (player[value[1]] as number) < 100,
-                          'text-[#fca96a]': (player[value[1]] as number) >= 80 && (player[value[1]] as number) < 90,
-                          'text-[#fceb6a]': (player[value[1]] as number) >= 70 && (player[value[1]] as number) < 80,
-                          'text-white': (player[value[1]] as number) < 70,
+                          'text-[#e643d8]': (player[value[1]] as number) + extraPoints >= 110,
+                          'text-[#a652e3]':
+                            (player[value[1]] as number) + extraPoints >= 100 &&
+                            (player[value[1]] as number) + extraPoints < 110,
+                          'text-[#e35252]':
+                            (player[value[1]] as number) + extraPoints >= 90 &&
+                            (player[value[1]] as number) + extraPoints < 100,
+                          'text-[#fca96a]':
+                            (player[value[1]] as number) + extraPoints >= 80 &&
+                            (player[value[1]] as number) + extraPoints < 90,
+                          'text-[#fceb6a]':
+                            (player[value[1]] as number) + extraPoints >= 70 &&
+                            (player[value[1]] as number) + extraPoints < 80,
+                          'text-white': (player[value[1]] as number) + extraPoints < 70,
                         })}
                       >
-                        {player[value[1]]}
+                        {(player[value[1]] as number) + extraPoints}
+                        <span className='absolute inline-block pl-3 text-white'>
+                          {extraPoints === 0 ? '' : `(+${extraPoints})`}
+                        </span>
                       </span>
                     </div>
                   ))}
@@ -216,7 +263,7 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
                   >
                     <div className='py-4'>{value[0]}</div>
                     <div className='w-full border-y-1 border-b-[#00000020] border-t-[#00000010] bg-gradient-to-br from-[#662315] to-[#5e1d10] py-4 text-center'>
-                      {player[value[1]]}
+                      {(player[value[1]] as number) + extraPoints}
                     </div>
                   </div>
                 ))}
@@ -230,7 +277,7 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
                   >
                     <div className='py-4'>{value[0]}</div>
                     <div className='w-full border-y-1 border-b-[#00000020] border-t-[#00000010] bg-gradient-to-br from-[#662315] to-[#5e1d10] py-4 text-center'>
-                      {player[value[1]]}
+                      {(player[value[1]] as number) + extraPoints}
                     </div>
                   </div>
                 ))}
