@@ -139,7 +139,7 @@ export default function Page({ params: { entryId }, searchParams: { limit } }: M
         <EntryDescription />
 
         <Lineup selectedTeams={selectedTeams} />
-        <SimpleBox />
+        <SimpleBox selectedTeams={selectedTeams} />
         <LineUpInfo selectedTeams={selectedTeams} />
       </div>
     </>
