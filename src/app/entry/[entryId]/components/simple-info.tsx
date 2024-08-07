@@ -4,17 +4,42 @@ import { IoSearchOutline } from 'react-icons/io5';
 
 import TeamLogo from '@/app/components/common/team-logo';
 import usePlayerStore from '@/app/stores/player';
+import useCommonStore from '@/app/stores/common';
 import InfoBox from './info-box';
 import SimpleStat from './simple-stat';
+import { getCalculatedBuff } from '@/app/util/calculateBuff';
 
 import { Hitter, Pitcher } from '@/app/stores/player/types';
+import useBuffStore from '@/app/stores/buff';
+import { Team } from '@/app/stores/team/types';
+import { isHitter } from '@/app/util/decideType';
 
 type SimpleInfoProps = {
   player: Hitter | Pitcher | null;
+  selectedTeams: Team[];
 };
 
-const SimpleInfo = ({ player }: SimpleInfoProps) => {
-  const [showDetail, pinnedPlayer] = usePlayerStore(useShallow((state) => [state.showDetail, state.pinnedPlayer]));
+const SimpleInfo = ({ player, selectedTeams }: SimpleInfoProps) => {
+  const [showDetail, pinnedPlayer, hitterLineup, pitcherLineup] = usePlayerStore(
+    useShallow((state) => [state.showDetail, state.pinnedPlayer, state.hitterLineup, state.pitcherLineup])
+  );
+  const currentBuff = useBuffStore((state) => state.currentBuff);
+  const isBuffActive = useCommonStore((state) => state.isBuffActive);
+  const extraPoints =
+    isBuffActive &&
+    player &&
+    ((isHitter(player) && hitterLineup.some((hitter) => hitter.player === player)) ||
+      (!isHitter(player) && pitcherLineup.some((pitcher) => pitcher.player === player)))
+      ? getCalculatedBuff({
+          player,
+          selectedTeams,
+          order: isHitter(player) ? hitterLineup.findIndex((lineup) => lineup.player === player) + 1 : 0,
+          position: isHitter(player)
+            ? hitterLineup.find((hitter) => hitter.player === player)!.position
+            : pitcherLineup.find((pitcher) => pitcher.player === player)!.position,
+          currentBuff,
+        })
+      : 0;
 
   const onDetailClick = () => {
     showDetail(player === pinnedPlayer ? 'pinned' : 'selected');
@@ -76,10 +101,10 @@ const SimpleInfo = ({ player }: SimpleInfoProps) => {
               >{`'${player.year.toString().slice(2)} ${player.name}`}</span>
             </div>
 
-            <span className='scale-y-125 text-18 font-semibold'>{player.overall}</span>
+            <span className='scale-y-125 text-18 font-semibold'>{player.overall + extraPoints}</span>
 
             <div className='flex items-center gap-8 mobileL:gap-20 tablet:gap-7 laptop:gap-10'>
-              <SimpleStat player={player} />
+              <SimpleStat player={player} extraPoints={extraPoints} />
 
               <button
                 className='flex aspect-square w-30 items-center justify-center rounded-md border-1 border-slate-400 text-16 font-semibold'

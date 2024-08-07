@@ -13,12 +13,20 @@ import { GrFormNextLink } from 'react-icons/gr';
 
 import MenuFilter from './menu-filter';
 import useTableStore from '@/app/stores/table';
+import useCommonStore from '@/app/stores/common';
 
 export default function Menu() {
   const [isMenu, openMenu, closeMenu] = useTableStore(
     useShallow((state) => [state.isMenu, state.openMenu, state.closeMenu])
   );
+  const [isBuffActive, setIsBuffActive] = useCommonStore(
+    useShallow((state) => [state.isBuffActive, state.setIsBuffActive])
+  );
   const pathname = usePathname();
+
+  const onBuffActiveClick = () => {
+    setIsBuffActive();
+  };
 
   useEffect(() => {
     closeMenu();
@@ -51,6 +59,31 @@ export default function Menu() {
 
               <button onClick={() => closeMenu()} className='flex items-center justify-center p-4'>
                 <IoCloseOutline className='text-25' />
+              </button>
+            </div>
+
+            <div
+              className={classNames('mb-20', {
+                hidden: !pathname.startsWith('/entry/'),
+              })}
+            >
+              <span className='mb-10 block text-18 font-semibold'>시너지 설정</span>
+              <span className='mb-10 block text-12 text-red-300 opacity-80'>
+                시너지 적용 시 선수 정보에 시너지가 반영됩니다.
+              </span>
+
+              <button
+                className={classNames(
+                  'h-40 w-full rounded-lg border-1 p-8 shadow-sm duration-200',
+
+                  {
+                    'bg-slate-100 font-semibold text-[#e56d36]': isBuffActive,
+                    'text-slate-400 opacity-50 hover:bg-slate-300 hover:text-slate-800 hover:opacity-90': !isBuffActive,
+                  }
+                )}
+                onClick={onBuffActiveClick}
+              >
+                {`시너지 설정 ${isBuffActive ? 'ON' : 'OFF'}`}
               </button>
             </div>
 

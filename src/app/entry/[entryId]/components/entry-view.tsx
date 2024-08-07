@@ -41,7 +41,7 @@ export default function EntryView({ selectedTeams, playersOfSelectedTeams, overa
         ))}
       </div>
 
-      <div data-role='table' className='flex w-full flex-col items-center gap-2 tablet:gap-3'>
+      <div data-role='table' className='flex w-full flex-col items-center gap-2 px-1 mobileL:px-0 tablet:gap-3'>
         {Object.entries(POSITION_LIMIT).map((limit) => {
           const [position, value] = limit;
           const filteredPlayers = playersOfSelectedTeams.filter((player) => player.position === position);
