@@ -7,18 +7,21 @@ import { isHitter } from '@/app/util/decideType';
 
 type SimpleStatProps = {
   player: Hitter | Pitcher | null;
+  extraPoints: number;
 };
 
-const SimpleStat = ({ player }: SimpleStatProps) => {
+const SimpleStat = ({ player, extraPoints }: SimpleStatProps) => {
   return (
     player && (
       <div className='flex gap-5 mobileL:gap-20 tablet:gap-5 laptop:gap-10'>
         {Object.entries(isHitter(player) ? HITTER_STAT : PITCHER_STAT).map((value, index) => {
           const [statName, statKey] = value;
 
-          const statValue = isHitter(player)
-            ? (player[statKey as keyof Hitter] as number)
-            : (player[statKey as keyof Pitcher] as number);
+          const statValue =
+            extraPoints +
+            (isHitter(player)
+              ? (player[statKey as keyof Hitter] as number)
+              : (player[statKey as keyof Pitcher] as number));
 
           return (
             <div key={index} className='flex flex-col items-center justify-center gap-3 laptop:gap-5'>

@@ -56,9 +56,12 @@ export default function OverallFilter() {
       <div
         className={classNames('relative mr-15 flex items-center justify-center border-r-1 border-r-slate-200/20 pr-15')}
       >
-        <div className='flex cursor-pointer items-center justify-end gap-5 py-5 text-17' onClick={onSelectClick}>
-          <span className='font-semibold text-[#F98A58]'>
-            {overallLimit <= 55 ? '전체' : `${overallLimit} 이상`} 보기
+        <div className='flex cursor-pointer items-center justify-end gap-5 text-17' onClick={onSelectClick}>
+          <span className='font-semibold text-[#F98A58] tablet:rounded-full tablet:border-2 tablet:border-[#F98A58] tablet:p-5 laptop:border-none'>
+            {overallLimit <= 55 ? '전체' : `${overallLimit}`}
+          </span>
+          <span className='hidden font-semibold text-[#F98A58] laptop:inline'>
+            {overallLimit <= 55 ? '' : '이상'} 보기
           </span>
           {isOverallFilter ? <IoCaretUp className='text-white/50' /> : <IoCaretDown className='text-white/50' />}
         </div>
