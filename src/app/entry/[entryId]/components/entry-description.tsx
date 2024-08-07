@@ -4,7 +4,7 @@ const descriptionList = ['올스타', '골든 글러브', 'MVP', '오버롤 80 �
 
 export default function EntryDescription() {
   return (
-    <div className='flex w-full justify-around gap-2 border-t-2 border-t-black tablet:gap-3 tablet:border-t-3'>
+    <div className='flex w-full justify-around gap-2 border-t-2 border-t-black px-1 mobileL:px-0 tablet:gap-3 tablet:border-t-3'>
       {descriptionList.map((description) => (
         <div
           className={classNames(
