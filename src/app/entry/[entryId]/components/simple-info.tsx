@@ -4,6 +4,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 
 import TeamLogo from '@/app/components/common/team-logo';
 import usePlayerStore from '@/app/stores/player';
+import useCommonStore from '@/app/stores/common';
 import InfoBox from './info-box';
 import SimpleStat from './simple-stat';
 import { getCalculatedBuff } from '@/app/util/calculateBuff';
@@ -23,7 +24,9 @@ const SimpleInfo = ({ player, selectedTeams }: SimpleInfoProps) => {
     useShallow((state) => [state.showDetail, state.pinnedPlayer, state.hitterLineup, state.pitcherLineup])
   );
   const currentBuff = useBuffStore((state) => state.currentBuff);
+  const isBuffActive = useCommonStore((state) => state.isBuffActive);
   const extraPoints =
+    isBuffActive &&
     player &&
     ((isHitter(player) && hitterLineup.some((hitter) => hitter.player === player)) ||
       (!isHitter(player) && pitcherLineup.some((pitcher) => pitcher.player === player)))

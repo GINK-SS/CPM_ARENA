@@ -15,6 +15,7 @@ import { HITTER_STAT, HITTER_STAT_DETAIL, PITCHER_STAT, PITCHER_STAT_DETAIL } fr
 import { getCalculatedBuff } from '@/app/util/calculateBuff';
 import { isHitter } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
+import useCommonStore from '@/app/stores/common';
 
 const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
   const [selectedPlayer, isShowDetail, pinnedPlayer, hitterLineup, pitcherLineup, clearDetail] = usePlayerStore(
@@ -28,11 +29,13 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
     ])
   );
   const currentBuff = useBuffStore((state) => state.currentBuff);
+  const isBuffActive = useCommonStore((state) => state.isBuffActive);
   const [scale, setScale] = useState(1);
   const player =
     isShowDetail.target === 'pinned' ? pinnedPlayer : isShowDetail.target === 'selected' ? selectedPlayer : null;
 
   const extraPoints =
+    isBuffActive &&
     player &&
     ((isHitter(player) && hitterLineup.some((hitter) => hitter.player === player)) ||
       (!isHitter(player) && pitcherLineup.some((pitcher) => pitcher.player === player)))
@@ -213,7 +216,7 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
                       >
                         {(player[value[1]] as number) + extraPoints}
                         <span className='absolute inline-block pl-3 text-white'>
-                          {extraPoints === 0 ? '' : `(+${extraPoints})`}
+                          {extraPoints === 0 ? '' : extraPoints < 0 ? `(${extraPoints})` : `(+${extraPoints})`}
                         </span>
                       </span>
                     </div>

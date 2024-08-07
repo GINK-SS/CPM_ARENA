@@ -4,6 +4,7 @@ import Link from 'next/link';
 import OverallFilter from './overall-filter';
 import Menu from './menu';
 import Links from './links';
+import BuffFilter from './buff-filter';
 
 export default async function Header() {
   const version = await fetch('https://api.github.com/repos/gink-ss/CPM_ARENA/releases/latest', {
@@ -40,6 +41,8 @@ export default async function Header() {
         </div>
 
         <div data-role='options' className='hidden items-center justify-end tablet:flex'>
+          <BuffFilter />
+
           <OverallFilter />
 
           <Links />
