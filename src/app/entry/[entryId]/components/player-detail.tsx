@@ -245,7 +245,7 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
                               'bg-[#1b59f5]': grade === 'D',
                             })}
                           >
-                            {grade}
+                            <span className='drop-shadow-[0px_0px_2px_#000]'>{grade}</span>
                           </div>
                         </div>
                       );
