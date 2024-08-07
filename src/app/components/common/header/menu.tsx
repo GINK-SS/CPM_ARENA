@@ -62,7 +62,11 @@ export default function Menu() {
               </button>
             </div>
 
-            <div className='mb-20'>
+            <div
+              className={classNames('mb-20', {
+                hidden: !pathname.startsWith('/entry/'),
+              })}
+            >
               <span className='mb-10 block text-18 font-semibold'>시너지 설정</span>
               <span className='mb-10 block text-12 text-red-300 opacity-80'>
                 시너지 적용 시 선수 정보에 시너지가 반영됩니다.
