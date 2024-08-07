@@ -72,7 +72,7 @@ export async function generateMetadata(
   };
 }
 
-export default function Page({ params: { entryId }, searchParams: { limit } }: MetaProps) {
+export default async function Page({ params: { entryId }, searchParams: { limit } }: MetaProps) {
   const paramYear = +entryId.slice(0, 4);
   const paramTeams = entryId.slice(4).match(/.{1,2}/g);
 
@@ -86,8 +86,7 @@ export default function Page({ params: { entryId }, searchParams: { limit } }: M
     return <NotFound />;
   }
 
-  // const allTeams: Team[] = await fetch(`${BASE_URL}/storage/teams.json`).then((res) => res.json());
-  const allTeams: Team[] = require('@/public/storage/teams.json');
+  const allTeams: Team[] = await fetch(`${process.env.BASE_URL}/storage/teams.json`).then((res) => res.json());
   const selectedTeams: Team[] = [];
   const selectedTeamIds: Set<TeamId> = new Set();
 
@@ -102,14 +101,12 @@ export default function Page({ params: { entryId }, searchParams: { limit } }: M
     selectedTeamIds.add(selectedTeam.name);
   });
 
-  // const hittersData: Hitter[] = await fetch(`${BASE_URL}/storage/hitter/hitters-${paramYear.toString()[2]}0.json`).then(
-  //   (res) => res.json()
-  // );
-  // const pitchersData: Pitcher[] = await fetch(
-  //   `${BASE_URL}/storage/pitcher/pitchers-${paramYear.toString()[2]}0.json`
-  // ).then((res) => res.json());
-  const hittersData: Hitter[] = require(`@/public/storage/hitter/hitters-${paramYear.toString()[2]}0.json`);
-  const pitchersData: Pitcher[] = require(`@/public/storage/pitcher/pitchers-${paramYear.toString()[2]}0.json`);
+  const hittersData: Hitter[] = await fetch(
+    `${process.env.BASE_URL}/storage/hitter/hitters-${paramYear.toString()[2]}0.json`
+  ).then((res) => res.json());
+  const pitchersData: Pitcher[] = await fetch(
+    `${process.env.BASE_URL}/storage/pitcher/pitchers-${paramYear.toString()[2]}0.json`
+  ).then((res) => res.json());
 
   const currentHitters = hittersData.filter((hitter) => hitter.year === paramYear && selectedTeamIds.has(hitter.team));
   const currentPitchers = pitchersData.filter(
