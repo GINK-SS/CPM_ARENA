@@ -21050,7 +21050,7 @@
     "hand_type": "우투우타",
     "order_type": "클린업",
     "order_numbers": [3],
-    "all_star": false,
+    "all_star": true,
     "golden_glove": false,
     "mvp_league": false,
     "mvp_korea": false
@@ -25312,7 +25312,7 @@
     "mvp_korea": false
   },
   {
-    "name": "김종국",
+    "name": "김죽민",
     "team": "해태",
     "overall": 74,
     "year": 1996,
@@ -25984,7 +25984,7 @@
     "mvp_korea": false
   },
   {
-    "name": "장정석",
+    "name": "장장민",
     "team": "현대",
     "overall": 61,
     "year": 1996,
@@ -28917,7 +28917,7 @@
     "position": "외야수",
     "hand_type": "우투우타",
     "order_type": "밸런스",
-    "order_numbers": [false],
+    "order_numbers": ["-"],
     "all_star": false,
     "golden_glove": false,
     "mvp_league": false,
@@ -29120,7 +29120,7 @@
     "mvp_korea": false
   },
   {
-    "name": "김종국",
+    "name": "김죽민",
     "team": "해태",
     "overall": 69,
     "year": 1997,
@@ -29792,7 +29792,7 @@
     "mvp_korea": false
   },
   {
-    "name": "장정석",
+    "name": "장장민",
     "team": "현대",
     "overall": 56,
     "year": 1997,
@@ -32648,7 +32648,7 @@
     "mvp_korea": false
   },
   {
-    "name": "김종국",
+    "name": "김죽민",
     "team": "해태",
     "overall": 62,
     "year": 1998,
@@ -32984,7 +32984,7 @@
     "mvp_korea": false
   },
   {
-    "name": "장정석",
+    "name": "장장민",
     "team": "현대",
     "overall": 61,
     "year": 1998,
