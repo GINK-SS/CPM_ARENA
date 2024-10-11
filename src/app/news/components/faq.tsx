@@ -13,7 +13,7 @@ export default function FAQ() {
       </h2>
 
       {faqData.map((faq, idx) => (
-        <FAQItem key={idx} {...faq} />
+        <FAQItem key={idx} {...faq} isLast={idx === 4} />
       ))}
     </div>
   );
