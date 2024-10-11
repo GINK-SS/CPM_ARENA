@@ -1,14 +1,16 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { IoAddOutline, IoRemoveOutline } from 'react-icons/io5';
 
 type UpdateItemProps = {
   question: string;
   answer: string[];
+  isLast: boolean;
 };
 
-export default function FAQItem({ question, answer }: UpdateItemProps) {
+export default function FAQItem({ question, answer, isLast }: UpdateItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClick = () => {
@@ -39,6 +41,11 @@ export default function FAQItem({ question, answer }: UpdateItemProps) {
               <p className='mb-10 text-15 font-medium text-slate-200 opacity-90'>{sentence}</p>
             </li>
           ))}
+          {isLast && (
+            <div className='flex w-fit justify-center rounded-2xl bg-white px-20 py-10'>
+              <Image src='/assets/number_of_win.png' alt='아레나_최다_승리' width={200} height={350} priority />
+            </div>
+          )}
         </ol>
       )}
     </div>
