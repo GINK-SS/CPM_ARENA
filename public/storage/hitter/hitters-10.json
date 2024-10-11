@@ -11788,7 +11788,7 @@
     "mvp_korea": false
   },
   {
-    "name": "정주현",
+    "name": "정장민",
     "team": "LG",
     "overall": 63,
     "year": 2013,
@@ -18312,7 +18312,7 @@
     "mvp_korea": false
   },
   {
-    "name": "이흥련",
+    "name": "이릉민",
     "team": "삼성",
     "overall": 62,
     "year": 2014,
@@ -22820,7 +22820,7 @@
     "mvp_korea": false
   },
   {
-    "name": "이흥련",
+    "name": "이릉민",
     "team": "삼성",
     "overall": 58,
     "year": 2015,
@@ -23156,7 +23156,7 @@
     "mvp_korea": false
   },
   {
-    "name": "장운호",
+    "name": "장혼민",
     "team": "한화",
     "overall": 63,
     "year": 2015,
@@ -23324,7 +23324,7 @@
     "mvp_korea": false
   },
   {
-    "name": "신성현",
+    "name": "신헌민",
     "team": "한화",
     "overall": 59,
     "year": 2015,
@@ -23576,7 +23576,7 @@
     "mvp_korea": false
   },
   {
-    "name": "노수광",
+    "name": "노산민",
     "team": "KIA",
     "overall": 69,
     "year": 2016,
@@ -24556,7 +24556,7 @@
     "mvp_korea": false
   },
   {
-    "name": "이천웅",
+    "name": "이언민",
     "team": "LG",
     "overall": 71,
     "year": 2016,
@@ -24724,7 +24724,7 @@
     "mvp_korea": false
   },
   {
-    "name": "정주현",
+    "name": "정장민",
     "team": "LG",
     "overall": 64,
     "year": 2016,
@@ -25088,7 +25088,7 @@
     "mvp_korea": false
   },
   {
-    "name": "김준완",
+    "name": "김울민",
     "team": "NC",
     "overall": 65,
     "year": 2016,
@@ -27300,6 +27300,34 @@
     "mvp_korea": false
   },
   {
+    "name": "이릉민",
+    "team": "삼성",
+    "overall": 68,
+    "year": 2016,
+    "batting_all": 77,
+    "batting_right": 89,
+    "batting_left": 48,
+    "batting_under": 88,
+    "long_all": 84,
+    "long_right": 83,
+    "long_left": 100,
+    "long_under": 39,
+    "eye_all": 52,
+    "eye_right": 50,
+    "eye_left": 45,
+    "eye_under": 86,
+    "running": 49,
+    "defense": 60,
+    "position": "포수",
+    "hand_type": "우투우타",
+    "order_type": "하위",
+    "order_numbers": [8],
+    "all_star": false,
+    "golden_glove": false,
+    "mvp_league": false,
+    "mvp_korea": false
+  },
+  {
     "name": "이지영",
     "team": "삼성",
     "overall": 68,
@@ -27318,34 +27346,6 @@
     "eye_under": 95,
     "running": 55,
     "defense": 77,
-    "position": "포수",
-    "hand_type": "우투우타",
-    "order_type": "하위",
-    "order_numbers": [8],
-    "all_star": false,
-    "golden_glove": false,
-    "mvp_league": false,
-    "mvp_korea": false
-  },
-  {
-    "name": "이흥련",
-    "team": "삼성",
-    "overall": 68,
-    "year": 2016,
-    "batting_all": 77,
-    "batting_right": 89,
-    "batting_left": 48,
-    "batting_under": 88,
-    "long_all": 84,
-    "long_right": 83,
-    "long_left": 100,
-    "long_under": 39,
-    "eye_all": 52,
-    "eye_right": 50,
-    "eye_left": 45,
-    "eye_under": 86,
-    "running": 49,
-    "defense": 60,
     "position": "포수",
     "hand_type": "우투우타",
     "order_type": "하위",
@@ -27636,7 +27636,7 @@
     "mvp_korea": false
   },
   {
-    "name": "신성현",
+    "name": "신헌민",
     "team": "한화",
     "overall": 70,
     "year": 2016,
@@ -28952,7 +28952,7 @@
     "mvp_korea": false
   },
   {
-    "name": "이천웅",
+    "name": "이언민",
     "team": "LG",
     "overall": 71,
     "year": 2017,
@@ -29708,7 +29708,7 @@
     "mvp_korea": false
   },
   {
-    "name": "김준완",
+    "name": "김울민",
     "team": "NC",
     "overall": 59,
     "year": 2017,
@@ -29904,7 +29904,7 @@
     "mvp_korea": false
   },
   {
-    "name": "노수광",
+    "name": "노산민",
     "team": "SK",
     "overall": 70,
     "year": 2017,
@@ -29988,7 +29988,7 @@
     "mvp_korea": false
   },
   {
-    "name": "정진기",
+    "name": "정가민",
     "team": "SK",
     "overall": 69,
     "year": 2017,
@@ -30380,7 +30380,7 @@
     "mvp_korea": false
   },
   {
-    "name": "이정후",
+    "name": "이작민",
     "team": "넥센",
     "overall": 74,
     "year": 2017,
@@ -31976,7 +31976,7 @@
     "mvp_korea": false
   },
   {
-    "name": "권정웅",
+    "name": "권좌민",
     "team": "삼성",
     "overall": 61,
     "year": 2017,
@@ -32508,7 +32508,7 @@
     "mvp_korea": false
   },
   {
-    "name": "이동훈",
+    "name": "이익민",
     "team": "한화",
     "overall": 57,
     "year": 2017,
@@ -33600,7 +33600,7 @@
     "mvp_korea": false
   },
   {
-    "name": "이천웅",
+    "name": "이언민",
     "team": "LG",
     "overall": 72,
     "year": 2018,
@@ -33628,7 +33628,7 @@
     "mvp_korea": false
   },
   {
-    "name": "정주현",
+    "name": "정장민",
     "team": "LG",
     "overall": 72,
     "year": 2018,
@@ -34440,7 +34440,7 @@
     "mvp_korea": false
   },
   {
-    "name": "노수광",
+    "name": "노산민",
     "team": "SK",
     "overall": 73,
     "year": 2018,
@@ -34580,7 +34580,7 @@
     "mvp_korea": false
   },
   {
-    "name": "정진기",
+    "name": "정가민",
     "team": "SK",
     "overall": 62,
     "year": 2018,
@@ -34804,7 +34804,7 @@
     "mvp_korea": false
   },
   {
-    "name": "이정후",
+    "name": "이작민",
     "team": "넥센",
     "overall": 75,
     "year": 2018,
@@ -38024,7 +38024,7 @@
     "mvp_korea": false
   },
   {
-    "name": "이천웅",
+    "name": "이언민",
     "team": "LG",
     "overall": 73,
     "year": 2019,
@@ -38164,7 +38164,7 @@
     "mvp_korea": false
   },
   {
-    "name": "정주현",
+    "name": "정장민",
     "team": "LG",
     "overall": 68,
     "year": 2019,
@@ -39060,7 +39060,7 @@
     "mvp_korea": false
   },
   {
-    "name": "노수광",
+    "name": "노산민",
     "team": "SK",
     "overall": 70,
     "year": 2019,
@@ -40684,7 +40684,7 @@
     "mvp_korea": false
   },
   {
-    "name": "이정후",
+    "name": "이작민",
     "team": "키움",
     "overall": 76,
     "year": 2019,
