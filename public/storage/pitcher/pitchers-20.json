@@ -23203,7 +23203,7 @@
     "hand_type": "좌투좌타",
     "pitches": "포심 S / 슬라이더 S / 체인지업 S",
     "all_star": false,
-    "golden_glove": false,
+    "golden_glove": true,
     "mvp_league": false,
     "mvp_korea": false
   },
