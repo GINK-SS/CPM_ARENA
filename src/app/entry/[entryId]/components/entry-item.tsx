@@ -70,7 +70,7 @@ const EntryItem = ({ player, selectedTeams }: EntryItemProps) => {
     if (isHitter(player)) {
       let hitterPosition: HitterPosition | null = null;
 
-      if (player.position === '외야수') {
+      if (player.positions[0] === '외야수') {
         hitterPosition =
           hitterLineup.filter((hitter) => hitter.position === '외야수').length >= 3
             ? hitterLineup.some((hitter) => hitter.position === '지명타자')
@@ -78,11 +78,11 @@ const EntryItem = ({ player, selectedTeams }: EntryItemProps) => {
               : '지명타자'
             : '외야수';
       } else {
-        hitterPosition = hitterLineup.some((hitter) => hitter.position === player.position)
+        hitterPosition = hitterLineup.some((hitter) => hitter.position === player.positions[0])
           ? hitterLineup.some((hitter) => hitter.position === '지명타자')
             ? null
             : '지명타자'
-          : player.position;
+          : player.positions[0];
       }
 
       if (!hitterPosition) return;

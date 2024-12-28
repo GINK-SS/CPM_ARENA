@@ -44,7 +44,7 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
           selectedTeams,
           order: isHitter(player) ? hitterLineup.findIndex((lineup) => lineup.player === player) + 1 : 0,
           position: isHitter(player)
-            ? hitterLineup.find((hitter) => hitter.player === player)!.position
+            ? player.positions[0]
             : pitcherLineup.find((pitcher) => pitcher.player === player)!.position,
           currentBuff,
         })
@@ -151,7 +151,7 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
 
                 <div className='flex w-150 flex-col justify-between border-2 border-[#82220e] bg-gradient-to-br from-[#662315] to-[#6b2d20] px-13 py-10'>
                   <div className='flex flex-col items-center gap-2'>
-                    <span className='font-semibold'>{player.position}</span>
+                    <span className='font-semibold'>{player.positions[0]}</span>
                     <span>{`(${player.hand_type})`}</span>
                   </div>
 

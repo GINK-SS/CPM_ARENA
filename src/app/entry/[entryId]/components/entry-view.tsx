@@ -5,6 +5,7 @@ import { POSITION_LIMIT } from '@/app/const';
 
 import { Team } from '@/app/stores/team/types';
 import { Hitter, Pitcher } from '@/app/stores/player/types';
+import { isHitter } from '@/app/util/decideType';
 
 type EntryViewProps = {
   selectedTeams: Team[];
@@ -44,7 +45,11 @@ export default function EntryView({ selectedTeams, playersOfSelectedTeams, overa
       <div data-role='table' className='flex w-full flex-col items-center gap-2 px-1 mobileL:px-0 tablet:gap-3'>
         {Object.entries(POSITION_LIMIT).map((limit) => {
           const [position, value] = limit;
-          const filteredPlayers = playersOfSelectedTeams.filter((player) => player.position === position);
+          const filteredPlayers = playersOfSelectedTeams.filter(
+            (player) =>
+              (isHitter(player) && player.positions[0] === position) ||
+              (!isHitter(player) && player.position === position)
+          );
 
           return (
             <PositionEntry

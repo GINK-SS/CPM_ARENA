@@ -19,7 +19,7 @@ export type Hitter = {
   eye_under: number;
   running: number;
   defense: number;
-  position: HitterPosition;
+  positions: HitterPosition[];
   hand_type: string;
   order_type: string;
   order_numbers: number[];
