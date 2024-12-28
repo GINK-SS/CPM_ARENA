@@ -8,7 +8,7 @@ import { PITCHER_POSITION_ORDER } from '@/app/const';
 import { isHitter } from '@/app/util/decideType';
 
 function EntryBlockComponent({ position }: { position: string }) {
-  const [pinnedPlayer, hitterLineup] = usePlayerStore(useShallow((state) => [state.pinnedPlayer, state.hitterLineup]));
+  const [pinnedPlayer] = usePlayerStore(useShallow((state) => [state.pinnedPlayer]));
   const isActive = useMemo(() => {
     if (!pinnedPlayer) return false;
 
@@ -23,10 +23,6 @@ function EntryBlockComponent({ position }: { position: string }) {
     }
 
     if (PITCHER_POSITION_ORDER.includes(position)) return true;
-
-    if (hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position !== '지명타자') {
-      return position !== hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position;
-    }
 
     return false;
   }, [pinnedPlayer]);
