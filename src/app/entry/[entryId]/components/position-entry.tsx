@@ -41,6 +41,7 @@ export default function PositionEntry({
         data-role='position-box'
         className='relative flex w-[10vw] items-center justify-center bg-white text-[2.4vw] font-semibold text-black mobileL:w-70 mobileL:text-15 tablet:w-90 tablet:text-18 laptop:w-100 laptop:text-20'
       >
+        <EntryBlock position={position} isJustPosition />
         <span>{position}</span>
       </div>
       {selectedTeams.map((selectedTeam) => (
