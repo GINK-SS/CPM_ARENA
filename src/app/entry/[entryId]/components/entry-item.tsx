@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 
@@ -8,15 +9,17 @@ import useTableStore from '@/app/stores/table';
 import useBuffStore from '@/app/stores/buff';
 
 import { Hitter, HitterPosition, Pitcher } from '@/app/stores/player/types';
+import { PITCHER_POSITION_ORDER } from '@/app/const';
 import { isHitter } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
 
 type EntryItemProps = {
   player: Hitter | Pitcher;
   selectedTeams: Team[];
+  position: string;
 };
 
-const EntryItem = ({ player, selectedTeams }: EntryItemProps) => {
+const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
   const [hitterLineup, pitcherLineup, selectedPlayer, pinnedPlayer, addToLineup, deleteFromLineup, setSelectedPlayer] =
     usePlayerStore(
       useShallow((state) => [
@@ -34,8 +37,23 @@ const EntryItem = ({ player, selectedTeams }: EntryItemProps) => {
   );
   const setBuff = useBuffStore((state) => state.setBuff);
 
+  const isBlocked = useMemo(() => {
+    if (!pinnedPlayer) return false;
+    if (!isHitter(pinnedPlayer)) return false;
+
+    // 여기서부터 pinnerPlayer는 타자
+    if (PITCHER_POSITION_ORDER.includes(position)) return false;
+
+    const pinnedPosition = hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position;
+
+    if (pinnedPosition === '지명타자' || pinnedPosition === position) return false;
+    if (isHitter(player) && player.positions.includes(pinnedPosition as HitterPosition)) return false;
+
+    return true;
+  }, [pinnedPlayer]);
+
   const onClick = () => {
-    if (!player.name) return;
+    if (!player.name || isBlocked) return;
 
     setSelectedPlayer(player);
 
@@ -97,11 +115,13 @@ const EntryItem = ({ player, selectedTeams }: EntryItemProps) => {
 
   return (
     <button
-      aria-label={player.name ? player.name : 'empty player'}
+      aria-label={player.name || 'empty player'}
       className='relative flex flex-1 items-center justify-center overflow-hidden border-t-1 border-black bg-white text-black first:border-t-0'
       disabled={!player.name}
       onClick={onClick}
     >
+      {isBlocked && <div className='absolute z-[5] h-full w-full cursor-default bg-black/70' />}
+
       <div
         data-role='orange-check'
         className={classNames('absolute z-[3] h-full w-full cursor-pointer', {

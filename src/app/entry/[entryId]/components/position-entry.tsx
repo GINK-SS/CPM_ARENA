@@ -46,7 +46,7 @@ export default function PositionEntry({
       {selectedTeams.map((selectedTeam) => (
         <div data-role='team-players-box' key={selectedTeam.id} className='flex flex-1 flex-col'>
           {arrangePlayers(selectedTeam).map((player, idx) => (
-            <EntryItem key={idx} player={player} selectedTeams={selectedTeams} />
+            <EntryItem key={idx} player={player} selectedTeams={selectedTeams} position={position} />
           ))}
         </div>
       ))}
