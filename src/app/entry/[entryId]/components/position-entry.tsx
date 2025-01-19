@@ -34,7 +34,7 @@ export default function PositionEntry({
   };
 
   return (
-    <div data-role='container' className='relative flex w-full gap-2 tablet:gap-3'>
+    <div data-role='container' className='relative flex w-full gap-2 px-4 mobileL:px-0 tablet:gap-3'>
       <EntryBlock position={position} />
 
       <div

@@ -143,7 +143,8 @@ const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
       <div
         data-role='name'
         className={classNames(
-          'flex aspect-[3/1.3] flex-[3] items-center justify-center border-r-1 border-r-black indent-[0.5px] text-[2.2vw] font-semibold tracking-[0.5px] mobileL:aspect-[3/1] mobileL:text-14 tablet:indent-1 tablet:text-17 tablet:tracking-[1px] laptop:text-20',
+          'flex aspect-[3/1.1] flex-[3] items-center justify-center border-r-1 border-r-black indent-[0.5px] text-[2.3vw] font-semibold tracking-[0.5px]',
+          'mobileL:aspect-[3/1] mobileL:text-14 tablet:indent-1 tablet:text-17 tablet:tracking-[1px] laptop:text-20',
           {
             'bg-[#f0c2bd]': player.all_star,
             'font-extrabold text-[#ca4142]': player.mvp_korea || player.mvp_league,
