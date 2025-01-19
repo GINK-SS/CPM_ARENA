@@ -1,11 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useShallow } from 'zustand/react/shallow';
 import { motion } from 'framer-motion';
 import classNames from 'classnames';
-import cpmLogo from '@/public/assets/logo/cpmRealLogo.webp';
 
 import TeamLogo from '@/app/components/common/team-logo';
 import usePlayerStore from '@/app/stores/player';
@@ -16,6 +14,7 @@ import { getCalculatedBuff } from '@/app/util/calculateBuff';
 import { isHitter } from '@/app/util/decideType';
 import { Team } from '@/app/stores/team/types';
 import useCommonStore from '@/app/stores/common';
+import PositionBase from './position-base';
 
 const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
   const [selectedPlayer, isShowDetail, pinnedPlayer, hitterLineup, pitcherLineup, clearDetail] = usePlayerStore(
@@ -118,7 +117,7 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
           <div className='flex bg-gradient-to-br from-[#2b1c1e] to-[#332325] p-10'>
             {isHitter(player) ? (
               <>
-                <div className='flex flex-1 flex-col gap-13 p-15 pr-65 text-20'>
+                <div className='flex flex-1 flex-col justify-between p-15 pr-65 text-20'>
                   {Object.entries(HITTER_STAT).map((value, index) => (
                     <div className='flex items-center justify-between' key={index}>
                       <span>{value[0]}</span>
@@ -150,14 +149,12 @@ const PlayerDetail = ({ selectedTeams }: { selectedTeams: Team[] }) => {
                 </div>
 
                 <div className='flex w-150 flex-col justify-between border-2 border-[#82220e] bg-gradient-to-br from-[#662315] to-[#6b2d20] px-13 py-10'>
-                  <div className='flex flex-col items-center gap-2'>
+                  <div className='mb-10 flex flex-col items-center gap-2'>
                     <span className='font-semibold'>{player.positions[0]}</span>
                     <span>{`(${player.hand_type})`}</span>
                   </div>
 
-                  <div className='relative h-43 w-122'>
-                    <Image src={cpmLogo} alt='logo' fill sizes='120px' />
-                  </div>
+                  <PositionBase positions={player.positions} />
 
                   <div className='flex items-center justify-between border-1 border-[#00000010] bg-[#52160a] font-semibold'>
                     <div className='flex items-center gap-3'>

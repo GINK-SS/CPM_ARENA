@@ -1,10 +1,11 @@
 'use client';
 
 import { useShallow } from 'zustand/react/shallow';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { ImArrowRight } from 'react-icons/im';
 import classNames from 'classnames';
 
+import PositionModal from './position-modal';
 import PlayerCard from './player-card';
 import InfoBox from './info-box';
 import useTableStore from '@/app/stores/table';
@@ -35,6 +36,7 @@ const pitcherOrder = [
 
 const Lineup = ({ selectedTeams }: LineupProps) => {
   const [isStickyOn, setIsStickyOn] = useState(true);
+  const [isShowPositionModifyModal, setIsShowPositionModifyModal] = useState(false);
   const [
     hitterLineup,
     pitcherLineup,
@@ -174,82 +176,111 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
             ))}
           </div>
 
-          <div className='mt-4 flex justify-end gap-5 mobileL:mt-8 mobileL:gap-10'>
-            <button
-              className={classNames(
-                'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
-                {
-                  'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
-                    selectedPlayer || pinnedPlayer,
-                  'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':
-                    !selectedPlayer && !pinnedPlayer,
-                }
+          <div className='mt-4 flex justify-between px-4 mobileL:mt-8 mobileL:px-10'>
+            <div className='relative'>
+              {isShowPositionModifyModal && (
+                <PositionModal
+                  player={pinnedPlayer as Hitter | null}
+                  onClose={() => setIsShowPositionModifyModal(false)}
+                />
               )}
-              onClick={onCancel}
-            >
-              <span className='indent-[2vw] tracking-[2vw] mobileL:indent-10 mobileL:tracking-[10px]'>취소</span>
-            </button>
-
-            {isShowHitterLineup && (
               <button
                 className={classNames(
                   'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
                   {
-                    ['bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%']:
-                      pinnedPlayer &&
-                      selectedPlayer &&
-                      isHitter(selectedPlayer) &&
-                      hitterLineup.some((hitter) => hitter.player === selectedPlayer) &&
-                      getCanChangePosition(
-                        selectedPlayer,
-                        hitterLineup.find((hitter) => hitter.player === selectedPlayer)?.position || null
-                      ),
-                    ['cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%']:
-                      !pinnedPlayer ||
-                      !selectedPlayer ||
-                      !isHitter(selectedPlayer) ||
-                      !hitterLineup.some((hitter) => hitter.player === selectedPlayer) ||
-                      !getCanChangePosition(
-                        selectedPlayer,
-                        hitterLineup.find((hitter) => hitter.player === selectedPlayer)?.position || null
-                      ),
+                    ['hidden']: !isShowHitterLineup,
+                    'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
+                      Boolean(pinnedPlayer) && !selectedPlayer,
+                    'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':
+                      !pinnedPlayer || Boolean(selectedPlayer),
                   }
                 )}
-                onClick={onChangePosition}
+                disabled={!pinnedPlayer || Boolean(selectedPlayer)}
+                onClick={() => setIsShowPositionModifyModal(true)}
               >
                 <span className='indent-[0.4vw] tracking-[0.4vw] mobileL:indent-3 mobileL:tracking-[3px]'>
-                  수비변경
+                  수비이동
                 </span>
               </button>
-            )}
+            </div>
 
-            <button
-              className={classNames(
-                'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
-                {
-                  'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
-                    pinnedPlayer && selectedPlayer && isHitter(selectedPlayer) === isHitter(pinnedPlayer),
-                  'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':
-                    !pinnedPlayer || !selectedPlayer || isHitter(selectedPlayer) !== isHitter(pinnedPlayer),
-                }
-              )}
-              onClick={onChangeOrder}
-            >
-              <span className='indent-[2vw] tracking-[2vw] mobileL:indent-10 mobileL:tracking-[10px]'>교체</span>
-            </button>
+            <div className='flex justify-end gap-5 mobileL:gap-10'>
+              <button
+                className={classNames(
+                  'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
+                  {
+                    'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
+                      selectedPlayer || pinnedPlayer,
+                    'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':
+                      !selectedPlayer && !pinnedPlayer,
+                  }
+                )}
+                onClick={onCancel}
+              >
+                <span className='indent-[2vw] tracking-[2vw] mobileL:indent-10 mobileL:tracking-[10px]'>취소</span>
+              </button>
 
-            <button
-              className={classNames(
-                'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
-                'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%'
+              {isShowHitterLineup && (
+                <button
+                  className={classNames(
+                    'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
+                    {
+                      ['bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%']:
+                        pinnedPlayer &&
+                        selectedPlayer &&
+                        isHitter(selectedPlayer) &&
+                        hitterLineup.some((hitter) => hitter.player === selectedPlayer) &&
+                        getCanChangePosition(
+                          selectedPlayer,
+                          hitterLineup.find((hitter) => hitter.player === selectedPlayer)?.position || null
+                        ),
+                      ['cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%']:
+                        !pinnedPlayer ||
+                        !selectedPlayer ||
+                        !isHitter(selectedPlayer) ||
+                        !hitterLineup.some((hitter) => hitter.player === selectedPlayer) ||
+                        !getCanChangePosition(
+                          selectedPlayer,
+                          hitterLineup.find((hitter) => hitter.player === selectedPlayer)?.position || null
+                        ),
+                    }
+                  )}
+                  onClick={onChangePosition}
+                >
+                  <span className='indent-[0.4vw] tracking-[0.4vw] mobileL:indent-3 mobileL:tracking-[3px]'>
+                    수비변경
+                  </span>
+                </button>
               )}
-              onClick={onSwitchLineup}
-            >
-              <span className='indent-0.41vw] tracking-0.41vw] mobileL:indent-3 mobileL:tracking-[3px]'>
-                {isShowHitterLineup ? '투수로' : '타자로'}
-              </span>
-              <ImArrowRight />
-            </button>
+
+              <button
+                className={classNames(
+                  'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
+                  {
+                    'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
+                      pinnedPlayer && selectedPlayer && isHitter(selectedPlayer) === isHitter(pinnedPlayer),
+                    'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':
+                      !pinnedPlayer || !selectedPlayer || isHitter(selectedPlayer) !== isHitter(pinnedPlayer),
+                  }
+                )}
+                onClick={onChangeOrder}
+              >
+                <span className='indent-[2vw] tracking-[2vw] mobileL:indent-10 mobileL:tracking-[10px]'>교체</span>
+              </button>
+
+              <button
+                className={classNames(
+                  'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
+                  'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%'
+                )}
+                onClick={onSwitchLineup}
+              >
+                <span className='indent-0.41vw] tracking-0.41vw] mobileL:indent-3 mobileL:tracking-[3px]'>
+                  {isShowHitterLineup ? '투수로' : '타자로'}
+                </span>
+                <ImArrowRight />
+              </button>
+            </div>
           </div>
         </div>
       </InfoBox>
