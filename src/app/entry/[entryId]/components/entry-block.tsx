@@ -7,12 +7,14 @@ import usePlayerStore from '@/app/stores/player';
 import { PITCHER_POSITION_ORDER } from '@/app/const';
 import { isHitter } from '@/app/util/decideType';
 
-function EntryBlockComponent({ position }: { position: string }) {
-  const [pinnedPlayer, hitterLineup] = usePlayerStore(useShallow((state) => [state.pinnedPlayer, state.hitterLineup]));
+function EntryBlockComponent({ position, isJustPosition = false }: { position: string; isJustPosition?: boolean }) {
+  const [hitterLineup, pinnedPlayer] = usePlayerStore(useShallow((state) => [state.hitterLineup, state.pinnedPlayer]));
   const isActive = useMemo(() => {
     if (!pinnedPlayer) return false;
 
     if (!isHitter(pinnedPlayer)) {
+      if (isJustPosition) return false;
+
       return pinnedPlayer.position === '선발'
         ? position !== '선발'
           ? true
@@ -22,11 +24,18 @@ function EntryBlockComponent({ position }: { position: string }) {
           : true;
     }
 
-    if (PITCHER_POSITION_ORDER.includes(position)) return true;
+    if (isJustPosition) {
+      if (PITCHER_POSITION_ORDER.includes(position)) return false;
 
-    if (hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position !== '지명타자') {
-      return position !== hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position;
+      const pinnedPosition = hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position;
+
+      if (pinnedPosition === '지명타자') return false;
+      if (pinnedPosition === position) return false;
+
+      return true;
     }
+
+    if (PITCHER_POSITION_ORDER.includes(position)) return true;
 
     return false;
   }, [pinnedPlayer]);

@@ -66,6 +66,16 @@ const usePlayerStore = create<PlayerStoreState>((set, get) => ({
       ],
     }));
   },
+  modifyPositionLineup: ({ pinnedPlayer, newPosition }) => {
+    set((state) => {
+      const newHitterLineup = [...state.hitterLineup];
+      const pinnedIdx = newHitterLineup.findIndex((hitter) => hitter.player === pinnedPlayer);
+
+      newHitterLineup[pinnedIdx].position = newPosition;
+
+      return { hitterLineup: newHitterLineup };
+    });
+  },
   changePositionLineup: ({ selectedPlayer, pinnedPlayer }) => {
     set((state) => {
       const newHitterLineup = [...state.hitterLineup];
