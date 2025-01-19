@@ -73,7 +73,7 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
             'absolute bottom-2 left-1/2 flex aspect-square w-27 -translate-x-1/2 items-center justify-center rounded-full border border-white',
             {
               ['hidden']: !positions.includes('포수'),
-              ['cursor-default bg-gray-300 opacity-40']:
+              ['cursor-default bg-gray-600 opacity-30']:
                 positions.includes('포수') &&
                 hitterLineup.some((hitter) => hitter.player !== player && hitter.position === '포수'),
               ['bg-gray-500']:
@@ -94,7 +94,7 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
             'absolute right-20 top-100 flex aspect-square w-27 items-center justify-center rounded-full border border-white',
             {
               ['hidden']: !positions.includes('1루수'),
-              ['cursor-default bg-gray-300 opacity-40']:
+              ['cursor-default bg-gray-600 opacity-30']:
                 positions.includes('1루수') &&
                 hitterLineup.some((hitter) => hitter.player !== player && hitter.position === '1루수'),
               ['bg-gray-500']:
@@ -115,7 +115,7 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
             'absolute right-30 top-55 flex aspect-square w-27 items-center justify-center rounded-full border border-white',
             {
               ['hidden']: !positions.includes('2루수'),
-              ['cursor-default bg-gray-300 opacity-40']:
+              ['cursor-default bg-gray-600 opacity-30']:
                 positions.includes('2루수') &&
                 hitterLineup.some((hitter) => hitter.player !== player && hitter.position === '2루수'),
               ['bg-gray-500']:
@@ -136,7 +136,7 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
             'absolute left-20 top-100 flex aspect-square w-27 items-center justify-center rounded-full border border-white',
             {
               ['hidden']: !positions.includes('3루수'),
-              ['cursor-default bg-gray-300 opacity-40']:
+              ['cursor-default bg-gray-600 opacity-30']:
                 positions.includes('3루수') &&
                 hitterLineup.some((hitter) => hitter.player !== player && hitter.position === '3루수'),
               ['bg-gray-500']:
@@ -157,7 +157,7 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
             'absolute left-30 top-55 flex aspect-square w-27 items-center justify-center rounded-full border border-white',
             {
               ['hidden']: !positions.includes('유격수'),
-              ['cursor-default bg-gray-300 opacity-40']:
+              ['cursor-default bg-gray-600 opacity-30']:
                 positions.includes('유격수') &&
                 hitterLineup.some((hitter) => hitter.player !== player && hitter.position === '유격수'),
               ['bg-gray-500']:
@@ -178,7 +178,7 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
             'absolute left-1/2 top-10 flex aspect-square w-27 -translate-x-1/2 items-center justify-center rounded-full border border-white',
             {
               ['hidden']: !positions.includes('외야수'),
-              ['cursor-default bg-gray-300 opacity-40']:
+              ['cursor-default bg-gray-600 opacity-30']:
                 positions.includes('외야수') &&
                 lineupPosition !== '외야수' &&
                 hitterLineup.filter((hitter) => hitter.position === '외야수').length >= 3,
@@ -199,7 +199,7 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
           className={classNames(
             'absolute bottom-5 left-5 flex aspect-square w-27 items-center justify-center rounded-full border border-white',
             {
-              ['cursor-default bg-gray-300 opacity-40']: hitterLineup.some(
+              ['cursor-default bg-gray-600 opacity-30']: hitterLineup.some(
                 (hitter) => hitter.player !== player && hitter.player !== player && hitter.position === '지명타자'
               ),
               ['bg-gray-500']:
@@ -216,12 +216,12 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
 
       <div className='my-2 mt-4 flex flex-col gap-6'>
         <div className='flex gap-2'>
-          <p className='text-12 text-white/50'>·</p>
-          <p className='text-12 text-white/50'>클릭 시, 포지션이 변경됩니다.</p>
+          <p className='text-13 text-white/50'>·</p>
+          <p className='text-13 text-white/50'>클릭 시, 포지션이 변경됩니다.</p>
         </div>
         <div className='flex gap-2'>
-          <p className='text-12 text-white/50'>·</p>
-          <p className='text-12 leading-14 text-white/50'>
+          <p className='text-13 text-white/50'>·</p>
+          <p className='text-13 leading-15 text-white/50'>
             라인업에 해당 포지션의 선수가 존재한다면 <span className='text-red-500'>투명</span>하게 표시됩니다.
           </p>
         </div>
