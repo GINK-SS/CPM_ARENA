@@ -189,11 +189,12 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
                   'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
                   {
                     'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
-                      Boolean(pinnedPlayer),
+                      Boolean(pinnedPlayer) && !selectedPlayer,
                     'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':
-                      !pinnedPlayer,
+                      !pinnedPlayer || Boolean(selectedPlayer),
                   }
                 )}
+                disabled={!pinnedPlayer || Boolean(selectedPlayer)}
                 onClick={() => setIsShowPositionModifyModal(true)}
               >
                 <span className='indent-[0.4vw] tracking-[0.4vw] mobileL:indent-3 mobileL:tracking-[3px]'>
