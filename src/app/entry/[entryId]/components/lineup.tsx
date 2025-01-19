@@ -188,6 +188,7 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
                 className={classNames(
                   'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
                   {
+                    ['hidden']: !isShowHitterLineup,
                     'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
                       Boolean(pinnedPlayer) && !selectedPlayer,
                     'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':

@@ -14,8 +14,6 @@ type PositionModalProps = {
 };
 
 export default function PositionModal({ player, onClose }: PositionModalProps) {
-  if (!player || !isHitter(player)) return null;
-
   const modalRef = useRef<HTMLDivElement>(null);
   const [hitterLineup, modifyPositionLineup, setSelectedPlayer, setPinnedPlayer] = usePlayerStore(
     useShallow((state) => [
@@ -25,7 +23,7 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
       state.setPinnedPlayer,
     ])
   );
-  const positions = player.positions;
+  const positions = player?.positions ?? [];
   const lineupPosition = hitterLineup.find((hitter) => hitter.player === player)?.position;
 
   const onPositionClick = (newPosition: HitterPosition) => {
@@ -37,7 +35,7 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
     )
       return;
 
-    modifyPositionLineup({ pinnedPlayer: player, newPosition });
+    modifyPositionLineup({ pinnedPlayer: player as Hitter, newPosition });
   };
 
   useEffect(() => {
@@ -55,6 +53,8 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, [onClose]);
+
+  if (!player || !isHitter(player) || !positions.length) return null;
 
   return (
     <div
