@@ -54,7 +54,10 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
   return (
     <div
       ref={modalRef}
-      className='absolute bottom-0 left-0 z-50 w-190 border-2 border-[#aaa] bg-black p-4 drop-shadow-[0_0_2px_#222]'
+      className={classNames(
+        'absolute bottom-0 left-0 z-50 w-190 border-2 border-[#aaa] bg-black p-4 drop-shadow-[0_0_2px_#222]',
+        'origin-bottom-left scale-75 mobileL:scale-[80%] tablet:scale-95 laptop:scale-100'
+      )}
     >
       <div className='relative aspect-square w-full bg-gray-300/50'>
         <Image src={base} alt='logo' fill sizes='120px' />
@@ -203,6 +206,19 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
         >
           <span className='text-14 font-semibold'>지</span>
         </button>
+      </div>
+
+      <div className='my-2 mt-4 flex flex-col gap-6'>
+        <div className='flex gap-2'>
+          <p className='text-12 text-white/50'>·</p>
+          <p className='text-12 text-white/50'>클릭 시, 포지션이 변경됩니다.</p>
+        </div>
+        <div className='flex gap-2'>
+          <p className='text-12 text-white/50'>·</p>
+          <p className='text-12 leading-14 text-white/50'>
+            라인업에 해당 포지션의 선수가 존재한다면 <span className='text-red-500'>투명</span>하게 표시됩니다.
+          </p>
+        </div>
       </div>
     </div>
   );
