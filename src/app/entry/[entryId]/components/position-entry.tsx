@@ -41,12 +41,13 @@ export default function PositionEntry({
         data-role='position-box'
         className='relative flex w-[10vw] items-center justify-center bg-white text-[2.4vw] font-semibold text-black mobileL:w-70 mobileL:text-15 tablet:w-90 tablet:text-18 laptop:w-100 laptop:text-20'
       >
+        <EntryBlock position={position} isJustPosition />
         <span>{position}</span>
       </div>
       {selectedTeams.map((selectedTeam) => (
         <div data-role='team-players-box' key={selectedTeam.id} className='flex flex-1 flex-col'>
           {arrangePlayers(selectedTeam).map((player, idx) => (
-            <EntryItem key={idx} player={player} selectedTeams={selectedTeams} />
+            <EntryItem key={idx} player={player} selectedTeams={selectedTeams} position={position} />
           ))}
         </div>
       ))}

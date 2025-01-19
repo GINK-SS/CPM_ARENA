@@ -1,7 +1,7 @@
 'use client';
 
 import { useShallow } from 'zustand/react/shallow';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ImArrowRight } from 'react-icons/im';
 import classNames from 'classnames';
 
@@ -12,6 +12,7 @@ import usePlayerStore from '@/app/stores/player';
 import useBuffStore from '@/app/stores/buff';
 
 import { isHitter } from '@/app/util/decideType';
+import { Hitter, HitterPosition } from '@/app/stores/player/types';
 import { Team } from '@/app/stores/team/types';
 
 type LineupProps = {
@@ -60,6 +61,29 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
   );
   const changeBuff = useBuffStore((state) => state.changeBuff);
 
+  const getCanChangePosition = (player: Hitter | null, position: string | null) => {
+    if (!pinnedPlayer || !isHitter(pinnedPlayer)) return false;
+    if (!player || !position) return false;
+    if (pinnedPlayer === player) return false;
+
+    const pinnedPosition = hitterLineup.find((hitter) => hitter.player === pinnedPlayer)?.position;
+
+    if (
+      pinnedPosition === '지명타자' &&
+      (position === '지명타자' || pinnedPlayer.positions.includes(position as HitterPosition))
+    )
+      return true;
+
+    if (
+      isHitter(player) &&
+      player.positions.includes(pinnedPosition as HitterPosition) &&
+      (pinnedPlayer.positions.includes(position as HitterPosition) || position === '지명타자')
+    )
+      return true;
+
+    return false;
+  };
+
   const onCancel = () => {
     setSelectedPlayer(null);
     setPinnedPlayer(null);
@@ -69,6 +93,13 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
     if (!selectedPlayer || !pinnedPlayer) return;
     if (!isHitter(selectedPlayer) || !isHitter(pinnedPlayer)) return;
     if (!hitterLineup.some((hitter) => hitter.player === selectedPlayer)) return;
+    if (
+      !getCanChangePosition(
+        selectedPlayer,
+        hitterLineup.find((hitter) => hitter.player === selectedPlayer)?.position ?? null
+      )
+    )
+      return;
 
     changePositionLineup({ selectedPlayer, pinnedPlayer });
     setSelectedPlayer(null);
@@ -116,7 +147,7 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
             <p className='text-12 font-semibold'>하단에 고정하기</p>
             <div
               className={classNames('mr-5 flex h-17 w-26 cursor-pointer rounded-2xl p-3', {
-                'justify-start, bg-[#a82919]': isStickyOn,
+                'justify-start bg-[#a82919]': isStickyOn,
                 'justify-end bg-white/40': !isStickyOn,
               })}
               onClick={() => setIsStickyOn((prev) => !prev)}
@@ -128,9 +159,11 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
       >
         <div className='mobileL:mx-[-80px] mobileL:my-[-15px] mobileL:scale-[80%] tablet:mx-[-25px] tablet:my-[-5px] tablet:scale-95 laptop:m-0 laptop:scale-100'>
           <div className='mb-4 flex justify-between mobileL:mb-8'>
-            {(isShowHitterLineup ? hitterOrder : pitcherOrder).map((value) => (
-              <div key={value} className='flex-1 text-center text-[2.2vw] font-semibold mobileL:text-16'>
-                {value}
+            {(isShowHitterLineup ? hitterOrder : pitcherOrder).map((value, index) => (
+              <div key={index} className='flex-1 text-center text-[2.2vw] font-semibold mobileL:text-16'>
+                {isShowHitterLineup && getCanChangePosition(hitterLineup[index].player, hitterLineup[index].position)
+                  ? '수비 교체'
+                  : value}
               </div>
             ))}
           </div>
@@ -162,12 +195,24 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
                 className={classNames(
                   'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
                   {
-                    'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
-                      pinnedPlayer && selectedPlayer && hitterLineup.some((hitter) => hitter.player === selectedPlayer),
-                    'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':
+                    ['bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%']:
+                      pinnedPlayer &&
+                      selectedPlayer &&
+                      isHitter(selectedPlayer) &&
+                      hitterLineup.some((hitter) => hitter.player === selectedPlayer) &&
+                      getCanChangePosition(
+                        selectedPlayer,
+                        hitterLineup.find((hitter) => hitter.player === selectedPlayer)?.position || null
+                      ),
+                    ['cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%']:
                       !pinnedPlayer ||
                       !selectedPlayer ||
-                      !hitterLineup.some((hitter) => hitter.player === selectedPlayer),
+                      !isHitter(selectedPlayer) ||
+                      !hitterLineup.some((hitter) => hitter.player === selectedPlayer) ||
+                      !getCanChangePosition(
+                        selectedPlayer,
+                        hitterLineup.find((hitter) => hitter.player === selectedPlayer)?.position || null
+                      ),
                   }
                 )}
                 onClick={onChangePosition}
