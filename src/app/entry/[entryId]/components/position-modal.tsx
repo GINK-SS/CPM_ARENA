@@ -30,7 +30,12 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
 
   const onPositionClick = (newPosition: HitterPosition) => {
     if (lineupPosition === newPosition) return;
-    if (hitterLineup.some((hitter) => hitter.player !== player && hitter.position === newPosition)) return;
+    if (newPosition === '외야수' && hitterLineup.filter((hitter) => hitter.position === '외야수').length >= 3) return;
+    if (
+      newPosition !== '외야수' &&
+      hitterLineup.some((hitter) => hitter.player !== player && hitter.position === newPosition)
+    )
+      return;
 
     modifyPositionLineup({ pinnedPlayer: player, newPosition });
   };
@@ -175,11 +180,12 @@ export default function PositionModal({ player, onClose }: PositionModalProps) {
               ['hidden']: !positions.includes('외야수'),
               ['cursor-default bg-gray-300 opacity-40']:
                 positions.includes('외야수') &&
-                hitterLineup.some((hitter) => hitter.player !== player && hitter.position === '외야수'),
+                lineupPosition !== '외야수' &&
+                hitterLineup.filter((hitter) => hitter.position === '외야수').length >= 3,
               ['bg-gray-500']:
                 positions.includes('외야수') &&
                 lineupPosition !== '외야수' &&
-                !hitterLineup.some((hitter) => hitter.player !== player && hitter.position === '외야수'),
+                hitterLineup.filter((hitter) => hitter.position === '외야수').length < 3,
               ['cursor-default bg-[#91260F]/95']: lineupPosition === '외야수',
             }
           )}
