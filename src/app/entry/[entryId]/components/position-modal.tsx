@@ -1,24 +1,61 @@
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import classNames from 'classnames';
 
-import { Hitter } from '@/app/stores/player/types';
+import { Hitter, HitterPosition } from '@/app/stores/player/types';
 import usePlayerStore from '@/app/stores/player';
 import base from '@/public/assets/base.png';
+import { isHitter } from '@/app/util/decideType';
 
 type PositionModalProps = {
   player: Hitter | null;
+  onClose: () => void;
 };
 
-export default function PositionModal({ player }: PositionModalProps) {
-  const [hitterLineup] = usePlayerStore(useShallow((state) => [state.hitterLineup]));
+export default function PositionModal({ player, onClose }: PositionModalProps) {
+  if (!player || !isHitter(player)) return null;
 
-  if (!player) return null;
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [hitterLineup, modifyPositionLineup, setSelectedPlayer, setPinnedPlayer] = usePlayerStore(
+    useShallow((state) => [
+      state.hitterLineup,
+      state.modifyPositionLineup,
+      state.setSelectedPlayer,
+      state.setPinnedPlayer,
+    ])
+  );
   const positions = player.positions;
   const lineupPosition = hitterLineup.find((hitter) => hitter.player === player)?.position;
 
+  const onPositionClick = (newPosition: HitterPosition) => {
+    if (lineupPosition === newPosition) return;
+    if (hitterLineup.some((hitter) => hitter.player !== player && hitter.position === newPosition)) return;
+
+    modifyPositionLineup({ pinnedPlayer: player, newPosition });
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setSelectedPlayer(null);
+        setPinnedPlayer(null);
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [onClose]);
+
   return (
-    <div className='absolute bottom-0 left-0 z-50 w-190 border-2 border-[#aaa] bg-black p-4 drop-shadow-[0_0_2px_#222]'>
+    <div
+      ref={modalRef}
+      className='absolute bottom-0 left-0 z-50 w-190 border-2 border-[#aaa] bg-black p-4 drop-shadow-[0_0_2px_#222]'
+    >
       <div className='relative aspect-square w-full bg-gray-300/50'>
         <Image src={base} alt='logo' fill sizes='120px' />
 
@@ -38,6 +75,7 @@ export default function PositionModal({ player }: PositionModalProps) {
               ['cursor-default bg-[#91260F]/95']: lineupPosition === '포수',
             }
           )}
+          onClick={() => onPositionClick('포수')}
         >
           <span className='text-14 font-semibold'>포</span>
         </button>
@@ -58,6 +96,7 @@ export default function PositionModal({ player }: PositionModalProps) {
               ['cursor-default bg-[#91260F]/95']: lineupPosition === '1루수',
             }
           )}
+          onClick={() => onPositionClick('1루수')}
         >
           <span className='text-14 font-semibold'>1</span>
         </button>
@@ -78,6 +117,7 @@ export default function PositionModal({ player }: PositionModalProps) {
               ['cursor-default bg-[#91260F]/95']: lineupPosition === '2루수',
             }
           )}
+          onClick={() => onPositionClick('2루수')}
         >
           <span className='text-14 font-semibold'>2</span>
         </button>
@@ -98,6 +138,7 @@ export default function PositionModal({ player }: PositionModalProps) {
               ['cursor-default bg-[#91260F]/95']: lineupPosition === '3루수',
             }
           )}
+          onClick={() => onPositionClick('3루수')}
         >
           <span className='text-14 font-semibold'>3</span>
         </button>
@@ -118,6 +159,7 @@ export default function PositionModal({ player }: PositionModalProps) {
               ['cursor-default bg-[#91260F]/95']: lineupPosition === '유격수',
             }
           )}
+          onClick={() => onPositionClick('유격수')}
         >
           <span className='text-14 font-semibold'>유</span>
         </button>
@@ -138,6 +180,7 @@ export default function PositionModal({ player }: PositionModalProps) {
               ['cursor-default bg-[#91260F]/95']: lineupPosition === '외야수',
             }
           )}
+          onClick={() => onPositionClick('외야수')}
         >
           <span className='text-14 font-semibold'>외</span>
         </button>
@@ -156,6 +199,7 @@ export default function PositionModal({ player }: PositionModalProps) {
               ['cursor-default bg-[#91260F]/95']: lineupPosition === '지명타자',
             }
           )}
+          onClick={() => onPositionClick('지명타자')}
         >
           <span className='text-14 font-semibold'>지</span>
         </button>

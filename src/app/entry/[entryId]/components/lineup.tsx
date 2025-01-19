@@ -178,7 +178,12 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
 
           <div className='mt-4 flex justify-between px-4 mobileL:mt-8 mobileL:px-10'>
             <div className='relative'>
-              {isShowPositionModifyModal && <PositionModal player={pinnedPlayer as Hitter | null} />}
+              {isShowPositionModifyModal && (
+                <PositionModal
+                  player={pinnedPlayer as Hitter | null}
+                  onClose={() => setIsShowPositionModifyModal(false)}
+                />
+              )}
               <button
                 className={classNames(
                   'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
