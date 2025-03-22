@@ -137,7 +137,7 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
 
   return (
     <div
-      className={classNames('bottom-0 z-[8] w-full', {
+      className={classNames('bottom-0 z-[8] w-[calc(100%+1px)]', {
         sticky: isStickyOn,
         relative: !isStickyOn,
       })}
