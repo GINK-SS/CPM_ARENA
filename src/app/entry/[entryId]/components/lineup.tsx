@@ -6,6 +6,7 @@ import { ImArrowRight } from 'react-icons/im';
 import classNames from 'classnames';
 
 import PositionModal from './position-modal';
+import LineupButton from './lineup-button';
 import PlayerCard from './player-card';
 import InfoBox from './info-box';
 import useTableStore from '@/app/stores/table';
@@ -184,102 +185,50 @@ const Lineup = ({ selectedTeams }: LineupProps) => {
                   onClose={() => setIsShowPositionModifyModal(false)}
                 />
               )}
-              <button
-                className={classNames(
-                  'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
-                  {
-                    ['hidden']: !isShowHitterLineup,
-                    'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
-                      Boolean(pinnedPlayer) && !selectedPlayer,
-                    'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':
-                      !pinnedPlayer || Boolean(selectedPlayer),
-                  }
-                )}
-                disabled={!pinnedPlayer || Boolean(selectedPlayer)}
+
+              <LineupButton
+                text='수비이동'
+                isActive={Boolean(pinnedPlayer) && !selectedPlayer}
                 onClick={() => setIsShowPositionModifyModal(true)}
-              >
-                <span className='indent-[0.4vw] tracking-[0.4vw] mobileL:indent-3 mobileL:tracking-[3px]'>
-                  수비이동
-                </span>
-              </button>
+                className={{ ['hidden']: !isShowHitterLineup }}
+              />
             </div>
 
             <div className='flex justify-end gap-5 mobileL:gap-10'>
-              <button
-                className={classNames(
-                  'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
-                  {
-                    'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
-                      selectedPlayer || pinnedPlayer,
-                    'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':
-                      !selectedPlayer && !pinnedPlayer,
-                  }
-                )}
+              <LineupButton
+                text='취소'
+                isActive={Boolean(selectedPlayer) || Boolean(pinnedPlayer)}
                 onClick={onCancel}
-              >
-                <span className='indent-[2vw] tracking-[2vw] mobileL:indent-10 mobileL:tracking-[10px]'>취소</span>
-              </button>
+              />
 
-              {isShowHitterLineup && (
-                <button
-                  className={classNames(
-                    'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
-                    {
-                      ['bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%']:
-                        pinnedPlayer &&
-                        selectedPlayer &&
-                        isHitter(selectedPlayer) &&
-                        hitterLineup.some((hitter) => hitter.player === selectedPlayer) &&
-                        getCanChangePosition(
-                          selectedPlayer,
-                          hitterLineup.find((hitter) => hitter.player === selectedPlayer)?.position || null
-                        ),
-                      ['cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%']:
-                        !pinnedPlayer ||
-                        !selectedPlayer ||
-                        !isHitter(selectedPlayer) ||
-                        !hitterLineup.some((hitter) => hitter.player === selectedPlayer) ||
-                        !getCanChangePosition(
-                          selectedPlayer,
-                          hitterLineup.find((hitter) => hitter.player === selectedPlayer)?.position || null
-                        ),
-                    }
-                  )}
-                  onClick={onChangePosition}
-                >
-                  <span className='indent-[0.4vw] tracking-[0.4vw] mobileL:indent-3 mobileL:tracking-[3px]'>
-                    수비변경
-                  </span>
-                </button>
-              )}
+              <LineupButton
+                text='수비변경'
+                isActive={
+                  Boolean(pinnedPlayer) &&
+                  !!selectedPlayer &&
+                  isHitter(selectedPlayer) &&
+                  hitterLineup.some((hitter) => hitter.player === selectedPlayer) &&
+                  getCanChangePosition(
+                    selectedPlayer,
+                    hitterLineup.find((hitter) => hitter.player === selectedPlayer)?.position || null
+                  )
+                }
+                onClick={onChangePosition}
+                className={{ ['hidden']: !isShowHitterLineup }}
+              />
 
-              <button
-                className={classNames(
-                  'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
-                  {
-                    'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%':
-                      pinnedPlayer && selectedPlayer && isHitter(selectedPlayer) === isHitter(pinnedPlayer),
-                    'cursor-default bg-gradient-to-b from-[#777] from-20% via-[#333] via-50% to-[#777] to-100%':
-                      !pinnedPlayer || !selectedPlayer || isHitter(selectedPlayer) !== isHitter(pinnedPlayer),
-                  }
-                )}
+              <LineupButton
+                text='교체'
+                isActive={!!pinnedPlayer && !!selectedPlayer && isHitter(selectedPlayer) === isHitter(pinnedPlayer)}
                 onClick={onChangeOrder}
-              >
-                <span className='indent-[2vw] tracking-[2vw] mobileL:indent-10 mobileL:tracking-[10px]'>교체</span>
-              </button>
+              />
 
-              <button
-                className={classNames(
-                  'flex h-[5vw] w-[10vw] items-center justify-center border-none text-[2vw] font-semibold text-white outline-none mobileL:h-40 mobileL:w-85 mobileL:text-18',
-                  'bg-gradient-to-b from-[#a82919] from-20% via-[#761d1b] via-50% to-[#a82919] to-100%'
-                )}
+              <LineupButton
+                text={isShowHitterLineup ? '투수로' : '타자로'}
+                isActive
                 onClick={onSwitchLineup}
-              >
-                <span className='indent-0.41vw] tracking-0.41vw] mobileL:indent-3 mobileL:tracking-[3px]'>
-                  {isShowHitterLineup ? '투수로' : '타자로'}
-                </span>
-                <ImArrowRight />
-              </button>
+                rightSlot={<ImArrowRight />}
+              />
             </div>
           </div>
         </div>
