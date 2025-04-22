@@ -117,7 +117,7 @@ const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
   };
 
   return (
-    <HoverCard openDelay={500} closeDelay={100}>
+    <HoverCard openDelay={500} closeDelay={100} open={isBlocked ? false : undefined}>
       <HoverCardTrigger asChild>
         <button
           aria-label={player.name || 'empty player'}
@@ -152,7 +152,7 @@ const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
             data-role='name'
             className={classNames(
               'flex aspect-[3/1.1] flex-[3] items-center justify-center border-r-1 border-r-black indent-[0.5px] text-[2.3vw] font-semibold tracking-[0.5px]',
-              'mobileL:text-14 tablet:text-17 laptop:text-20 mobileL:aspect-[3/1] tablet:indent-1 tablet:tracking-[1px]',
+              'mobileL:aspect-[3/1] mobileL:text-14 tablet:indent-1 tablet:text-17 tablet:tracking-[1px] laptop:text-20',
               {
                 'bg-[#f0c2bd]': player.all_star,
                 'font-extrabold text-[#ca4142]': player.mvp_korea || player.mvp_league,
@@ -165,7 +165,7 @@ const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
           <div
             data-role='overall'
             className={classNames(
-              'mobileL:text-14 tablet:text-16 laptop:text-19 flex aspect-auto h-full flex-[1] items-center justify-center text-[2.2vw] mobileL:aspect-square mobileL:h-auto',
+              'flex aspect-auto h-full flex-[1] items-center justify-center text-[2.2vw] mobileL:aspect-square mobileL:h-auto mobileL:text-14 tablet:text-16 laptop:text-19',
               {
                 'font-bold text-[#1b1588]': player.overall >= 80,
                 'bg-[#f5df94]': player.golden_glove,
@@ -180,7 +180,7 @@ const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
         <div className='flex flex-col gap-4'>
           <div className='flex justify-between border-b border-black/30 pb-4'>
             <div>
-              <div className='w-30 relative aspect-square'>
+              <div className='relative aspect-square w-30'>
                 <TeamLogo teamId={player.team} />
               </div>
 
