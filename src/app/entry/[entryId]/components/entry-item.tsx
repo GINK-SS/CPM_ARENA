@@ -117,7 +117,7 @@ const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
   };
 
   return (
-    <HoverCard openDelay={500} closeDelay={100} open={isBlocked ? false : undefined}>
+    <HoverCard openDelay={100} closeDelay={100} open={isBlocked ? false : undefined}>
       <HoverCardTrigger asChild>
         <button
           aria-label={player.name || 'empty player'}
@@ -176,7 +176,7 @@ const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
           </div>
         </button>
       </HoverCardTrigger>
-      <HoverCardContent className='w-full'>
+      <HoverCardContent className='w-full' sideOffset={3}>
         <div className='flex flex-col gap-4'>
           <div className='flex justify-between border-b border-black/30 pb-4'>
             <div>
