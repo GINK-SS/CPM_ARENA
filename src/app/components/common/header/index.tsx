@@ -32,7 +32,7 @@ export default async function Header() {
                 width={180}
                 height={30}
                 sizes='250px'
-                className='mobileL:h-auto mobileL:w-[250px]'
+                className='h-auto w-auto mobileL:w-[250px]'
                 priority
               />
             </div>
