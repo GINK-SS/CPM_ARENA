@@ -215,7 +215,7 @@ const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
 
             <div className='flex flex-col items-end gap-3'>
               <div className='flex gap-3 font-semibold'>
-                <span>'{player.year?.toString().slice(2) || ''}</span>
+                <span>{`'${player.year?.toString().slice(2) || ''}`}</span>
                 <span>{player.name}</span>
               </div>
 
