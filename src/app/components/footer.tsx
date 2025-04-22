@@ -1,10 +1,23 @@
-const Footer = () => {
+export const dynamic = 'force-dynamic';
+
+import { redis } from '@/app/lib/redis';
+
+const Footer = async () => {
+  const now = new Date();
+  const koreaNow = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  const today = koreaNow.toISOString().slice(0, 10);
+  const todayKey = `visitor_count:${today}`;
+  const todayCount = await redis.incr(todayKey);
+  const totalCount = await redis.incr('total_visitor_count');
+
+  await redis.expire(todayKey, 60 * 60 * 24 * 30);
+
   return (
     <div className='mx-auto flex max-w-[700px] justify-between gap-3 mobileL:flex-col mobileL:items-end laptop:max-w-[1000px]'>
       <div className='h-20'>
         <img
-          src='https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fwww.cpm-arena.com&count_bg=%23D17407&title_bg=%235E5E5E&icon=angellist.svg&icon_color=%23E7E7E7&title=visits&edge_flat=true'
-          alt='visits'
+          src={`https://img.shields.io/badge/visit-${todayCount}_/_${totalCount}-%23CC7820?style=flat-square&logo=v&logoColor=white&labelColor=gray`}
+          alt='visitor'
           height={20}
         />
       </div>

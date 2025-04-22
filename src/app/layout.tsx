@@ -10,9 +10,11 @@ import Providers from './providers';
 import Loading from './components/common/loading';
 
 const notoSansKR = Noto_Sans_KR({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   weight: ['200', '400', '700', '900'],
   display: 'swap',
+  preload: true,
+  fallback: ['system-ui', '-apple-system', 'sans-serif'],
 });
 
 export const metadata: Metadata = {

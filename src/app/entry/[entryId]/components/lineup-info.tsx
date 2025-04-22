@@ -60,7 +60,7 @@ const LineUpInfo = ({ selectedTeams }: { selectedTeams: Team[] }) => {
 
         <div className='flex justify-between'>
           <button
-            className='border-1 border-slate-400 px-10 py-6 text-12 mobileL:px-10 mobileL:py-4 mobileL:text-14'
+            className='border-1 border-slate-400 px-10 py-6 text-12 mobileL:px-10 mobileL:py-8 mobileL:text-16'
             onClick={onReset}
           >
             선택 초기화
