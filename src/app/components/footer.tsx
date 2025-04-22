@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { redis } from '@/app/lib/kv';
+import { redis } from '@/app/lib/redis';
 
 const Footer = async () => {
   const now = new Date();
