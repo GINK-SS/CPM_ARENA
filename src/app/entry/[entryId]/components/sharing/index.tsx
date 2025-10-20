@@ -25,11 +25,12 @@ export default function Sharing({ year, selectedTeams }: SharingProps) {
     }
 
     const filter = (node: HTMLElement) => {
-      const exclusionClassName = 'remove-me';
+      const exclusionClassName = 'sharing-remove';
+
       return !node.classList?.contains(exclusionClassName);
     };
 
-    toJpeg(node, { quality: 0.95, filter }).then(function (dataUrl) {
+    toJpeg(node, { quality: 0.95, filter, includeQueryParams: true }).then(function (dataUrl) {
       const link = document.createElement('a');
 
       link.download = `${year}년_${selectedTeams.map((team) => team.id).join('_')}_아레나.jpeg`;
