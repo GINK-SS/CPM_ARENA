@@ -10,6 +10,7 @@ import Lineup from './components/lineup';
 import LineUpInfo from './components/lineup-info';
 import SimpleBox from './components/simple-box';
 import PlayerDetail from './components/player-detail';
+import Sharing from './components/sharing';
 
 type MetaProps = {
   params: { entryId: string };
@@ -118,7 +119,9 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
   const overallLimit = !limit || isNaN(+limit) || +limit > 99 ? 69 : +limit < 55 ? 55 : +limit;
 
   return (
-    <>
+    <div id='sharing-container' className='relative z-0'>
+      <Sharing />
+
       <PlayerDetail selectedTeams={selectedTeams} />
 
       <div className='relative mx-auto flex w-full flex-col items-center py-25 mobileL:max-w-[630px] mobileL:py-20 tablet:max-w-[750px] laptop:max-w-[850px]'>
@@ -139,6 +142,6 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
         <SimpleBox selectedTeams={selectedTeams} />
         <LineUpInfo selectedTeams={selectedTeams} />
       </div>
-    </>
+    </div>
   );
 }
