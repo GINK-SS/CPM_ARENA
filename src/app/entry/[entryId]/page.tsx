@@ -11,6 +11,7 @@ import LineUpInfo from './components/lineup-info';
 import SimpleBox from './components/simple-box';
 import PlayerDetail from './components/player-detail';
 import Sharing from './components/sharing';
+import { cn } from '@/app/lib/utils';
 
 type MetaProps = {
   params: { entryId: string };
@@ -120,14 +121,16 @@ export default async function Page({ params: { entryId }, searchParams: { limit 
 
   return (
     <div id='sharing-container' className='relative z-0'>
-      <Sharing />
-
+      <Sharing year={paramYear} selectedTeams={selectedTeams} />
       <PlayerDetail selectedTeams={selectedTeams} />
 
       <div className='relative mx-auto flex w-full flex-col items-center py-25 mobileL:max-w-[630px] mobileL:py-20 tablet:max-w-[750px] laptop:max-w-[850px]'>
         <h1
           data-role='title'
-          className='mb-10 text-center indent-8 text-[6vw] font-extrabold tracking-[8px] drop-shadow-[1px_1px_1px_#555] mobileL:mb-20 mobileL:indent-15 mobileL:text-40 mobileL:tracking-[15px] tablet:text-45 tablet:drop-shadow-[3px_3px_2px_#555] laptop:text-55'
+          className={cn(
+            'mb-10 text-center indent-8 text-[6vw] font-extrabold tracking-[8px] drop-shadow-[1px_1px_1px_#555]',
+            'mobileL:mb-20 mobileL:indent-15 mobileL:text-40 mobileL:tracking-[15px] tablet:text-45 tablet:drop-shadow-[3px_3px_2px_#555] laptop:text-55'
+          )}
         >
           {paramYear}년 ARENA
         </h1>
