@@ -3,7 +3,7 @@ import { Hitter, Pitcher } from './stores/player/types';
 import { TeamId, TeamShorten } from './stores/team/types';
 
 export const FIRST_YEAR = 1982;
-export const LAST_YEAR = 2024;
+export const LAST_YEAR = 2025;
 
 export const YEAR_LIST = [
   2020,
@@ -11,7 +11,7 @@ export const YEAR_LIST = [
   2022,
   2023,
   2024,
-  null,
+  2025,
   null,
   null,
   null,
