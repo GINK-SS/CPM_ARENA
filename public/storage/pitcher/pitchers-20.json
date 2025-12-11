@@ -29827,8 +29827,8 @@
     "hand_type": "우투우타",
     "pitches": "포심 A / 체인지업 B / 슬라이더 A / 커브 C",
     "all_star": true,
-    "golden_glove": false,
-    "mvp_league": false,
+    "golden_glove": true,
+    "mvp_league": true,
     "mvp_korea": false
   },
   {

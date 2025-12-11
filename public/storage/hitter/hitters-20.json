@@ -24047,7 +24047,7 @@
     "order_type": "상위",
     "order_numbers": [1],
     "all_star": true,
-    "golden_glove": false,
+    "golden_glove": true,
     "mvp_league": false,
     "mvp_korea": false
   },
@@ -24637,7 +24637,7 @@
     "all_star": true,
     "golden_glove": false,
     "mvp_league": false,
-    "mvp_korea": false
+    "mvp_korea": true
   },
   {
     "name": "오지환",
@@ -24691,7 +24691,7 @@
     "order_type": "상위",
     "order_numbers": [1],
     "all_star": false,
-    "golden_glove": false,
+    "golden_glove": true,
     "mvp_league": false,
     "mvp_korea": false
   },
@@ -24943,7 +24943,7 @@
     "order_type": "클린업",
     "order_numbers": [3],
     "all_star": true,
-    "golden_glove": false,
+    "golden_glove": true,
     "mvp_league": false,
     "mvp_korea": false
   },
@@ -25503,7 +25503,7 @@
     "order_type": "클린업",
     "order_numbers": [4],
     "all_star": true,
-    "golden_glove": false,
+    "golden_glove": true,
     "mvp_league": false,
     "mvp_korea": false
   },
@@ -26483,7 +26483,7 @@
     "order_type": "상위",
     "order_numbers": [1],
     "all_star": true,
-    "golden_glove": false,
+    "golden_glove": true,
     "mvp_league": false,
     "mvp_korea": false
   },
@@ -26987,7 +26987,7 @@
     "order_type": "클린업",
     "order_numbers": [4],
     "all_star": true,
-    "golden_glove": false,
+    "golden_glove": true,
     "mvp_league": false,
     "mvp_korea": false
   },
@@ -27043,7 +27043,7 @@
     "order_type": "클린업",
     "order_numbers": [3],
     "all_star": true,
-    "golden_glove": false,
+    "golden_glove": true,
     "mvp_league": false,
     "mvp_korea": false
   },
@@ -27407,7 +27407,7 @@
     "order_type": "클린업",
     "order_numbers": [4, 3],
     "all_star": true,
-    "golden_glove": false,
+    "golden_glove": true,
     "mvp_league": false,
     "mvp_korea": false
   },
@@ -27911,7 +27911,7 @@
     "order_type": "클린업",
     "order_numbers": [4, 3],
     "all_star": false,
-    "golden_glove": false,
+    "golden_glove": true,
     "mvp_league": false,
     "mvp_korea": false
   },
