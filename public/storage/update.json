@@ -1,5 +1,15 @@
 [
   {
+    "date": "2025.12.12",
+    "version": "1.7.3",
+    "contents": [
+      {
+        "title": "골글 및 MVP 레코드 추가",
+        "descriptions": ["골글 및 MVP 레코드가 추가되었습니다."]
+      }
+    ]
+  },
+  {
     "date": "2025.10.21",
     "version": "1.7.2",
     "contents": [
