@@ -40,6 +40,22 @@ const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
   );
   const setBuff = useBuffStore((state) => state.setBuff);
 
+  const lineupPosition = useMemo(() => {
+    if (!isHitter(player)) return null;
+
+    return hitterLineup.find((hitter) => hitter.player === player)?.position ?? null;
+  }, [hitterLineup, player]);
+
+  const assignedPositionLabel = useMemo(() => {
+    if (!isHitter(player)) return null;
+    if (!lineupPosition) return null;
+
+    if (lineupPosition === '지명타자') return 'DH';
+    if (lineupPosition !== player.positions[0]) return lineupPosition;
+
+    return null;
+  }, [lineupPosition, player]);
+
   const isBlocked = useMemo(() => {
     if (!pinnedPlayer) return false;
     if (!isHitter(pinnedPlayer)) return false;
@@ -147,6 +163,19 @@ const EntryItem = ({ player, selectedTeams, position }: EntryItemProps) => {
                 : !pitcherLineup.some((pitcher) => pitcher.player === player),
             })}
           />
+
+          <div
+            className={classNames(
+              'pointer-events-none absolute left-2 top-1 z-[4] rounded-sm',
+              'bg-[#ff7a00] px-3 py-1 text-[1.8vw] font-bold text-white',
+              'mobileL:left-3 mobileL:top-2 mobileL:text-10 tablet:text-11 laptop:text-12',
+              {
+                hidden: !assignedPositionLabel,
+              }
+            )}
+          >
+            {assignedPositionLabel}
+          </div>
 
           <div
             data-role='name'
